@@ -1074,42 +1074,41 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 
     <!-- Signatures -->
     <div class="sig-section">
-      <div style="text-align:center;margin-bottom:28px;">
-        <div class="sig-section-title">✍️ Electronic Agreement &amp; Signature</div>
-        <div class="sig-section-sub">Legally binding under the Illinois E-Commerce Security Act &amp; federal E-SIGN Act</div>
+      <div style="text-align:center;margin-bottom:32px;">
+        <div style="font-size:1.8rem;margin-bottom:10px;">✍️</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:#fff;letter-spacing:0.04em;">Electronic Agreement &amp; Signature</div>
+        <div style="font-size:0.68rem;color:rgba(255,255,255,0.4);letter-spacing:0.12em;text-transform:uppercase;font-family:'Inter',sans-serif;margin-top:8px;">Legally binding under the Illinois E-Commerce Security Act &amp; federal E-SIGN Act</div>
+        <div style="width:60px;height:2px;background:linear-gradient(to right,var(--crimson),var(--gold));margin:16px auto 0;border-radius:99px;"></div>
       </div>
-      <div class="section-body" style="background:transparent;padding:0;">od, and agreed to all terms of this Catering Services Agreement. Your typed name constitutes a legally binding electronic signature under the Illinois Electronic Commerce Security Act (5 ILCS 175) and the federal E-SIGN Act.</p>
-        <div style="background:rgba(139,0,0,0.3);border:1px solid rgba(139,0,0,0.5);border-radius:8px;padding:14px 18px;margin-bottom:28px;display:flex;align-items:flex-start;gap:12px;font-size:0.9rem;font-family:'Inter',sans-serif;">
-          <input type="checkbox" id="retainer_confirm" style="margin-top:3px;accent-color:var(--gold);width:18px;height:18px;flex-shrink:0;"/>
-          <label for="retainer_confirm" style="color:rgba(255,255,255,0.85);"><strong style="color:#fff;">I understand that the non-refundable $200 deposit is due immediately upon submitting this contract</strong> to secure my event date. Failure to submit payment does not cancel this agreement or release me from its terms. I am liable for all agreed payments.</label>
-        </div>
-        <div class="sig-grid">
-          <div class="sig-block">
-            <h4>The BBQ Guys Chicago — Authorized Signature</h4>
-            <div class="sig-box">
-              <span style="font-size:1.1rem;flex-shrink:0;">🔥</span>
-              <div style="flex:1;">
-                <div class="sig-box-label">Authorized Signature</div>
-                <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:rgba(255,255,255,0.6);">Asmar Najam</div>
-              </div>
-            </div>
-            <div class="sig-date-box">
-              <span style="font-size:1rem;">📅</span>
-              <div style="flex:1;"><div class="sig-box-label">Date</div><input type="date" id="mc_date" readonly/></div>
+      <p style="font-size:0.88rem;color:rgba(255,255,255,0.55);font-style:italic;margin-bottom:24px;line-height:1.8;font-family:'Inter',sans-serif;text-align:center;padding:0 10px;">By typing your full legal name below, you confirm you have read, understood, and agreed to all terms of this Catering Services Agreement.</p>
+      <div style="background:rgba(139,0,0,0.35);border:1px solid rgba(192,57,43,0.6);border-radius:10px;padding:16px 18px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;">
+        <input type="checkbox" id="retainer_confirm" style="margin-top:3px;accent-color:var(--gold);width:18px;height:18px;flex-shrink:0;cursor:pointer;"/>
+        <label for="retainer_confirm" style="font-size:0.88rem;color:rgba(255,255,255,0.9);font-family:'Inter',sans-serif;line-height:1.65;cursor:pointer;"><strong style="color:#fff;display:block;margin-bottom:4px;">I understand the non-refundable $200 deposit is due immediately upon signing</strong> to secure my event date. Failure to submit payment does not cancel this agreement or release me from its terms.</label>
+      </div>
+      <div class="sig-grid">
+        <div class="sig-block">
+          <h4>The BBQ Guys Chicago</h4>
+          <div class="sig-box" style="flex-direction:column;align-items:flex-start;min-height:110px;padding:20px 22px;">
+            <div class="sig-box-label">Authorized Signature</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-style:italic;color:rgba(255,255,255,0.75);letter-spacing:0.02em;margin-top:8px;">Asmar Najam</div>
+          </div>
+          <div class="sig-date-box" style="margin-top:12px;">
+            <div style="flex:1;">
+              <div class="sig-box-label" style="margin-bottom:6px;">Date Signed</div>
+              <input type="date" id="mc_date" readonly style="border:none;background:transparent;font-size:0.95rem;font-family:'Playfair Display',serif;color:#fff;outline:none;width:100%;"/>
             </div>
           </div>
-          <div class="sig-block">
-            <h4>Client — Type Full Legal Name <span class="req-badge">REQUIRED</span></h4>
-            <div class="sig-box active" onclick="document.getElementById('client_sig_name').focus()">
-              <span style="font-size:1.1rem;flex-shrink:0;">✍️</span>
-              <div style="flex:1;">
-                <div class="sig-box-label">Electronic Signature</div>
-                <input type="text" id="client_sig_name" placeholder="Type your full legal name"/>
-              </div>
-            </div>
-            <div class="sig-date-box active">
-              <span style="font-size:1rem;">📅</span>
-              <div style="flex:1;"><div class="sig-box-label">Your Signing Date <span class="req-badge">REQUIRED</span></div><input type="date" id="client_date"/></div>
+        </div>
+        <div class="sig-block">
+          <h4>Client Signature <span class="req-badge">REQUIRED</span></h4>
+          <div class="sig-box active" onclick="document.getElementById('client_sig_name').focus()" style="flex-direction:column;align-items:flex-start;min-height:110px;padding:20px 22px;cursor:text;">
+            <div class="sig-box-label">Type Your Full Legal Name</div>
+            <input type="text" id="client_sig_name" placeholder="Your full name here…" style="border:none;outline:none;width:100%;font-family:'Playfair Display',serif;font-size:1.5rem;font-style:italic;color:#fff;background:transparent;letter-spacing:0.02em;margin-top:8px;padding:0;"/>
+          </div>
+          <div class="sig-date-box active" style="margin-top:12px;">
+            <div style="flex:1;">
+              <div class="sig-box-label" style="margin-bottom:6px;">Your Signing Date <span class="req-badge">REQUIRED</span></div>
+              <input type="date" id="client_date" style="border:none;background:transparent;font-size:0.95rem;font-family:'Playfair Display',serif;color:#fff;outline:none;width:100%;cursor:pointer;"/>
             </div>
           </div>
         </div>
