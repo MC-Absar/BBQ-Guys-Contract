@@ -1640,7 +1640,12 @@ function loadClientView(){
   setText('d_addons',raw['addons']&&parseFloat(raw['addons'])>0?'$'+parseFloat(raw['addons']).toFixed(2):'—');
   setText('d_deposit','$'+parseFloat(raw['deposit']||200).toFixed(2)+' (paid)');
   setText('d_total_remaining',raw['total_remaining']||'—');
-  try{const food=JSON.parse(raw['food']||'{}');renderMenuDisplay(food);}catch(e){renderMenuDisplay({});}
+  try{
+    let fRaw='{}';
+    if(raw['foodb64']){try{fRaw=decodeURIComponent(escape(atob(raw['foodb64'])));}catch(e){}}
+    if(fRaw==='{}'&&raw['food']){fRaw=raw['food'];}
+    renderMenuDisplay(JSON.parse(fRaw));
+  }catch(e){renderMenuDisplay({});}
   const notes=raw['food_notes']||'';
   if(notes){const nw=document.getElementById('foodNotesDisplay');const ne=document.getElementById('d_food_notes');if(nw)nw.style.display='block';if(ne)ne.textContent=notes;}
   document.getElementById('mc_date').value=new Date().toISOString().split('T')[0];
@@ -1685,9 +1690,18 @@ function renderPrintCard(){
   try{const events=JSON.parse(raw['events']||'[]');if(events.length>0){const ev=events[0];setText('pm_date',ev.edate?fmtDate(ev.edate):'—');if(ev.etype)setText('pm_event_type',ev.etype);}}catch(e){}
   const foodWrap=document.getElementById('pm_food_sections');let foodHtml='';
   try{
-    let foodRaw = raw['food']||'{}';
-    // Handle double-encoding
-    try { JSON.parse(foodRaw); } catch(e) { try { foodRaw = decodeURIComponent(foodRaw); } catch(e2) {} }
+    let foodRaw = '{}';
+    // Try base64 first (more reliable through email links)
+    if(raw['foodb64']) {
+      try { foodRaw = decodeURIComponent(escape(atob(raw['foodb64']))); } catch(e) {}
+    }
+    // Fall back to raw food param
+    if(foodRaw === '{}' && raw['food']) {
+      foodRaw = raw['food'];
+      try { JSON.parse(foodRaw); } catch(e) {
+        try { foodRaw = decodeURIComponent(foodRaw); } catch(e2) {}
+      }
+    }
     const food=JSON.parse(foodRaw);
     // Collect ALL items from all sections into flat lists by category
     const mainItems=[];const appItems=[];const dessertItems=[];const breadItems=[];
@@ -1863,6 +1877,10 @@ window.submitContract=async function(){
   pp.set('service_type',raw['service_type']||'');
   pp.set('events',raw['events']||'[]');
   pp.set('food',raw['food']||'{}');
+  try {
+    const foodB64Full = btoa(unescape(encodeURIComponent(raw['food']||'{}')));
+    pp.set('foodb64', foodB64Full);
+  } catch(e) {}
   pp.set('food_notes',raw['food_notes']||'');
   pp.set('venue',venueFirst[0]||'');
   pp.set('submitted_at',new Date().toLocaleDateString('en-US'));
@@ -1878,7 +1896,13 @@ window.submitContract=async function(){
   ppShort.set('events',raw['events']||'[]');
   ppShort.set('venue',venueFirst[0]||'');
   if(raw['celebration']) ppShort.set('celebration',raw['celebration']);
-  ppShort.set('food',raw['food']||'{}');
+  // Encode food as base64 to prevent URL encoding corruption
+  try {
+    const foodB64 = btoa(unescape(encodeURIComponent(raw['food']||'{}')));
+    ppShort.set('foodb64', foodB64);
+  } catch(e) {
+    ppShort.set('food', raw['food']||'{}');
+  }
   const printLinkEmail = baseUrl+'?'+ppShort.toString();
 
   // ── Build .ics calendar link for team ──
@@ -1968,15 +1992,15 @@ window.submitContract=async function(){
         'END:VCALENDAR'
       ].join('\r\n');
 
-      // Google Calendar link — works in all email clients including iPhone Mail
-      const gcalBase = 'https://calendar.google.com/calendar/render?action=TEMPLATE';
-      const gcalParams = new URLSearchParams({
-        text: autoTitle,
-        dates: dtStart + '/' + dtEnd,
-        details: desc.slice(0, 1500), // Google Calendar has a limit
-        location: venue + (addr ? ', ' + addr : ''),
-      });
-      calLink = gcalBase + '&' + gcalParams.toString();
+      // Build Google Calendar link manually — URLSearchParams encodes / in dates which breaks it
+      const gcalDetails = encodeURIComponent(desc.slice(0, 1500));
+      const gcalLocation = encodeURIComponent(venue + (addr ? ', ' + addr : ''));
+      const gcalText = encodeURIComponent(autoTitle);
+      calLink = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+        + '&text=' + gcalText
+        + '&dates=' + dtStart + '/' + dtEnd
+        + '&details=' + gcalDetails
+        + '&location=' + gcalLocation;
     }
   } catch(e) { calLink = ''; }
 
