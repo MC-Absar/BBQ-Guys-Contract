@@ -1858,11 +1858,28 @@ window.submitContract=async function(){
   const baseUrl=window.location.href.split('?')[0];
   const pp=new URLSearchParams();pp.set('print','1');
   pp.set('client_names',raw['client_names']||cnEl.value||'');
-  pp.set('guest_count',raw['guest_count']||'');pp.set('pkg',raw['pkg']||'');
-  pp.set('service_type',raw['service_type']||'');pp.set('events',raw['events']||'[]');
-  pp.set('food',raw['food']||'{}');pp.set('food_notes',raw['food_notes']||'');
-  pp.set('venue',venueFirst[0]||'');pp.set('submitted_at',new Date().toLocaleDateString('en-US'));
+  pp.set('guest_count',raw['guest_count']||'');
+  pp.set('pkg',raw['pkg']||'');
+  pp.set('service_type',raw['service_type']||'');
+  pp.set('events',raw['events']||'[]');
+  pp.set('food',raw['food']||'{}');
+  pp.set('food_notes',raw['food_notes']||'');
+  pp.set('venue',venueFirst[0]||'');
+  pp.set('submitted_at',new Date().toLocaleDateString('en-US'));
+  if(raw['celebration']) pp.set('celebration',raw['celebration']);
+  // Build full print link — stored as-is for use in contract
   const printLink=baseUrl+'?'+pp.toString();
+  // Build a short print link for email (strip food JSON to keep URL short)
+  const ppShort=new URLSearchParams();ppShort.set('print','1');
+  ppShort.set('client_names',raw['client_names']||cnEl.value||'');
+  ppShort.set('guest_count',raw['guest_count']||'');
+  ppShort.set('pkg',raw['pkg']||'');
+  ppShort.set('service_type',raw['service_type']||'');
+  ppShort.set('events',raw['events']||'[]');
+  ppShort.set('venue',venueFirst[0]||'');
+  if(raw['celebration']) ppShort.set('celebration',raw['celebration']);
+  ppShort.set('food',raw['food']||'{}');
+  const printLinkEmail = baseUrl+'?'+ppShort.toString();
 
   // ── Build .ics calendar link for team ──
   let calLink = '';
@@ -1951,7 +1968,15 @@ window.submitContract=async function(){
         'END:VCALENDAR'
       ].join('\r\n');
 
-      calLink = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+      // Google Calendar link — works in all email clients including iPhone Mail
+      const gcalBase = 'https://calendar.google.com/calendar/render?action=TEMPLATE';
+      const gcalParams = new URLSearchParams({
+        text: autoTitle,
+        dates: dtStart + '/' + dtEnd,
+        details: desc.slice(0, 1500), // Google Calendar has a limit
+        location: venue + (addr ? ', ' + addr : ''),
+      });
+      calLink = gcalBase + '&' + gcalParams.toString();
     }
   } catch(e) { calLink = ''; }
 
@@ -1986,7 +2011,7 @@ window.submitContract=async function(){
     submitted_at:new Date().toLocaleString('en-US',{timeZone:'America/Chicago'}),
     client_ip:clientIP,quote_date:raw['quote_date']||'—',
     contract_version:'v2.0 – BBQ Guys Chicago',
-    print_link:printLink,
+    print_link:printLinkEmail||printLink,
     cal_link:calLink||'No calendar link available',
     to_email:ceEl.value.trim()||'',
   };
