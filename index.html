@@ -368,24 +368,6 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <div id="hostEventList"></div>
       <button class="btn-add-event" onclick="addHostEvent()">+ Add Event Date</button>
 
-      <div class="host-section-label">Catering Package</div>
-      <div class="hrow two">
-        <div class="hf">
-          <label>Catering Package</label>
-          <select id="h_pkg">
-            <option value="">Select package…</option>
-            <option value="PKG1">PKG 1 — $30/person (4 items)</option>
-            <option value="PKG2">PKG 2 — $40/person (5 items)</option>
-            <option value="PKG3">PKG 3 — $50/person (6 items)</option>
-            <option value="Custom">Custom / À la carte</option>
-          </select>
-        </div>
-        <div class="hf">
-          <label>Estimated Guest Count</label>
-          <input type="number" id="h_guest_count" placeholder="e.g. 150" min="1" oninput="updateLivePreview()"/>
-        </div>
-      </div>
-
       <!-- ── Sec 1: Chk Tikka ── -->
       <div class="food-section-wrap">
         <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 1 — Chicken Tikka (2 pcs) · Pick up to 2</div>
@@ -690,7 +672,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <span style="color:#A81010;font-size:0.85rem;letter-spacing:0.2em;">🔥</span>
       <div style="flex:1;max-width:80px;height:1px;background:linear-gradient(to left,transparent,#A81010);"></div>
     </div>
-    <div style="margin-bottom:10px;"><span class="halal-badge">☪ Certified Halal</span></div>
+    <div style="margin-bottom:10px;"></div>
     <h2>Catering Services Agreement</h2>
     <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:14px;margin-bottom:6px;">
       <div style="flex:1;max-width:80px;height:1px;background:linear-gradient(to right,transparent,#A81010);"></div>
@@ -761,7 +743,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <div class="menu-display-wrap" style="margin-bottom:16px;">
           <div class="menu-display-title">Your Package &amp; Guest Count</div>
           <div style="display:flex;gap:20px;flex-wrap:wrap;">
-            <div><span style="font-size:0.7rem;color:var(--muted);font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:0.08em;">Package</span><div style="font-weight:700;color:var(--dark);font-family:'Inter',sans-serif;margin-top:3px;" id="d_pkg">—</div></div>
+            
             <div><span style="font-size:0.7rem;color:var(--muted);font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:0.08em;">Estimated Guests</span><div style="font-weight:700;color:var(--dark);font-family:'Inter',sans-serif;margin-top:3px;" id="d_guest_count">—</div></div>
             <div><span style="font-size:0.7rem;color:var(--muted);font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:0.08em;">Service Style</span><div style="font-weight:700;color:var(--dark);font-family:'Inter',sans-serif;margin-top:3px;" id="d_service_type">—</div></div>
           </div>
@@ -810,7 +792,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <span id="calc_deposit_disp" style="display:none;"></span>
         <span id="calc_total_remaining" style="display:none;"></span>
         <p class="clause" style="font-size:0.82rem;color:var(--muted);">Payment methods accepted: Cash &nbsp;|&nbsp; Zelle &nbsp;|&nbsp; Check (payable to The BBQ Guys Chicago)</p>
-        <p class="clause" style="font-size:0.82rem;">The non-refundable retainer of <strong>$200.00 minimum</strong> is due immediately upon signing this agreement and secures The BBQ Guys Chicago's availability for your event date(s). The remaining balance is due no later than <strong>14 days</strong> prior to the event.</p>
+        <p class="clause" style="font-size:0.82rem;">The non-refundable retainer of <strong>$200.00 minimum</strong> is due immediately upon signing this agreement and secures The BBQ Guys Chicago's availability for your event date(s). The remaining balance is due at the <strong>start or end of your event</strong>, payable by Cash, Zelle, or Check.</p>
       </div>
     </div>
 
@@ -856,19 +838,8 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 
     <!-- 5. Catering Packages -->
     <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>📦 5. Catering Packages &amp; Pricing</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <p class="clause">The BBQ Guys Chicago offers the following standard catering packages. All packages are priced per person and include service from the corresponding menu sections:</p>
-        <table class="fee-table">
-          <thead><tr><th>Package</th><th>Items Included</th><th>Rate</th></tr></thead>
-          <tbody>
-            <tr><td><strong>PKG 1</strong></td><td>Pick 2 from Sec 1–3, Pick 1 from Sec 7, Pick 1 from Sec 8 (4 total items)</td><td>$30/person</td></tr>
-            <tr><td><strong>PKG 2</strong></td><td>Pick 3 from Sec 1–5, Pick 1 from Sec 7, Pick 1 from Sec 8 (5 total items)</td><td>$40/person</td></tr>
-            <tr><td><strong>PKG 3</strong></td><td>Pick 4 from Sec 1–5, Pick 1 from Sec 7, Pick 1 from Sec 8 (6 total items)</td><td>$50/person</td></tr>
-          </tbody>
-        </table>
-        <p class="clause" style="font-size:0.82rem;color:var(--muted);">Appetizers, desserts, bread, and sides are priced separately. Events of more than 150 guests will have custom pricing. Call or text for custom menu quotes.</p>
-      </div>
+      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>📦 5. Pricing</span><span class="toggle-icon">&#9660;</span></div>
+      <div class="section-body collapsed"><p class="clause">Pricing is custom per event based on guest count, menu selections, and service requirements. Your per-person rate is confirmed at the time of booking and outlined in this agreement.</p></div>
     </div>
 
     <!-- 6. Cancellation Policy -->
@@ -978,7 +949,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         </div>
         <div class="sub-heading">Late Payment:</div>
         <ul class="clause-list">
-          <li>Remaining balance not received by the 14-day deadline will incur a one-time late fee of <strong>5% of the outstanding balance</strong> (minimum $50). An additional <strong>2% per week</strong> will accrue for each week the balance remains unpaid.</li>
+          <li>Remaining balance not received by the end of the event date will incur a one-time late fee of <strong>5% of the outstanding balance</strong> (minimum $50). An additional <strong>2% per week</strong> will accrue for each week the balance remains unpaid.</li>
           <li>If the balance remains unpaid 72 hours before the event, The BBQ Guys Chicago reserves the right to withhold services until payment is received in full.</li>
           <li>Failure to pay does not entitle the Client to a refund of the retainer or release from contractual obligations.</li>
           <li>Returned checks will be charged a $35 returned check fee in addition to any outstanding balance.</li>
@@ -1198,7 +1169,8 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
     <p style="margin-top:10px;font-size:0.8rem;color:var(--muted);font-family:'Inter',sans-serif;">Refer a friend who books with us and receive a <strong style="color:var(--crimson);">$100 credit</strong> toward your next event! 🎉</p>
     <div class="retainer-card">
       <div class="rc-title">⚡ Submit Your $200 Non-Refundable Retainer to Secure Your Date</div>
-      <div class="rc-row"><span class="rc-key">Zelle</span><span class="rc-val">Contact us for account details</span></div>
+      <div class="rc-row"><span class="rc-key">Zelle</span><span class="rc-val"><strong>(224) 400-2402</strong></span></div>
+      <div class="rc-row"><span class="rc-key">Contact</span><span class="rc-val">Asmar — <a href="tel:2244002402" style="color:var(--crimson-mid);text-decoration:none;">(224) 400-2402</a></span></div>
       <div style="display:flex;gap:10px;margin:10px 0 4px;flex-wrap:wrap;justify-content:center;">
         <a href="sms:2244002402&body=Hi! I just signed the catering contract and want to send the $200 non-refundable retainer. My name is [YOUR NAME] and my event date is [DATE]." style="display:inline-flex;align-items:center;gap:6px;background:#007AFF;color:#fff;font-size:0.78rem;font-weight:700;padding:8px 16px;border-radius:50px;text-decoration:none;font-family:'Inter',sans-serif;letter-spacing:0.04em;">💬 Text Us for Payment Info</a>
         <a href="tel:2244002402" style="display:inline-flex;align-items:center;gap:6px;background:#34C759;color:#fff;font-size:0.78rem;font-weight:700;padding:8px 16px;border-radius:50px;text-decoration:none;font-family:'Inter',sans-serif;letter-spacing:0.04em;">📞 Call Us</a>
@@ -1234,7 +1206,6 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <div class="pm-venue-name" id="pm_client" style="margin-top:4px;font-size:0.8rem;color:#aaa;"></div>
         <div id="pm_guests" style="font-size:0.72rem;color:#aaa;letter-spacing:0.08em;"></div>
         <div id="pm_submitted_at" style="display:none;"></div>
-        <div id="pm_pkg" style="display:none;"></div>
         <div id="pm_svc" style="display:none;"></div>
       </div>
       <div class="pm-logo-text">THE BBQ GUYS<span>CHICAGO</span></div>
@@ -1507,7 +1478,7 @@ function showContractSummary(){
     '<strong>Contract #:</strong> ' + (raw['contract_num']||'—'),
     '<strong>Client:</strong> ' + (raw['client_names']||'—'),
     '<strong>Celebration:</strong> ' + (raw['celebration']||'—'),
-    '<strong>Package:</strong> ' + (raw['pkg']||'—') + ' &nbsp;|&nbsp; ' + (raw['guest_count']||'—') + ' guests',
+    '<strong>Guests:</strong> ' + (raw['guest_count']||'—') + ' guests',
     '<strong>Service:</strong> ' + (raw['service_type']||'—'),
     '&nbsp;',
   ];
@@ -1606,7 +1577,6 @@ function previewContract(){
     if(etype||edate) events.push({etype,edate});
   });
   p.set('events',JSON.stringify(events));
-  const pkg=document.getElementById('h_pkg')?.value||'';
   const guests=document.getElementById('h_guest_count')?.value||'';
   const svc=document.getElementById('h_service_type')?.value||'';
   if(pkg) p.set('pkg',pkg);
@@ -1655,7 +1625,6 @@ function generateLink(){
     if(etype||edate)events.push({etype,edate});
   });
   p.set('events',JSON.stringify(events));
-  const pkg=document.getElementById('h_pkg')?.value||'';
   const gc=document.getElementById('h_guest_count')?.value||'';
   const svc=document.getElementById('h_service_type')?.value||'';
   const rpp=document.getElementById('h_fee_single')?.value||'';
@@ -1677,7 +1646,6 @@ function generateLink(){
   p.set('food_sub',fmt$(foodSub));p.set('pre_tax_total',fmt$(foodSub+tr+ch));p.set('tax_amt',fmt$(tax));p.set('total_remaining',fmt$(totalRem));
   const celebration=document.getElementById('h_celebration')?.value||'';
   if(celebration)p.set('celebration',celebration);
-  if(pkg)p.set('pkg',pkg);
   if(gc)p.set('guest_count',gc);
   if(svc)p.set('service_type',svc);
   const food=collectFood();p.set('food',JSON.stringify(food));
@@ -1815,7 +1783,6 @@ function loadClientView(){
   });
   if(raw['event_desc']){const el=document.getElementById('h_celebration');if(el){el.value=raw['event_desc'];el.classList.add('prefilled');el.readOnly=true;}}
   try{const events=JSON.parse(raw['events']||'[]');if(events.length>0)events.forEach(ev=>addClientEvent(ev));else addClientEvent();}catch(e){addClientEvent();}
-  setText('d_pkg',raw['pkg']||'—');
   setText('d_guest_count',raw['guest_count']?raw['guest_count']+' guests':'—');
   setText('d_service_type',raw['service_type']||'—');
   if(raw['celebration']){const cel=document.getElementById('pm_event_type');if(cel)cel.textContent=raw['celebration'];}
@@ -1885,7 +1852,6 @@ function renderPrintCard(){
   if(raw['celebration']) setText('pm_event_type', raw['celebration']);
   setText('pm_client',raw['client_names']||'—');
   setText('pm_guests',raw['guest_count']?raw['guest_count']+' guests':'—');
-  setText('pm_pkg',raw['pkg']||'—');
   setText('pm_svc',raw['service_type']||'—');
   // Get venue from events array (not a top-level param)
   try {
@@ -2143,27 +2109,38 @@ window.submitContract=async function(){
     const autoTitle   = 'BBQ Guys Chicago | ' + clientName + ' | ' + evDateShort + ' | ' + (etype||'Event');
 
     // Build description
-    const pkg   = raw['pkg']            || '—';
     const total = raw['total_remaining']|| '—';
     const preTax= raw['pre_tax_total']  || '—';
     const cNum  = raw['contract_num']   || '';
 
+    // Build menu list from food data
+    let menuLines = '';
+    try {
+      const foodData = JSON.parse(raw['food']||'{}');
+      const ORDER = ['apps','tikka','boti','kabab','goat','seafood','veg','gravy','rice','american','custom','bread','dessert'];
+      const allMenuItems = [];
+      ORDER.forEach(k => { if(foodData[k]&&foodData[k].length) allMenuItems.push(...foodData[k]); });
+      if(allMenuItems.length > 0) menuLines = allMenuItems.map((item,i) => (i+1)+'. '+item).join('\n');
+    } catch(e) {}
+
     const gcalDesc = encodeURIComponent(
-      '--- CLIENT ---\n' +
-      'Name: '  + clientName + '\n' +
-      'Phone: ' + (raw['client_phone']||'—') + '\n' +
-      'Email: ' + (raw['client_email']||'—') + '\n' +
-      '\n--- EVENT ---\n' +
-      'Date: '         + evDate    + '\n' +
-      'Food Service: ' + fmtTime(startTime) + '\n' +
-      'Venue: '        + venue     + '\n' +
-      (addr ? 'Address: ' + addr + '\n' : '') +
-      '\n--- BOOKING ---\n' +
-      'Guests: '        + guests  + '\n' +
-      'Package: '       + pkg     + '\n' +
-      'Pre-Tax Total: ' + preTax  + '\n' +
-      'Total w/ Tax: '  + total   + '\n' +
-      (cNum ? 'Contract #: ' + cNum : '')
+      '📋 CONTRACT #: ' + (cNum||'—') + '\n' +
+      '─────────────────\n' +
+      '👤 CLIENT\n' +
+      clientName + '\n' +
+      (raw['client_phone']||'—') + '\n' +
+      (raw['client_email']||'—') + '\n' +
+      '─────────────────\n' +
+      '📍 EVENT\n' +
+      fmtTime(startTime) + ' · ' + evDate + '\n' +
+      venue + '\n' +
+      (addr ? addr + '\n' : '') +
+      'Guests: ' + guests + '\n' +
+      (menuLines ? '─────────────────\n🍖 MENU\n' + menuLines + '\n' : '') +
+      '─────────────────\n' +
+      '💰 FEES\n' +
+      'Pre-Tax: ' + preTax + '\n' +
+      'Total w/ Tax: ' + total
     );
 
     const gcalText = encodeURIComponent(autoTitle);
@@ -2185,7 +2162,7 @@ window.submitContract=async function(){
     client_email:ceEl.value.trim()||'—',
     event_desc:raw['event_desc']||document.getElementById('h_celebration')?.value||'—',
     events_summary:eventLines.join('\n\n'),
-    pkg:raw['pkg']||'—',guest_count:raw['guest_count']||'—',service_type:raw['service_type']||'—',
+    guest_count:raw['guest_count']||'—',service_type:raw['service_type']||'—',
     rate_pp:raw['rate_pp']?'$'+parseFloat(raw['rate_pp']).toFixed(2)+'/person':'—',
     food_sub:raw['food_sub']||'—',
     pre_tax_total:raw['pre_tax_total']||'—',
@@ -2235,7 +2212,6 @@ window.submitContract=async function(){
         client_names: templateParams.client_names,
         celebration: templateParams.celebration,
         events_summary: templateParams.events_summary,
-        pkg: templateParams.pkg,
         guest_count: templateParams.guest_count,
         service_type: templateParams.service_type,
         food_summary: templateParams.food_summary,
