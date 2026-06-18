@@ -271,28 +271,31 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
   font-family:'Helvetica Neue',Arial,sans-serif;
   background:#FDFAF6; min-height:100vh;
   position:relative;
+  text-align:center;
 }
-.pm-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:40px; }
-.pm-header-left { flex:1; }
-.pm-event-type { font-size:2.8rem; font-weight:900; letter-spacing:0.03em; color:#1A1A1A; text-transform:uppercase; line-height:1.05; margin-bottom:8px; font-family:'Georgia',serif; }
-.pm-event-date { font-size:0.85rem; color:#888; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px; }
-.pm-venue-name { font-size:0.85rem; color:#888; letter-spacing:0.08em; }
-.pm-logo-circle { width:90px; height:90px; border-radius:50%; overflow:hidden; flex-shrink:0; margin-left:20px; }
+.pm-header { display:flex; flex-direction:column; align-items:center; margin-bottom:32px; }
+.pm-header-left { text-align:center; margin-bottom:16px; }
+.pm-event-type { font-size:3.2rem; font-weight:900; letter-spacing:0.03em; color:#1A1A1A; text-transform:uppercase; line-height:1.05; margin-bottom:8px; font-family:'Georgia',serif; text-align:center; }
+.pm-event-date { font-size:0.85rem; color:#888; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px; text-align:center; }
+.pm-venue-name { font-size:0.85rem; color:#888; letter-spacing:0.08em; text-align:center; }
+.pm-logo-circle { width:90px; height:90px; border-radius:50%; overflow:hidden; margin:0 auto; }
 .pm-logo-circle img { width:100%;height:100%;object-fit:cover;object-position:center; }
 
 .pm-divider { height:1px; background:#1A1A1A; margin:24px 0 32px; }
 
-.pm-section-block { margin-bottom:28px; }
-.pm-section-name { font-size:0.72rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#8B0000; margin-bottom:12px; padding-bottom:6px; border-bottom:2px solid #1A1A1A; }
-.pm-item-list { list-style:none; padding:0; margin:0; }
-.pm-item-list li { font-size:0.88rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:#2a2a2a; padding:5px 0; line-height:1.5; border-bottom:1px solid #EDE8E0; }
+.pm-section-block { margin-bottom:28px; text-align:center; }
+.pm-section-name { font-size:0.82rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#8B0000; margin-bottom:12px; padding-bottom:6px; border-bottom:2px solid #1A1A1A; display:inline-block; }
+.pm-item-list { list-style:none; padding:0; margin:0 auto; display:inline-block; text-align:center; }
+.pm-item-list li { font-size:1rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:#2a2a2a; padding:7px 0; line-height:1.6; border-bottom:1px solid #EDE8E0; }
 .pm-item-list li:last-child { border-bottom:none; }
 
-.pm-footer-row { display:flex; justify-content:space-between; align-items:center; margin-top:40px; padding-top:16px; border-top:1px solid #ccc; }
+.pm-footer-row { display:flex; justify-content:center; align-items:center; gap:24px; margin-top:40px; padding-top:16px; border-top:1px solid #ccc; flex-wrap:wrap; }
 .pm-ig-handle { font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#333; }
-.pm-qr-area { font-size:0.7rem; text-align:right; color:#888; letter-spacing:0.06em; }
+.pm-qr-area { font-size:0.7rem; text-align:center; color:#888; letter-spacing:0.06em; }
 
 .no-print { text-align:center; margin-top:24px; }
+.scroll-top-btn { position:fixed; bottom:80px; right:16px; width:44px; height:44px; border-radius:50%; background:var(--crimson-mid); color:#fff; border:none; font-size:1.2rem; cursor:pointer; display:none; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(139,0,0,0.4); z-index:999; transition:all 0.2s; }
+.scroll-top-btn:hover { background:var(--crimson); transform:translateY(-2px); }
 .btn-print-trigger { background:linear-gradient(135deg,var(--crimson-mid),var(--crimson)); color:#fff; border:none; padding:12px 32px; font-size:0.85rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; border-radius:6px; cursor:pointer; transition:all 0.2s; }
 </style>
 </head>
@@ -329,6 +332,13 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       </div>
       <div class="hrow full">
         <div class="hf"><label>Client Email</label><input type="text" id="h_client_email" placeholder="email@example.com"/></div>
+      </div>
+      <div class="hrow two">
+        <div class="hf"><label>Client Instagram / FB <span style="font-size:0.6rem;color:var(--muted);">optional</span></label><input type="text" id="h_client_social" placeholder="@handle or facebook.com/name"/></div>
+        <div class="hf"><label>Other Food Vendors? <span style="font-size:0.6rem;color:var(--muted);">optional</span></label><input type="text" id="h_other_vendors" placeholder="e.g. Acai dessert stand, cake vendor"/></div>
+      </div>
+      <div class="hrow full">
+        <div class="hf"><label>COI / Permit Requirements <span style="font-size:0.6rem;color:var(--muted);">optional</span></label><input type="text" id="h_coi_requirements" placeholder="e.g. Park requires COI, banquet hall needs vendor certificate"/></div>
       </div>
 
       <div class="host-section-label">Event Date(s)</div>
@@ -567,7 +577,16 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <div class="hf"><label>Per-Person Rate</label><input type="text" id="h_fee_single" placeholder="$0.00" oninput="updateLivePreview()"/>
         <span class="host-error-msg" id="err_fee_single">Please enter a per-person rate</span></div>
         <div class="hf"><label>Travel Fee</label><input type="text" id="h_fee_travel" placeholder="$0.00" oninput="updateLivePreview()"/></div>
-        <div class="hf"><label>Chafing Setup Fee</label><input type="text" id="h_fee_chafing" placeholder="$0.00" oninput="updateLivePreview()"/></div>
+        <div class="hf">
+          <label>Chafing Setup</label>
+          <select id="h_chafing_tier" onchange="setChafingFee(this.value)" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:8px 2px;font-size:0.9rem;font-family:'Inter',sans-serif;color:var(--body);outline:none;width:100%;">
+            <option value="">None / Not booked</option>
+            <option value="200">Basic — $200</option>
+            <option value="250">Banquet — $250</option>
+            <option value="300">Fancy — $300</option>
+          </select>
+          <input type="hidden" id="h_fee_chafing" value="0"/>
+        </div>
         <div class="hf"><label>Retainer (due on signing — $200 minimum)</label><input type="text" id="h_fee_retainer" value="$200.00" oninput="updateLivePreview()"/></div>
       </div>
       <!-- Live Fee Preview -->
@@ -582,9 +601,15 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <div class="live-preview-row"><span class="live-preview-label">Deposit (paid)</span><span class="live-preview-value" id="lp_deposit">—</span></div>
         <div class="live-preview-total"><span class="live-preview-label">TOTAL REMAINING</span><span class="live-preview-value" id="lp_total">—</span></div>
       </div>
-
-      <button class="btn-generate" onclick="generateLink()">Generate Client Contract Link →</button>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn-generate" style="flex:1;" onclick="generateLink()">Generate Client Contract Link →</button>
+        <button onclick="previewContract()" style="padding:14px 18px;background:transparent;border:2px solid var(--gold);color:var(--gold);border-radius:8px;font-size:0.82rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.06em;white-space:nowrap;transition:all 0.2s;" onmouseover="this.style.background='rgba(201,149,10,0.1)'" onmouseout="this.style.background='transparent'">👁 Preview</button>
+      </div>
       <div class="generated-link-box" id="generatedLinkBox">
+        <div style="margin-bottom:12px;padding:10px 14px;background:rgba(201,149,10,0.1);border:1px solid rgba(201,149,10,0.3);border-radius:6px;display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);font-family:'Inter',sans-serif;">Contract #</span>
+          <span style="font-size:0.9rem;font-weight:700;color:var(--dark);font-family:'Inter',sans-serif;" id="contractNumber">—</span>
+        </div>
         <p>Share this link with your client to review and sign the contract.</p>
         <div class="link-copy-row">
           <input type="text" id="generatedLinkInput" readonly/>
@@ -640,6 +665,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
     <p>Welcome, <span id="welcomeName">valued client</span>! Please review your catering agreement carefully before signing. 🔥</p>
   </div>
 
+  <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
   <div id="progressBar">
     <div class="progress-inner">
       <div class="progress-label">Reading progress <span id="progressPct">0%</span></div>
@@ -721,6 +747,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>💰 3. Compensation &amp; Payment</span><span class="toggle-icon">&#9660;</span></div>
       <div class="section-body">
         <div class="clause-highlight">Minimum booking spend is <strong>$3,000</strong>. A non-refundable <strong>$200 deposit</strong> is required at time of booking to secure your date.</div>
+        <div id="minimum_booking_warning" style="display:none;background:#fff3f0;border:1px solid #fac8c1;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:0.82rem;font-family:'Inter',sans-serif;color:#8B0000;font-weight:600;">⚠️ Your current quote is below the $3,000 minimum. Please confirm your total with The BBQ Guys Chicago before proceeding.</div>
         <table class="fee-table">
           <thead><tr><th>Item</th><th>Amount</th></tr></thead>
           <tbody>
@@ -749,6 +776,10 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
           <li>Client must provide a full event timeline at least 7 days before the event</li>
           <li>Overtime beyond 2 hours of food service is billed at <strong>$200/hr</strong></li>
         </ul>
+        <div class="checkbox-row" style="margin-top:12px;background:#fff3f0;border:1px solid #fac8c1;border-radius:4px;padding:10px 14px;">
+          <input type="checkbox" id="overtime_confirm"/>
+          <label for="overtime_confirm"><strong>I understand our team requires 2 hours setup time before food service, and overtime beyond 2 hours of food service is billed at $200/hr.</strong> (Required)</label>
+        </div>
       </div>
     </div>
     <!-- 4. Scope of Services -->
@@ -805,6 +836,10 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <p class="clause">One (1) complimentary rescheduling is permitted if the new date is available and written notice is given at least 30 days in advance. Any subsequent reschedule is subject to a $150 rescheduling fee. Rescheduling within 14 days of the event is treated as a cancellation under the applicable cancellation tier.</p>
         <div class="sub-heading">Cancellation by Caterer:</div>
         <p class="clause">In the unlikely event The BBQ Guys Chicago must cancel, a full refund of all payments received will be issued and the Caterer will make reasonable efforts to provide a qualified referral or alternative catering arrangement.</p>
+        <div class="checkbox-row" style="margin-top:12px;background:#fff3f0;border:1px solid #fac8c1;border-radius:4px;padding:10px 14px;">
+          <input type="checkbox" id="cancellation_confirm"/>
+          <label for="cancellation_confirm"><strong>I have read and understand the Cancellation &amp; Rescheduling Policy above, including all applicable fees.</strong> (Required)</label>
+        </div>
       </div>
     </div>
 
@@ -887,6 +922,10 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <p class="clause">Cash &middot; Zelle &middot; Venmo &middot; Check (payable to The BBQ Guys Chicago). All prices are based on cash/check purchase.</p>
         <div class="sub-heading">Chargeback Protection:</div>
         <p class="clause">The Client agrees not to initiate a chargeback or payment dispute without first contacting The BBQ Guys Chicago directly. Any fraudulent chargeback will result in pursuit of the full contract value plus applicable legal fees.</p>
+        <div class="checkbox-row" style="margin-top:12px;background:#fff3f0;border:1px solid #fac8c1;border-radius:4px;padding:10px 14px;">
+          <input type="checkbox" id="chargeback_confirm"/>
+          <label for="chargeback_confirm"><strong>I agree not to initiate a chargeback or payment dispute without first contacting The BBQ Guys Chicago directly.</strong> (Required)</label>
+        </div>
         <div class="sub-heading">Late Payment:</div>
         <ul class="clause-list">
           <li>Remaining balance not received by the 14-day deadline will incur a one-time late fee of <strong>$100</strong>.</li>
@@ -973,8 +1012,8 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
     <div class="section">
       <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>⚖️ 17. Governing Law &amp; Dispute Resolution</span><span class="toggle-icon">&#9660;</span></div>
       <div class="section-body collapsed">
-        <p class="clause">This agreement shall be governed by and construed in accordance with the laws of the State of Illinois (for Chicago-area events) or the State of Texas (for -area events), without regard to conflict of law provisions. Any disputes arising under this agreement shall first be submitted to good-faith mediation before any legal action is pursued.</p>
-        <p class="clause">If mediation fails, disputes shall be resolved exclusively in the courts of Cook County, Illinois or  County, Texas, as applicable to the event location. The Client agrees that any claim or cause of action arising from this agreement must be filed within one (1) year of the event date.</p>
+        <p class="clause">This agreement shall be governed by and construed in accordance with the laws of the State of Illinois, without regard to conflict of law provisions. Any disputes arising under this agreement shall first be submitted to good-faith mediation before any legal action is pursued.</p>
+        <p class="clause">If mediation fails, disputes shall be resolved exclusively in the courts of Cook County, Illinois. The Client agrees that any claim or cause of action arising from this agreement must be filed within one (1) year of the event date.</p>
       </div>
     </div>
 
@@ -997,6 +1036,36 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       </div>
     </div>
 
+    <!-- FAQ -->
+    <div class="section">
+      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>❓ Frequently Asked Questions</span><span class="toggle-icon">&#9660;</span></div>
+      <div class="section-body collapsed">
+        <div class="sub-heading">Do you provide plates, napkins, and cutlery?</div>
+        <p class="clause">Standard packages do not include disposable tableware. If you need plates, napkins, cups, and cutlery, this can be added as a paid extra — please ask at the time of booking.</p>
+
+        <div class="sub-heading">What if my guest count changes after signing?</div>
+        <p class="clause">Final guest count is due 5 days before your event. Increases up to 7 days before are subject to availability. Decreases of more than 15% within 14 days do not reduce the contract fee.</p>
+
+        <div class="sub-heading">How long does setup take?</div>
+        <p class="clause">Our team requires venue access at least 2 hours before food service begins. Please coordinate with your venue to ensure this window is available. For very large events (200+ guests), 3 hours may be needed.</p>
+
+        <div class="sub-heading">Is your food certified Halal?</div>
+        <p class="clause">Yes. All meats used by The BBQ Guys Chicago are sourced from certified Halal suppliers. We do not serve pork, pork-derived products, or alcohol at any event under any circumstances.</p>
+
+        <div class="sub-heading">Can we make menu changes after signing?</div>
+        <p class="clause">Menu change requests must be submitted at least 14 days before your event. We cannot guarantee availability of new items with less notice. Substitutions due to market unavailability may occur — we'll always notify you promptly.</p>
+
+        <div class="sub-heading">What happens if we need to reschedule?</div>
+        <p class="clause">One complimentary reschedule is permitted with at least 30 days written notice, subject to availability. A second reschedule incurs a $150 fee. Rescheduling within 14 days is treated as a cancellation.</p>
+
+        <div class="sub-heading">How do I pay the deposit?</div>
+        <p class="clause">The $200 non-refundable deposit is due immediately after signing. Send payment via Zelle or Venmo (contact us for details), cash, or check payable to The BBQ Guys Chicago. Include your name and event date in the payment note.</p>
+
+        <div class="sub-heading">Will you tag us on social media?</div>
+        <p class="clause">We love to share our work! With your permission (Section 19), we'll tag @thebbqguyschicago on any photos or videos from your event. You can opt out or limit sharing — just let us know before the event.</p>
+      </div>
+    </div>
+
     <!-- 20. Review & Referral -->
     <div class="section">
       <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>⭐ 20. Review &amp; Referral Request</span><span class="toggle-icon">&#9660;</span></div>
@@ -1014,6 +1083,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <div style="font-size:1.8rem;margin-bottom:10px;">✍️</div>
         <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:#fff;letter-spacing:0.04em;">Electronic Agreement &amp; Signature</div>
         <div style="font-size:0.68rem;color:rgba(255,255,255,0.4);letter-spacing:0.12em;text-transform:uppercase;font-family:'Inter',sans-serif;margin-top:8px;">Legally binding under the Illinois E-Commerce Security Act &amp; federal E-SIGN Act</div>
+        <div style="font-size:0.65rem;color:rgba(255,255,255,0.25);letter-spacing:0.1em;font-family:'Inter',sans-serif;margin-top:6px;" id="contractVersionDisplay">Contract v2.0 · The BBQ Guys Chicago</div>
         <div style="width:60px;height:2px;background:linear-gradient(to right,var(--crimson),var(--gold));margin:16px auto 0;border-radius:99px;"></div>
       </div>
       <p style="font-size:0.88rem;color:rgba(255,255,255,0.55);font-style:italic;margin-bottom:24px;line-height:1.8;font-family:'Inter',sans-serif;text-align:center;padding:0 10px;">By typing your full legal name below, you confirm you have read, understood, and agreed to all terms of this Catering Services Agreement.</p>
@@ -1047,6 +1117,12 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
               <input type="date" id="client_date" style="border:none;background:transparent;font-size:0.95rem;font-family:'Playfair Display',serif;color:#fff;outline:none;width:100%;cursor:pointer;"/>
             </div>
           </div>
+          <div class="sig-date-box active" style="margin-top:12px;">
+            <div style="flex:1;">
+              <div class="sig-box-label" style="margin-bottom:6px;">Last 4 Digits of Photo ID <span class="req-badge">REQUIRED</span></div>
+              <input type="text" id="client_id_last4" inputmode="numeric" maxlength="4" placeholder="e.g. 4821" style="border:none;background:transparent;font-size:1.1rem;font-family:'Playfair Display',serif;color:#fff;outline:none;width:100%;letter-spacing:0.2em;"/>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1072,7 +1148,11 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
     <p style="margin-top:10px;font-size:0.8rem;color:var(--muted);font-family:'Inter',sans-serif;">Refer a friend who books with us and receive a <strong style="color:var(--crimson);">$100 credit</strong> toward your next event! 🎉</p>
     <div class="retainer-card">
       <div class="rc-title">⚡ Submit Your $200 Deposit to Secure Your Date</div>
-      <div class="rc-row"><span class="rc-key">Zelle / Venmo</span><span class="rc-val">Contact us for details</span></div>
+      <div class="rc-row"><span class="rc-key">Zelle / Venmo</span><span class="rc-val">Contact us for account details</span></div>
+      <div style="display:flex;gap:10px;margin:10px 0 4px;flex-wrap:wrap;justify-content:center;">
+        <a href="sms:2244002402&body=Hi! I just signed the catering contract and want to send the $200 deposit. My name is [YOUR NAME] and my event date is [DATE]." style="display:inline-flex;align-items:center;gap:6px;background:#007AFF;color:#fff;font-size:0.78rem;font-weight:700;padding:8px 16px;border-radius:50px;text-decoration:none;font-family:'Inter',sans-serif;letter-spacing:0.04em;">💬 Text Us for Payment Info</a>
+        <a href="tel:2244002402" style="display:inline-flex;align-items:center;gap:6px;background:#34C759;color:#fff;font-size:0.78rem;font-weight:700;padding:8px 16px;border-radius:50px;text-decoration:none;font-family:'Inter',sans-serif;letter-spacing:0.04em;">📞 Call Us</a>
+      </div>
       <div class="rc-row"><span class="rc-key">Cash / Check</span><span class="rc-val">Payable to The BBQ Guys Chicago</span></div>
       <div class="rc-row"><span class="rc-key">Phone</span><span class="rc-val">224-400-2402</span></div>
       <p style="margin-top:12px;font-size:0.72rem;color:#9ca3af;font-style:italic;text-align:center;font-family:'Inter',sans-serif;">Please include your name and event date in the payment note.</p>
@@ -1182,7 +1262,7 @@ function addHostEvent(){
   div.innerHTML=`<div class="host-event-label">Event ${idx}<button class="btn-remove-ev" onclick="removeHostEvent(${idx})">✕</button></div>
     <div class="hrow two">
       <div class="hf"><label>Event Type</label><select id="h_etype_${idx}">${EVENT_TYPES.map(t=>`<option>${t}</option>`).join('')}</select></div>
-      <div class="hf"><label>Date</label><input type="date" id="h_edate_${idx}"/></div>
+      <div class="hf"><label>Date</label><input type="date" id="h_edate_${idx}" min="${new Date().toISOString().split('T')[0]}"/></div>
     </div>`;
   document.getElementById('hostEventList').appendChild(div);
 }
@@ -1292,6 +1372,12 @@ function updateLivePreview(){
   set('lp_chafing', chafing > 0 ? fmt$(chafing) : 'Not booked');
   set('lp_deposit', '-'+fmt$(deposit));
   set('lp_total', foodSub > 0 || travel > 0 || chafing > 0 ? fmt$(total) : '—');
+  // Warn if below $3,000 minimum
+  const minWarn = document.getElementById('minimum_booking_warning');
+  if(minWarn){
+    const gross = foodSub + tax + travel + chafing;
+    minWarn.style.display = (gross > 0 && gross < 3000) ? 'block' : 'none';
+  }
 }
 
 // ── Collapsible food sections ──
@@ -1344,10 +1430,32 @@ function validateHostPanel(){
   return valid;
 }
 
+function setChafingFee(val){
+  const input = document.getElementById('h_fee_chafing');
+  if(input){ input.value = val || '0'; updateLivePreview(); }
+}
+
 function cleanNum(id){const v=document.getElementById(id)?.value||'0';return parseFloat(v.replace(/[$,\s]/g,''))||0;}
+
+function previewContract(){
+  if(!validateHostPanel()){ return; }
+  // Temporarily generate link and open in new tab
+  const saved = document.getElementById('generatedLinkBox').style.display;
+  const savedVal = document.getElementById('generatedLinkInput').value;
+  generateLink();
+  const url = document.getElementById('generatedLinkInput').value;
+  if(url) window.open(url, '_blank');
+  // Restore state if it was hidden before
+  if(saved !== 'block'){
+    document.getElementById('generatedLinkBox').style.display = saved;
+    document.getElementById('generatedLinkInput').value = savedVal;
+  }
+}
 
 function generateLink(){
   if(!validateHostPanel()) return;
+  const alreadyGenerated = document.getElementById('generatedLinkBox').style.display === 'block';
+  if(alreadyGenerated && !confirm('A link has already been generated. Regenerating will create a new contract number. Are you sure?')) return;
   const base=window.location.href.split('?')[0];
   const p=new URLSearchParams();p.set('d','1');
   const cn=document.getElementById('h_client_names')?.value||'';
@@ -1391,9 +1499,26 @@ function generateLink(){
   if(svc)p.set('service_type',svc);
   const food=collectFood();p.set('food',JSON.stringify(food));
   const notes=document.getElementById('h_food_notes')?.value||'';if(notes)p.set('food_notes',notes);
+  const clientSocial=document.getElementById('h_client_social')?.value||'';if(clientSocial)p.set('client_social',clientSocial);
+  const otherVendors=document.getElementById('h_other_vendors')?.value||'';if(otherVendors)p.set('other_vendors',otherVendors);
+  const coiReq=document.getElementById('h_coi_requirements')?.value||'';if(coiReq)p.set('coi_requirements',coiReq);
+  const chafingTier=document.getElementById('h_chafing_tier')?.options[document.getElementById('h_chafing_tier')?.selectedIndex]?.text||'';
+  if(chafingTier&&chafingTier!=='None / Not booked')p.set('chafing_tier',chafingTier);
+
+  // 30-day expiry
+  const expiryDate = new Date(); expiryDate.setDate(expiryDate.getDate()+30);
+  p.set('expires', expiryDate.toISOString().split('T')[0]);
   p.set('quote_date',new Date().toLocaleDateString('en-US'));
   const url=base+'?'+p.toString();
   document.getElementById('generatedLinkInput').value=url;
+  // Generate contract number
+  const now=new Date();
+  const yr=now.getFullYear().toString().slice(-2);
+  const mo=String(now.getMonth()+1).padStart(2,'0');
+  const rand=String(Math.floor(Math.random()*900)+100);
+  const contractNum='BBQ-'+yr+mo+'-'+rand;
+  p.set('contract_num',contractNum);
+  const cnEl2=document.getElementById('contractNumber');if(cnEl2)cnEl2.textContent=contractNum;
   document.getElementById('generatedLinkBox').style.display='block';
   document.getElementById('generatedLinkBox').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
@@ -1438,7 +1563,7 @@ function addClientEvent(prefill={}){
       </div>
       <div class="field-group">
         <label>⑤ Food Service Start Time <span class="req-badge">REQUIRED</span></label>
-        <input type="time" id="c_start_${idx}" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;"/>
+        <input type="time" id="c_start_${idx}" placeholder="--:-- --" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;"/>
       </div>
       <div class="field-group">
         <label>⑥ Confirmed Guest Count <span class="req-badge">REQUIRED</span></label>
@@ -1526,9 +1651,32 @@ function loadClientView(){
   const notes=raw['food_notes']||'';
   if(notes){const nw=document.getElementById('foodNotesDisplay');const ne=document.getElementById('d_food_notes');if(nw)nw.style.display='block';if(ne)ne.textContent=notes;}
   document.getElementById('mc_date').value=new Date().toISOString().split('T')[0];
+  const vDisp=document.getElementById('contractVersionDisplay');
+  const cNum=params.get('contract_num');
+  if(vDisp && cNum) vDisp.textContent='Contract #'+cNum+' · v2.0 · The BBQ Guys Chicago';
+  const cdInput=document.getElementById('client_date');
+  if(cdInput && !cdInput.value) cdInput.value=new Date().toISOString().split('T')[0];
 }
 
-if(isClientMode){document.getElementById('hostPanel').style.display='none';document.getElementById('contractView').style.display='block';loadClientView();}
+if(isClientMode){
+  // Check 30-day expiry
+  const expiresParam = params.get('expires');
+  if(expiresParam){
+    const expiry = new Date(expiresParam+'T23:59:59');
+    if(new Date() > expiry){
+      document.getElementById('hostPanel').style.display='none';
+            document.getElementById('contractView').style.display='block';
+    } else {
+      document.getElementById('hostPanel').style.display='none';
+      document.getElementById('contractView').style.display='block';
+      loadClientView();
+    }
+  } else {
+    document.getElementById('hostPanel').style.display='none';
+    document.getElementById('contractView').style.display='block';
+    loadClientView();
+  }
+}
 
 function renderPrintCard(){
   document.getElementById('hostPanel').style.display='none';
@@ -1615,9 +1763,11 @@ function updateProgress(){
   const pct=scrollHeight>0?Math.round((scrollTop/scrollHeight)*100):0;
   const fill=document.getElementById('progressFill');const label=document.getElementById('progressPct');
   const bar=document.getElementById('progressBar');const sticky=document.getElementById('stickySubmit');
-  if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'% complete';
+  if(fill)fill.style.width=pct+'%';if(label)label.textContent=pct+'% COMPLETE';
   if(bar)bar.style.display=scrollTop>100?'block':'none';
   if(sticky)sticky.style.display=scrollTop>300?'block':'none';
+  const scrollTopBtn=document.getElementById('scrollTopBtn');
+  if(scrollTopBtn)scrollTopBtn.style.display=scrollTop>400?'flex':'none';
   const steps=['ps1','ps2','ps3','ps4'];const thresholds=[0,30,60,85];
   steps.forEach((id,i)=>{
     const el=document.getElementById(id);if(!el)return;
@@ -1626,8 +1776,14 @@ function updateProgress(){
   });
 }
 window.addEventListener('scroll',updateProgress,{passive:true});
+// Run once on load to set correct initial state
+if(isClientMode) setTimeout(updateProgress, 100);
 
 window.submitContract=async function(){
+  // Prevent double submission
+  try{ if(sessionStorage.getItem('bbq_submitted')==='1'){return;} }catch(e){}
+  const submitBtn=document.querySelector('.btn-submit');
+  if(submitBtn){ submitBtn.disabled=true; submitBtn.textContent='Submitting…'; submitBtn.style.opacity='0.7'; }
   function fieldErr(el,msg){
     if(el){
       const sec=el.closest('.section,.sig-section');
@@ -1656,12 +1812,16 @@ window.submitContract=async function(){
     
     if(!gu?.value){fieldErr(gu,`Please enter the confirmed guest count for Event ${n}.`);return;}
   }
+  if(!document.getElementById('overtime_confirm')?.checked){const el=document.getElementById('overtime_confirm');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you understand the grace time & overtime policy.');return;}
+  if(!document.getElementById('cancellation_confirm')?.checked){const el=document.getElementById('cancellation_confirm');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you have read the Cancellation Policy.');return;}
+  if(!document.getElementById('chargeback_confirm')?.checked){const el=document.getElementById('chargeback_confirm');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm the Chargeback Protection clause.');return;}
   if(!document.getElementById('menu_confirm')?.checked){const el=document.getElementById('menu_confirm');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm your menu selections in Section 2.');return;}
   if(!document.getElementById('media_release_agree')?.checked){const el=document.getElementById('media_release_agree');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please acknowledge the Media & Content Release in Section 18.');return;}
   if(!document.getElementById('review_acknowledge')?.checked){const el=document.getElementById('review_acknowledge');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm Section 19 — Review & Referral.');return;}
   if(!document.getElementById('retainer_confirm')?.checked){document.getElementById('retainer_confirm')?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you understand the $200 non-refundable deposit is due immediately upon signing.');return;}
   if(!document.getElementById('read_all_sections')?.checked){document.getElementById('read_all_sections')?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you have read and understood all sections of this contract.');return;}
   const sigEl=document.getElementById('client_sig_name');if(!sigEl?.value?.trim()){fieldErr(sigEl,'Please type your full legal name to sign the contract.');return;}
+  const idEl=document.getElementById('client_id_last4');if(!idEl?.value?.trim()||idEl.value.trim().length<4){fieldErr(idEl,'Please enter the last 4 digits of your photo ID.');return;}
   const cdEl=document.getElementById('client_date');if(!cdEl?.value){fieldErr(cdEl,'Please enter your signing date.');return;}
 
   const btn=document.getElementById('submitBtn');
@@ -1689,7 +1849,16 @@ window.submitContract=async function(){
   });
 
   let foodSummary='';
-  try{const food=JSON.parse(raw['food']||'{}');const lines=[];Object.entries(food).forEach(([k,v])=>{const sec=FOOD_SECTIONS.find(s=>s.key===k);if(sec&&v.length)lines.push(`${sec.label}: ${v.join(', ')}`);});foodSummary=lines.join('\n');}catch(e){}
+  try{
+    const food=JSON.parse(raw['food']||'{}');
+    const allItems=[];
+    // Order: apps first, then mains, then bread, then desserts
+    const ORDER=['apps','tikka','boti','kabab','goat','seafood','veg','gravy','rice','american','custom','bread','dessert'];
+    ORDER.forEach(k=>{ const v=food[k]; if(v&&v.length) allItems.push(...v); });
+    // Also catch any keys not in ORDER
+    Object.keys(food).forEach(k=>{ if(!ORDER.includes(k)&&food[k]&&food[k].length) allItems.push(...food[k]); });
+    foodSummary=allItems.map((item,i)=>`${i+1}. ${item}`).join('\n');
+  }catch(e){}
 
   const baseUrl=window.location.href.split('?')[0];
   const pp=new URLSearchParams();pp.set('print','1');
@@ -1700,9 +1869,97 @@ window.submitContract=async function(){
   pp.set('venue',venueFirst[0]||'');pp.set('submitted_at',new Date().toLocaleDateString('en-US'));
   const printLink=baseUrl+'?'+pp.toString();
 
+  // ── Build .ics calendar link for team ──
+  let calLink = '';
+  try {
+    const evList = JSON.parse(raw['events']||'[]');
+    if (evList.length > 0) {
+      const ev = evList[0];
+      const evDate = ev.edate || ''; // YYYY-MM-DD
+      const startTime = document.querySelector('[id^="c_start_"]')?.value || '18:00';
+      const [sh, sm] = startTime.split(':').map(Number);
+      // Build DTSTART and DTEND (2hr service window)
+      const dtBase = evDate.replace(/-/g,'');
+      const dtStart = dtBase + 'T' + String(sh).padStart(2,'0') + String(sm).padStart(2,'0') + '00';
+      const endHr = sh + 2;
+      const dtEnd = dtBase + 'T' + String(endHr).padStart(2,'0') + String(sm).padStart(2,'0') + '00';
+      const clientName = raw['client_names'] || cnEl.value || 'Client';
+      const venue = venueFirst[0] || '';
+      const addr = document.querySelector('[id^="c_addr_"]')?.value || '';
+      const guests = raw['guest_count'] || '—';
+      const pkg = raw['pkg'] || '—';
+      const total = raw['total_remaining'] || '—';
+      const contractNum = raw['contract_num'] || '';
+      const foodSum = foodSummary.split('\n').slice(0,8).join(', ');
+      // Auto-generate title: "BBQ Guys - [FirstName] [GuestCount] ppl - [EventType abbrev]"
+      const firstName = clientName.split(' ')[0];
+      const etypeAbbrev = (ev.etype||'Event').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,4);
+      const autoTitle = 'BBQ Guys - ' + firstName + ' ' + guests + ' ppl - ' + etypeAbbrev;
+
+      const desc = [
+        '=== BBQ GUYS CHICAGO ===',
+        'CONTRACT #: ' + (contractNum||'—'),
+        '',
+        '--- CLIENT INFO ---',
+        'Name: ' + clientName,
+        'Phone: ' + (raw['client_phone'] || '—'),
+        'Email: ' + ceEl.value,
+        raw['client_social'] ? 'Instagram/FB: ' + raw['client_social'] : '',
+        '',
+        '--- EVENT DETAILS ---',
+        'Date: ' + (ev.edate||'—'),
+        'Food Service: ' + fmtTime(startTime),
+        'Venue: ' + venue,
+        'Address: ' + addr,
+        'Guests: ' + guests,
+        'Package: ' + pkg,
+        'Service: ' + (raw['service_type']||'—'),
+        '',
+        '--- FEES ---',
+        'Per Person: $' + (raw['rate_pp']||'—'),
+        'Food Subtotal: ' + (raw['food_sub']||'—'),
+        'Tax: ' + (raw['tax_amt']||'—'),
+        raw['travel_fee'] && parseFloat(raw['travel_fee'])>0 ? 'Travel Fee: $'+parseFloat(raw['travel_fee']).toFixed(2) : '',
+        raw['chafing_tier'] ? 'Chafing: ' + raw['chafing_tier'] : '',
+        'Deposit Paid: $' + (raw['deposit']||'200'),
+        'TOTAL REMAINING: ' + total,
+        '',
+        '--- LOGISTICS ---',
+        raw['coi_requirements'] ? 'COI/Permits: ' + raw['coi_requirements'] : '',
+        raw['other_vendors'] ? 'Other Vendors: ' + raw['other_vendors'] : '',
+        '',
+        '--- MENU ---',
+        foodSum,
+        '',
+        '--- LINKS ---',
+        'Print Menu: ' + printLink,
+      ].filter(Boolean).join('\\n');
+
+      const ics = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//BBQ Guys Chicago//Contract//EN',
+        'BEGIN:VEVENT',
+        'UID:' + dtStart + '-bbqguys@thebbqguyschicago.com',
+        'DTSTART:' + dtStart,
+        'DTEND:' + dtEnd,
+        'SUMMARY:' + autoTitle,
+        'LOCATION:' + venue + (addr ? ', ' + addr : ''),
+        'DESCRIPTION:' + desc.replace(/,/g, '\\,').replace(/\n/g, '\\n'),
+        'STATUS:CONFIRMED',
+        'URL:tel:' + (raw['client_phone']||'').replace(/\D/g,''),
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+
+      calLink = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+    }
+  } catch(e) { calLink = ''; }
+
   const templateParams={
     celebration:raw['celebration']||'The BBQ Guys Chicago',
     celebration:raw['celebration']||'Catering Event',
+    event_date_short:(()=>{ try{ const evs=JSON.parse(raw['events']||'[]'); return evs[0]?.edate ? new Date(evs[0].edate+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—'; } catch(e){ return '—'; }})(),
     client_names:raw['client_names']||cnEl.value||'—',
     client_phone:raw['client_phone']||document.getElementById('client_phone')?.value||'—',
     client_email:ceEl.value.trim()||'—',
@@ -1718,16 +1975,33 @@ window.submitContract=async function(){
     total_remaining:raw['total_remaining']||'—',
     food_summary:foodSummary||'See contract for menu selections.',
     food_notes:raw['food_notes']||'None',
+    client_social:raw['client_social']||'Not provided',
+    other_vendors:raw['other_vendors']||'None',
+    coi_requirements:raw['coi_requirements']||'None',
+    chafing_tier:raw['chafing_tier']||'Not booked',
     secondary_contact:(document.getElementById('secondary_contact_name')?.value?.trim()||'None')+(document.getElementById('secondary_contact_phone')?.value?.trim()?' — '+document.getElementById('secondary_contact_phone').value.trim():''),
     venue_coord:(document.getElementById('venue_coord_name')?.value?.trim()||'None')+(document.getElementById('venue_coord_phone')?.value?.trim()?' — '+document.getElementById('venue_coord_phone').value.trim():''),
     vendor_tags:document.getElementById('permit_vendor_tags')?.checked?'Yes':'No',
     client_sig:sigEl.value.trim(),client_date:fmtDate(cdEl.value),
+    client_id_last4:document.getElementById('client_id_last4')?.value?.trim()||'Not provided',
     mc_date:fmtDate(new Date().toISOString().split('T')[0]),
     submitted_at:new Date().toLocaleString('en-US',{timeZone:'America/Chicago'}),
     client_ip:clientIP,quote_date:raw['quote_date']||'—',
     contract_version:'v2.0 – BBQ Guys Chicago',
-    print_link:printLink,to_email:ceEl.value.trim()||'',
+    print_link:printLink,
+    cal_link:calLink||'No calendar link available',
+    to_email:ceEl.value.trim()||'',
   };
+
+  // Show loading state
+  const loadingMsg = document.createElement('div');
+  loadingMsg.id = 'emailLoadingMsg';
+  loadingMsg.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;';
+  const inner = document.createElement('div');
+  inner.style.cssText = 'background:#1a1a1a;border:1px solid rgba(201,149,10,0.4);border-radius:12px;padding:32px 40px;text-align:center;';
+  inner.innerHTML = '<div style="font-size:2rem;margin-bottom:12px;">🔥</div><div style="color:#fff;font-weight:700;font-size:1rem;margin-bottom:6px;">Submitting Contract…</div><div style="color:rgba(255,255,255,0.5);font-size:0.78rem;">Please keep this page open</div>';
+  loadingMsg.appendChild(inner);
+  document.body.appendChild(loadingMsg);
 
   try{
     emailjs.init(EMAILJS_PUBLIC_KEY);
@@ -1738,17 +2012,34 @@ window.submitContract=async function(){
       await emailjs.send(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,clientParams);
     }
   }catch(err){
+    const lm=document.getElementById('emailLoadingMsg');if(lm)lm.remove();
     console.warn('EmailJS:',err);
     alert('Contract recorded. Email notification encountered an issue. Please contact thebbqguyschicago@gmail.com to confirm. Error: '+JSON.stringify(err));
   }
 
+  const lm=document.getElementById('emailLoadingMsg');if(lm)lm.remove();
   document.getElementById('contractForm').style.display='none';
   document.getElementById('successScreen').style.display='block';
   const sticky=document.getElementById('stickySubmit');if(sticky){sticky.style.display='none';sticky.remove();}
   const bar=document.getElementById('progressBar');if(bar)bar.style.display='none';
+  // Mark as submitted so refresh can't resubmit
+  try{sessionStorage.setItem('bbq_submitted','1');}catch(e){}
+  window.submitContract=function(){return;};
   const wb=document.getElementById('welcomeBanner');if(wb)wb.style.display='none';
   window.submitContract=function(){return;};
   window.scrollTo({top:0,behavior:'smooth'});
+  // Check on load if already submitted this session
+  try{
+    if(sessionStorage.getItem('bbq_submitted')==='1'){
+      const form=document.getElementById('contractForm');
+      const success=document.getElementById('successScreen');
+      const sticky=document.getElementById('stickySubmit');
+      if(form) form.style.display='none';
+      if(success) success.style.display='block';
+      if(sticky) sticky.style.display='none';
+      window.submitContract=function(){return;};
+    }
+  }catch(e){}
 };
 </script>
 </body>
