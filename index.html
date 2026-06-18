@@ -1270,12 +1270,12 @@ function fmt$(n){return(n===null||isNaN(n))?'—':'$'+parseFloat(n).toFixed(2);}
 function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
 
 function calcTax(){
-  const rate=parseFloat(document.getElementById('h_rate_pp')?.value)||0;
+  const rate=parseFloat(document.getElementById('h_fee_single')?.value)||0;
   const guests=parseInt(document.getElementById('h_guest_count')?.value)||0;
-  const travel=parseFloat(document.getElementById('h_travel_fee')?.value)||0;
-  const chafing=parseFloat(document.getElementById('h_chafing_fee')?.value)||0;
-  const deposit=parseFloat(document.getElementById('h_deposit')?.value)||200;
-  const addons=parseFloat(document.getElementById('h_addons')?.value)||0;
+  const travel=parseFloat(document.getElementById('h_fee_travel')?.value)||0;
+  const chafing=parseFloat(document.getElementById('h_fee_chafing')?.value)||0;
+  const deposit=parseFloat(document.getElementById('h_fee_retainer')?.value)||200;
+  const addons=parseFloat(document.getElementById('h_fee_retainer')?.value)||0;
   const foodSub=rate*guests;
   const tax=foodSub*TAX_RATE;
   const total=foodSub+tax+travel+chafing+addons-deposit;
@@ -1296,7 +1296,7 @@ function addHostEvent(){
   div.className='host-event-block';div.id=`hev_${idx}`;
   div.innerHTML=`<div class="host-event-label">Event ${idx}<button class="btn-remove-ev" onclick="removeHostEvent(${idx})">✕</button></div>
     <div class="hrow two">
-      <div class="hf"><label>Event Type</label><select id="h_etype_${idx}">${EVENT_TYPES.map(t=>`<option${t===typeName?' selected':''}>` + t + `</option>`).join('')}</select></div>
+      <div class="hf"><label>Event Type</label><select id="h_etype_${idx}">${EVENT_TYPES.map(t=>`<option>` + t + `</option>`).join('')}</select></div>
       <div class="hf"><label>Date</label><input type="date" id="h_edate_${idx}" min="${new Date().toISOString().split('T')[0]}"/></div>
     </div>`;
   document.getElementById('hostEventList').appendChild(div);
@@ -1589,7 +1589,7 @@ function generateLink(){
   const cn=document.getElementById('h_client_names')?.value||'';
   const cp=document.getElementById('h_client_phone')?.value||'';
   const ce=document.getElementById('h_client_email')?.value||'';
-  const ed=document.getElementById('h_event_desc')?.value||'';
+  const ed=document.getElementById('h_celebration')?.value||'';
   if(cn)p.set('client_names',cn);if(cp)p.set('client_phone',cp);
   if(ce)p.set('client_email',ce);if(ed)p.set('event_desc',ed);
   const events=[];
@@ -1603,7 +1603,7 @@ function generateLink(){
   const pkg=document.getElementById('h_pkg')?.value||'';
   const gc=document.getElementById('h_guest_count')?.value||'';
   const svc=document.getElementById('h_service_type')?.value||'';
-  const rpp=document.getElementById('h_rate_pp')?.value||'';
+  const rpp=document.getElementById('h_fee_single')?.value||'';
   // Read from host panel fee fields (the ones the host actually fills in)
   // Clean currency input and calculate fees
   const rNum = cleanNum('h_fee_single');
@@ -1758,7 +1758,7 @@ function loadClientView(){
     const v=raw[id]||'';const el=document.getElementById(id);
     if(v&&el){el.value=v;el.classList.add('prefilled');el.readOnly=true;}
   });
-  if(raw['event_desc']){const el=document.getElementById('client_event_desc');if(el){el.value=raw['event_desc'];el.classList.add('prefilled');el.readOnly=true;}}
+  if(raw['event_desc']){const el=document.getElementById('h_celebration');if(el){el.value=raw['event_desc'];el.classList.add('prefilled');el.readOnly=true;}}
   try{const events=JSON.parse(raw['events']||'[]');if(events.length>0)events.forEach(ev=>addClientEvent(ev));else addClientEvent();}catch(e){addClientEvent();}
   setText('d_pkg',raw['pkg']||'—');
   setText('d_guest_count',raw['guest_count']?raw['guest_count']+' guests':'—');
@@ -1884,7 +1884,7 @@ if(isPrintMode){
 
 (function(){
   const canvas=document.getElementById('headerCanvas');if(!canvas)return;
-  const ctx=canvas.getContext('2d');let particles=[];
+  const ctx=canvas.getContext('2d');if(!ctx)return;let particles=[];
   function resize(){canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight;}
   resize();window.addEventListener('resize',resize);
   function mkP(){return{x:Math.random()*canvas.width,y:canvas.height+5,r:Math.random()*2+0.4,opacity:Math.random()*0.65+0.15,speed:Math.random()*0.9+0.3,drift:(Math.random()-0.5)*0.5,color:Math.random()>0.5?'139,0,0':'201,149,10'};}
@@ -2197,7 +2197,7 @@ window.submitContract=async function(){
     client_names:raw['client_names']||cnEl.value||'—',
     client_phone:raw['client_phone']||document.getElementById('client_phone')?.value||'—',
     client_email:ceEl.value.trim()||'—',
-    event_desc:raw['event_desc']||document.getElementById('client_event_desc')?.value||'—',
+    event_desc:raw['event_desc']||document.getElementById('h_celebration')?.value||'—',
     events_summary:eventLines.join('\n\n'),
     pkg:raw['pkg']||'—',guest_count:raw['guest_count']||'—',service_type:raw['service_type']||'—',
     rate_pp:raw['rate_pp']?'$'+parseFloat(raw['rate_pp']).toFixed(2)+'/person':'—',
