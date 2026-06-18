@@ -1240,6 +1240,8 @@ function collectFood(){
   return result;
 }
 
+function cleanNum(id){const v=document.getElementById(id)?.value||'0';return parseFloat(v.replace(/[$,\s]/g,''))||0;}
+
 function generateLink(){
   const base=window.location.href.split('?')[0];
   const p=new URLSearchParams();p.set('d','1');
@@ -1262,8 +1264,7 @@ function generateLink(){
   const svc=document.getElementById('h_service_type')?.value||'';
   const rpp=document.getElementById('h_rate_pp')?.value||'';
   // Read from host panel fee fields (the ones the host actually fills in)
-  // Clean currency input
-  function cleanNum(id){const v=document.getElementById(id)?.value||'0';return parseFloat(v.replace(/[$,\s]/g,''))||0;}
+  // Clean currency input and calculate fees
   const rNum = cleanNum('h_fee_single');
   const tr   = cleanNum('h_fee_travel');
   const ch   = cleanNum('h_fee_chafing');
@@ -1416,7 +1417,7 @@ function renderPrintCard(){
     if(breadItems.length>0){foodHtml+=`<div class="pm-section-block"><div class="pm-section-name">Bread</div><ul class="pm-item-list">${breadItems.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;}
     if(dessertItems.length>0){foodHtml+=`<div class="pm-section-block"><div class="pm-section-name">Dessert</div><ul class="pm-item-list">${dessertItems.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;}
   }catch(e){}
-  if(!foodHtml)foodHtml='<p style="color:#9ca3af;font-size:0.85rem;padding:10px 0;">No menu items recorded.</p>';font-size:0.85rem;padding:10px 0;font-family:Inter,sans-serif;">No menu items recorded.</p>';
+    if(!foodHtml)foodHtml='<p style="color:#9ca3af;font-size:0.85rem;padding:10px 0;">No menu items recorded.</p>';
   foodWrap.innerHTML=foodHtml;
   const notes=raw['food_notes']||'';
   if(notes&&notes!=='None'){document.getElementById('pm_notes_wrap').style.display='block';setText('pm_notes',notes);}
