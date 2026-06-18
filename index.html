@@ -1071,12 +1071,10 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
     <p>Thank you! Your catering agreement has been recorded. The BBQ Guys Chicago will be in touch shortly to finalize your event details.</p>
     <p style="margin-top:10px;font-size:0.8rem;color:var(--muted);font-family:'Inter',sans-serif;">Refer a friend who books with us and receive a <strong style="color:var(--crimson);">$100 credit</strong> toward your next event! 🎉</p>
     <div class="retainer-card">
-      <div class="rc-title">⚡ Next Step — Submit Your $200 Deposit</div>
-      <div class="rc-row"><span class="rc-key">Zelle / Venmo</span><span class="rc-val">Contact The BBQ Guys Chicago for payment details</span></div>
+      <div class="rc-title">⚡ Submit Your $200 Deposit to Secure Your Date</div>
+      <div class="rc-row"><span class="rc-key">Zelle / Venmo</span><span class="rc-val">Contact us for details</span></div>
       <div class="rc-row"><span class="rc-key">Cash / Check</span><span class="rc-val">Payable to The BBQ Guys Chicago</span></div>
       <div class="rc-row"><span class="rc-key">Phone</span><span class="rc-val">224-400-2402</span></div>
-      <div class="rc-row"><span class="rc-key">Email</span><span class="rc-val">thebbqguyschicago@gmail.com</span></div>
-      <div class="rc-row"><span class="rc-key">Instagram / Facebook</span><span class="rc-val">@thebbqguyschicago</span></div>
       <p style="margin-top:12px;font-size:0.72rem;color:#9ca3af;font-style:italic;text-align:center;font-family:'Inter',sans-serif;">Please include your name and event date in the payment note.</p>
     </div>
     <div style="margin-top:18px;text-align:center;">
@@ -1421,26 +1419,38 @@ function addClientEvent(prefill={}){
       ${typeName?`<span class="event-badge-pill">${typeName}</span>`:`Event ${idx}`}
       ${clientEventCount>1?`<button class="btn-remove-cev" onclick="removeClientEvent(${idx})">✕ Remove</button>`:''}
     </div>
-    <div class="cfield-row two">
-      <div class="field-group"><label>Event Type <span class="req-badge">REQUIRED</span></label>
-        <select id="c_etype_${idx}" style="border:none;border-bottom:1.5px solid var(--border);background:transparent;padding:7px 2px;font-size:0.92rem;font-family:'Inter',sans-serif;color:var(--body);outline:none;width:100%;">${EVENT_TYPES.map(t=>`<option>${t}</option>`).join('')}</select>
+    <div style="display:grid;gap:18px;padding:8px 0;">
+      <div class="field-group">
+        <label>① Event Type <span class="req-badge">REQUIRED</span></label>
+        <select id="c_etype_${idx}" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;">${EVENT_TYPES.map(t=>`<option>${t}</option>`).join('')}</select>
       </div>
-      <div class="field-group"><label>Event Date <span class="req-badge">REQUIRED</span></label><input type="date" id="c_edate_${idx}"/></div>
-    </div>
-    <div class="cfield-row two">
-      <div class="field-group"><label>Venue Name <span class="req-badge">REQUIRED</span></label><input type="text" id="c_venue_${idx}" placeholder="Venue name"/></div>
-      <div class="field-group"><label>Venue Address <span class="req-badge">REQUIRED</span></label><input type="text" id="c_addr_${idx}" placeholder="Full address"/></div>
-    </div>
-    <div class="cfield-row full">
-      <div class="field-group"><label>Food Service Start Time <span class="req-badge">REQUIRED</span></label><input type="time" id="c_start_${idx}"/></div>
-    </div>
-    <div class="cfield-row two">
-      <div class="field-group"><label>Confirmed Guest Count <span class="req-badge">REQUIRED</span></label><input type="text" inputmode="numeric" pattern="[0-9]*" id="c_guests_${idx}" placeholder="e.g. 150"/></div>
-      <div class="field-group"><label>Setup / Load-In Notes <span class="opt-badge">OPTIONAL</span></label><input type="text" id="c_setup_${idx}" placeholder="e.g. back entrance, elevator code"/></div>
-    </div>
-    <div class="cfield-row full">
-      <div class="field-group"><label>Event Timeline / Schedule <span class="opt-badge">OPTIONAL</span></label>
-        <textarea id="c_timeline_${idx}" placeholder="e.g. 6pm guests arrive, 7pm food service, 8pm speeches…" style="border:1px solid var(--border);border-radius:6px;padding:8px 10px;resize:vertical;min-height:58px;font-size:0.88rem;font-family:'Inter',sans-serif;width:100%;outline:none;background:transparent;color:var(--body);"></textarea>
+      <div class="field-group">
+        <label>② Event Date <span class="req-badge">REQUIRED</span></label>
+        <input type="date" id="c_edate_${idx}" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;"/>
+      </div>
+      <div class="field-group">
+        <label>③ Venue Name <span class="req-badge">REQUIRED</span></label>
+        <input type="text" id="c_venue_${idx}" placeholder="e.g. The Social Loft, Private Residence" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;"/>
+      </div>
+      <div class="field-group">
+        <label>④ Venue Address <span class="req-badge">REQUIRED</span></label>
+        <input type="text" id="c_addr_${idx}" placeholder="Full street address" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;"/>
+      </div>
+      <div class="field-group">
+        <label>⑤ Food Service Start Time <span class="req-badge">REQUIRED</span></label>
+        <input type="time" id="c_start_${idx}" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;"/>
+      </div>
+      <div class="field-group">
+        <label>⑥ Confirmed Guest Count <span class="req-badge">REQUIRED</span></label>
+        <input type="text" inputmode="numeric" pattern="[0-9]*" id="c_guests_${idx}" placeholder="e.g. 150" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;"/>
+      </div>
+      <div class="field-group">
+        <label>⑦ Setup / Load-In Notes <span class="opt-badge">OPTIONAL</span></label>
+        <input type="text" id="c_setup_${idx}" placeholder="e.g. back entrance, elevator code" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;"/>
+      </div>
+      <div class="field-group">
+        <label>⑧ Event Timeline <span class="opt-badge">OPTIONAL</span></label>
+        <textarea id="c_timeline_${idx}" placeholder="e.g. 6pm guests arrive, 7pm food service, 8pm speeches…" style="border:1.5px solid #C8BFB0;border-radius:6px;padding:10px 12px;resize:vertical;min-height:64px;background:transparent;font-size:0.92rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;margin-top:4px;"></textarea>
       </div>
     </div>`;
   document.getElementById('clientEventList').appendChild(div);
@@ -1457,19 +1467,29 @@ function removeClientEvent(idx){const el=document.getElementById(`cev_${idx}`);i
 
 function renderMenuDisplay(food){
   const wrap=document.getElementById('menuDisplaySections');if(!wrap)return;
-  // Collect all items flat — no section labels
-  const allItems=[];
-  FOOD_SECTIONS.forEach(sec=>{
-    const items=food[sec.key];
-    if(items&&items.length>0) allItems.push(...items);
-  });
-  let html='';
-  if(allItems.length>0){
-    html=`<div class="menu-display-wrap" style="margin-bottom:10px;"><div>${allItems.map(i=>`<span class="menu-tag">${i}</span>`).join('')}</div></div>`;
-  } else {
+  // Order: Appetizers first, then Mains, then Bread, then Desserts/Drinks
+  const APP_KEYS  = ['apps'];
+  const MAIN_KEYS = ['tikka','boti','kabab','goat','seafood','veg','gravy','rice','american','custom'];
+  const BREAD_KEYS= ['bread'];
+  const DES_KEYS  = ['dessert'];
+
+  function buildList(keys, label){
+    const items=[];
+    keys.forEach(k=>{ const v=food[k]; if(v&&v.length>0) items.push(...v); });
+    if(!items.length) return '';
+    const bullets = items.map(i=>`<li style="padding:3px 0;font-size:0.9rem;font-family:'Inter',sans-serif;color:var(--body);">• ${i}</li>`).join('');
+    return `<div style="margin-bottom:14px;">
+      <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--crimson-mid);font-family:'Inter',sans-serif;margin-bottom:6px;">${label}</div>
+      <ul style="list-style:none;margin:0;padding:0;">${bullets}</ul>
+    </div>`;
+  }
+
+  let html = buildList(APP_KEYS,'Appetizers') + buildList(MAIN_KEYS,'Main Course') + buildList(BREAD_KEYS,'Bread') + buildList(DES_KEYS,'Desserts & Drinks');
+
+  if(!html){
     html=`<div class="menu-display-wrap"><div class="menu-display-title">No menu items pre-selected</div><p style="font-size:0.82rem;color:var(--muted);font-family:'Inter',sans-serif;">Please contact The BBQ Guys Chicago to confirm your selections.</p></div>`;
   }
-  wrap.innerHTML=html;
+  wrap.innerHTML=`<div class="menu-display-wrap" style="padding:14px 16px;">${html}</div>`;
 }
 
 function getRaw(){
