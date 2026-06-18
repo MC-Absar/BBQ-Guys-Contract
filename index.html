@@ -597,6 +597,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
           <input type="hidden" id="h_fee_chafing" value="0"/>
         </div>
         <div class="hf"><label>Retainer (due on signing — $200 minimum)</label><input type="text" id="h_fee_retainer" value="$200.00" oninput="updateLivePreview()"/></div>
+        <div class="hf"><label>Discount <span style="font-size:0.6rem;color:var(--muted);">optional — dollar amount</span></label><input type="text" id="h_fee_discount" placeholder="$0.00" oninput="updateLivePreview()"/></div>
       </div>
       <!-- Live Fee Preview -->
       <div class="live-preview">
@@ -608,6 +609,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <div class="live-preview-row"><span class="live-preview-label">Tax (10.25%)</span><span class="live-preview-value" id="lp_tax">—</span></div>
         <div class="live-preview-row"><span class="live-preview-label">Travel Fee</span><span class="live-preview-value" id="lp_travel">—</span></div>
         <div class="live-preview-row"><span class="live-preview-label">Chafing Setup</span><span class="live-preview-value" id="lp_chafing">—</span></div>
+        <div class="live-preview-row" id="lp_discount_row" style="display:none;color:#2d7a2d;"><span class="live-preview-label">🎁 Discount Applied</span><span class="live-preview-value" id="lp_discount">—</span></div>
         <div class="live-preview-row"><span class="live-preview-label">Non-Refundable Retainer (paid)</span><span class="live-preview-value" id="lp_deposit">—</span></div>
         <div class="live-preview-total"><span class="live-preview-label">TOTAL REMAINING</span><span class="live-preview-value" id="lp_total">—</span></div>
       </div>
@@ -630,7 +632,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
           <div style="display:flex;gap:6px;flex-wrap:wrap;">
             <button onclick="setContractStatus('link_sent')" id="status_link_sent" style="padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-size:0.72rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s;">🔗 Link Sent</button>
             <button onclick="setContractStatus('signed')" id="status_signed" style="padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-size:0.72rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s;">✅ Signed</button>
-            <button onclick="setContractStatus('deposit_received')" id="status_deposit_received" style="padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-size:0.72rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s;">💰 Deposit Rcvd</button>
+            <button onclick="setContractStatus('deposit_received')" id="status_deposit_received" style="padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-size:0.72rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s;">💰 Retainer Rcvd</button>
             <button onclick="setContractStatus('confirmed')" id="status_confirmed" style="padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-size:0.72rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s;">🔥 Confirmed</button>
             <button onclick="setContractStatus('completed')" id="status_completed" style="padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-size:0.72rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s;">🏁 Completed</button>
           </div>
@@ -655,7 +657,6 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
     <!-- BBQ Guys Logo -->
     <div class="header-logo-text">THE BBQ GUYS<span>CHICAGO</span></div>
 
-    <h1>THE BBQ GUYS CHICAGO</h1>
     <div class="tagline">Halal Live BBQ · Live Event Catering · Chicago, IL</div>
     <div class="contact">
       <a href="https://thebbqguyschicago.com" target="_blank">thebbqguyschicago.com</a>
@@ -782,6 +783,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
             <tr style="font-style:italic;"><td>Tax (10.25% Chicago rate — food items only)</td><td class="prefilled-cell" id="d_tax">—</td></tr>
             <tr><td>Travel Fee</td><td class="prefilled-cell" id="d_travel_fee">—</td></tr>
             <tr><td>Chafing Setup</td><td class="prefilled-cell" id="d_chafing_fee">—</td></tr>
+            <tr id="d_discount_row" style="display:none;color:#2d7a2d;font-weight:600;"><td>🎁 Discount Applied</td><td class="prefilled-cell" id="d_discount">—</td></tr>
             <tr><td><strong>Non-Refundable Retainer Paid</strong></td><td class="prefilled-cell" id="d_deposit">—</td></tr>
             <tr><td>Add-Ons</td><td class="prefilled-cell" id="d_addons">—</td></tr>
             <tr class="total-row"><td>TOTAL REMAINING</td><td id="d_total_remaining">—</td></tr>
@@ -904,7 +906,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <div class="section-body collapsed">
         <p class="clause">For events held fully or partially outdoors, the Client is responsible for providing adequate shelter, shade, and weather protection for the catering team and equipment. This includes a covered tent or canopy structure sufficient to protect grills, food stations, and staff from precipitation and direct sun.</p>
         <p class="clause">The Caterer reserves the right to pause or restructure service if outdoor conditions become unsafe or unworkable, including but not limited to extreme heat (above 95°F), heavy rain, lightning, or high winds. No refund will be issued for weather-related service interruptions beyond the Caterer's control.</p>
-        <p class="clause"><strong>Day-of Weather Force Majeure:</strong> If severe weather (tornado warning, flash flood emergency, or equivalent government-issued alert) forces a venue change or cancellation within 24 hours of the event, The BBQ Guys Chicago will make best efforts to reschedule at no additional rescheduling fee. If rescheduling is not possible, a credit of 50% of payments made (excluding the non-refundable deposit) will be applied toward a future booking within 12 months.</p>
+        <p class="clause"><strong>Day-of Weather Force Majeure:</strong> If severe weather (tornado warning, flash flood emergency, or equivalent government-issued alert) forces a venue change or cancellation within 24 hours of the event, The BBQ Guys Chicago will make best efforts to reschedule at no additional rescheduling fee. If rescheduling is not possible, a credit of 50% of payments made (excluding the non-refundable retainer) will be applied toward a future booking within 12 months.</p>
         <p class="clause">If the venue requires open-flame permits for live BBQ cooking, those permits are the Client's sole responsibility to obtain and provide to the Caterer at least 7 days before the event.</p>
       </div>
     </div>
@@ -1173,8 +1175,14 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
     <p style="margin-top:10px;font-size:0.8rem;color:var(--muted);font-family:'Inter',sans-serif;">Refer a friend who books with us and receive a <strong style="color:var(--crimson);">$100 credit</strong> toward your next event! 🎉</p>
     <div class="retainer-card">
       <div class="rc-title">⚡ Submit Your $200 Non-Refundable Retainer to Secure Your Date</div>
-      <div class="rc-row"><span class="rc-key">Zelle</span><span class="rc-val"><strong>(224) 400-2402</strong></span></div>
-      <div class="rc-row"><span class="rc-key">Contact</span><span class="rc-val">Asmar — <a href="tel:2244002402" style="color:var(--crimson-mid);text-decoration:none;">(224) 400-2402</a></span></div>
+      <div class="rc-row" style="background:#fdf3e3;border-radius:8px;padding:10px 14px;margin-bottom:6px;">
+        <span class="rc-key">📲 Zelle</span>
+        <span class="rc-val"><strong style="font-size:1rem;color:#8B0000;">(224) 400-2402</strong></span>
+      </div>
+      <div class="rc-row">
+        <span class="rc-key">Contact</span>
+        <span class="rc-val">Asmar — <a href="tel:2244002402" style="color:var(--crimson-mid);text-decoration:none;font-weight:700;">(224) 400-2402</a></span>
+      </div>
       <div style="display:flex;gap:10px;margin:10px 0 4px;flex-wrap:wrap;justify-content:center;">
         <a href="sms:2244002402&body=Hi! I just signed the catering contract and want to send the $200 non-refundable retainer. My name is [YOUR NAME] and my event date is [DATE]." style="display:inline-flex;align-items:center;gap:6px;background:#007AFF;color:#fff;font-size:0.78rem;font-weight:700;padding:8px 16px;border-radius:50px;text-decoration:none;font-family:'Inter',sans-serif;letter-spacing:0.04em;">💬 Text Us for Payment Info</a>
         <a href="tel:2244002402" style="display:inline-flex;align-items:center;gap:6px;background:#34C759;color:#fff;font-size:0.78rem;font-weight:700;padding:8px 16px;border-radius:50px;text-decoration:none;font-family:'Inter',sans-serif;letter-spacing:0.04em;">📞 Call Us</a>
@@ -1187,7 +1195,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <p style="margin-top:12px;font-size:0.72rem;color:#9ca3af;font-style:italic;text-align:center;font-family:'Inter',sans-serif;">Please include your name and event date in the payment note.</p>
     </div>
     <div style="margin-top:18px;text-align:center;">
-      <a href="https://instagram.com/thebbqguyschicago" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;font-family:'Inter',sans-serif;font-weight:700;font-size:0.86rem;padding:12px 26px;border-radius:50px;text-decoration:none;">
+      <a href="https://instagram.com/thebbqguyschicago" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;font-family:'Inter',sans-serif;font-weight:700;font-size:0.86rem;padding:12px 26px;border-radius:50px;text-decoration:none;margin-bottom:10px;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
         @thebbqguyschicago
       </a>
@@ -1391,15 +1399,20 @@ function updateLivePreview(){
   const travel = cleanNum('h_fee_travel');
   const chafing = cleanNum('h_fee_chafing');
   const deposit = cleanNum('h_fee_retainer')||200;
+  const discount = cleanNum('h_fee_discount');
   const foodSub = rate * guests;
   const tax = foodSub * TAX_RATE;
-  const total = foodSub + tax + travel + chafing - deposit;
+  const total = foodSub + tax + travel + chafing - deposit - discount;
   const set = (id, val) => { const el=document.getElementById(id); if(el) el.textContent=val; };
   set('lp_rate', rate > 0 ? fmt$(rate)+'/person' : '—');
   set('lp_guests', guests > 0 ? guests+' guests' : '—');
   const preTax = foodSub + travel + chafing;
   set('lp_food_sub', foodSub > 0 ? fmt$(foodSub) : '—');
   set('lp_pretax', preTax > 0 ? fmt$(preTax) : '—');
+  // Discount row
+  const discRow = document.getElementById('lp_discount_row');
+  if(discRow) discRow.style.display = discount > 0 ? 'flex' : 'none';
+  set('lp_discount', discount > 0 ? '-'+fmt$(discount) : '—');
   set('lp_tax', foodSub > 0 ? fmt$(tax) : '—');
   set('lp_travel', travel > 0 ? fmt$(travel) : 'Not applicable');
   set('lp_chafing', chafing > 0 ? fmt$(chafing) : 'Not booked');
@@ -1590,9 +1603,10 @@ function previewContract(){
   const travel=cleanNum('h_fee_travel');
   const chafing=cleanNum('h_fee_chafing');
   const deposit=cleanNum('h_fee_retainer')||200;
+  const discPrev=cleanNum('h_fee_discount');
   const foodSub=rate*(parseInt(guests)||0);
   const tax=foodSub*TAX_RATE;
-  const totalRem=foodSub+tax+travel+chafing-deposit;
+  const totalRem=foodSub+tax+travel+chafing-deposit-discPrev;
   if(rate) p.set('rate_pp',rate.toFixed(2));
   if(foodSub) p.set('food_sub',fmt$(foodSub));
   if(tax) p.set('tax_amt',fmt$(tax));
@@ -1600,6 +1614,7 @@ function previewContract(){
   if(chafing) p.set('chafing_fee',chafing.toFixed(2));
   p.set('deposit',deposit.toFixed(2));
   if(totalRem) p.set('total_remaining',fmt$(totalRem));
+  if(discPrev>0) p.set('discount',fmt$(discPrev));
   const food=collectFood();
   p.set('food',JSON.stringify(food));
   try{ p.set('foodb64', btoa(unescape(encodeURIComponent(JSON.stringify(food))))); }catch(e){}
@@ -1638,16 +1653,18 @@ function generateLink(){
   const tr   = cleanNum('h_fee_travel');
   const ch   = cleanNum('h_fee_chafing');
   const dep  = cleanNum('h_fee_retainer')||200;
+  const disc = cleanNum('h_fee_discount');
   const gNum2 = parseInt(gc)||0;
   const foodSub = gNum2 * rNum;
   const tax = foodSub * TAX_RATE;
-  const totalRem = foodSub + tax + tr + ch - dep;
+  const totalRem = foodSub + tax + tr + ch - dep - disc;
   p.set('rate_pp', rNum > 0 ? rNum.toFixed(2) : '0');
   p.set('travel_fee', tr > 0 ? tr.toFixed(2) : '0');
   p.set('chafing_fee', ch > 0 ? ch.toFixed(2) : '0');
   p.set('deposit', dep.toFixed(2));
   p.set('addons','0');
   p.set('food_sub',fmt$(foodSub));p.set('pre_tax_total',fmt$(foodSub+tr+ch));p.set('tax_amt',fmt$(tax));p.set('total_remaining',fmt$(totalRem));
+  if(disc>0){p.set('discount',fmt$(disc));}
   const celebration=document.getElementById('h_celebration')?.value||'';
   if(celebration)p.set('celebration',celebration);
   if(gc)p.set('guest_count',gc);
@@ -1802,8 +1819,41 @@ function loadClientView(){
   setText('d_addons',raw['addons']&&parseFloat(raw['addons'])>0?'$'+parseFloat(raw['addons']).toFixed(2):'—');
   setText('d_chafing_fee',raw['chafing_fee']&&parseFloat(raw['chafing_fee'])>0?'$'+parseFloat(raw['chafing_fee']).toFixed(2):'Not booked');
   setText('d_addons',raw['addons']&&parseFloat(raw['addons'])>0?'$'+parseFloat(raw['addons']).toFixed(2):'—');
+  // Show discount if present
+  if(raw['discount'] && parseFloat(raw['discount'].replace(/[$,]/g,'')) > 0){
+    const discRow = document.getElementById('d_discount_row');
+    if(discRow) discRow.style.display = 'table-row';
+    setText('d_discount', '-' + raw['discount']);
+  }
   setText('d_deposit','$'+parseFloat(raw['deposit']||200).toFixed(2)+' (paid)');
   setText('d_total_remaining',raw['total_remaining']||'—');
+
+  // ── Recalc on guest count change ──
+  function recalcClientFees(){
+    const rateRaw = parseFloat((raw['rate_pp']||'0').replace(/[$,\/a-z\s]/gi,''))||0;
+    const depRaw = parseFloat((raw['deposit']||'200').replace(/[$,]/g,''))||200;
+    const travelRaw = parseFloat((raw['travel_fee']||'0').replace(/[$,]/g,''))||0;
+    const chafingRaw = parseFloat((raw['chafing_fee']||'0').replace(/[$,]/g,''))||0;
+    const discRaw = parseFloat((raw['discount']||'0').replace(/[$,]/g,''))||0;
+    let newGuests = 0;
+    document.querySelectorAll('[id^="c_guests_"]').forEach(el => {
+      const v = parseInt(el.value); if(v > 0) newGuests = v;
+    });
+    if(newGuests <= 0 || rateRaw <= 0) return;
+    const newFoodSub = rateRaw * newGuests;
+    const newTax = newFoodSub * TAX_RATE;
+    const newPreTax = newFoodSub + travelRaw + chafingRaw;
+    const newTotal = newFoodSub + newTax + travelRaw + chafingRaw - depRaw - discRaw;
+    setText('d_guest_count', newGuests + ' guests');
+    setText('d_food_sub', fmt$(newFoodSub));
+    setText('d_pretax', fmt$(newPreTax));
+    setText('d_tax', fmt$(newTax));
+    setText('d_total_remaining', fmt$(newTotal));
+  }
+  // Wire up all guest count fields to recalc
+  document.addEventListener('input', e => {
+    if(e.target.id && e.target.id.startsWith('c_guests_')) recalcClientFees();
+  });
   try{
     let fRaw='{}';
     if(raw['foodb64']){try{fRaw=decodeURIComponent(escape(atob(raw['foodb64'])));}catch(e){}}
@@ -2011,7 +2061,7 @@ window.submitContract=async function(){
   if(!document.getElementById('menu_confirm')?.checked){const el=document.getElementById('menu_confirm');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm your menu selections in Section 2.');return;}
 
   if(!document.getElementById('review_acknowledge')?.checked){const el=document.getElementById('review_acknowledge');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm Section 19 — Review & Referral.');return;}
-  if(!document.getElementById('retainer_confirm')?.checked){document.getElementById('retainer_confirm')?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you understand the $200 non-refundable deposit is due immediately upon signing.');return;}
+  if(!document.getElementById('retainer_confirm')?.checked){document.getElementById('retainer_confirm')?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you understand the $200 non-refundable retainer is due immediately upon signing.');return;}
   if(!document.getElementById('read_all_sections')?.checked){document.getElementById('read_all_sections')?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you have read and understood all sections of this contract.');return;}
   const sigEl=document.getElementById('client_sig_name');if(!sigEl?.value?.trim()){fieldErr(sigEl,'Please type your full legal name to sign the contract.');return;}
   const cdEl=document.getElementById('client_date');if(!cdEl?.value){fieldErr(cdEl,'Please enter your signing date.');return;}
@@ -2128,23 +2178,13 @@ window.submitContract=async function(){
     } catch(e) {}
 
     const gcalDesc = encodeURIComponent(
-      '📋 CONTRACT #: ' + (cNum||'—') + '\n' +
-      '─────────────────\n' +
-      '👤 CLIENT\n' +
-      clientName + '\n' +
-      (raw['client_phone']||'—') + '\n' +
-      (raw['client_email']||'—') + '\n' +
-      '─────────────────\n' +
-      '📍 EVENT\n' +
-      fmtTime(startTime) + ' · ' + evDate + '\n' +
-      venue + '\n' +
-      (addr ? addr + '\n' : '') +
-      'Guests: ' + guests + '\n' +
-      (menuLines ? '─────────────────\n🍖 MENU\n' + menuLines + '\n' : '') +
-      '─────────────────\n' +
-      '💰 FEES\n' +
-      'Pre-Tax: ' + preTax + '\n' +
-      'Total w/ Tax: ' + total
+      'CONTRACT: ' + (cNum||'—') + '\n' +
+      'CLIENT: ' + clientName + ' | ' + (raw['client_phone']||'') + '\n' +
+      'EVENT: ' + fmtTime(startTime) + ' | ' + evDate + '\n' +
+      'VENUE: ' + venue + (addr ? ', ' + addr : '') + '\n' +
+      'GUESTS: ' + guests + '\n' +
+      (menuLines ? 'MENU:\n' + menuLines + '\n' : '') +
+      'PRE-TAX: ' + preTax + ' | TOTAL: ' + total
     );
 
     const gcalText = encodeURIComponent(autoTitle);
@@ -2174,6 +2214,7 @@ window.submitContract=async function(){
     travel_fee:raw['travel_fee']&&parseFloat(raw['travel_fee'])>0?'$'+parseFloat(raw['travel_fee']).toFixed(2):'Not applicable',
     addons:raw['addons']&&parseFloat(raw['addons'])>0?'$'+parseFloat(raw['addons']).toFixed(2):'—',
     deposit:'$'+parseFloat(raw['deposit']||200).toFixed(2),
+    discount:raw['discount']&&parseFloat(raw['discount'].replace(/[$,]/g,''))>0?raw['discount']:'None',
     total_remaining:raw['total_remaining']||'—',
     food_summary:foodSummary||'See contract for menu selections.',
     food_notes:raw['food_notes']||'None',
@@ -2190,6 +2231,7 @@ window.submitContract=async function(){
     client_ip:clientIP,quote_date:raw['quote_date']||'—',
     contract_version:'v2.0 – BBQ Guys Chicago',
     contract_num:raw['contract_num']||'—',
+    reply_to:'thebbqguyschicago@gmail.com',
     print_link:printLinkEmail||printLink,
     cal_link:calLink||'No calendar link available',
     to_email:ceEl.value.trim()||'',
