@@ -767,8 +767,8 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 
     <!-- Grace Time -->
     <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>&#9203; Grace Time &amp; Service Timeline</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
+      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>&#9203; Grace Time &amp; Service Timeline</span><span class="toggle-icon">&#9660;</span></div>
+      <div class="section-body">
         <div class="clause-highlight"><strong>Please allow a grace time of 30&#8211;45 minutes in your service time as the food we prepare is LIVE.</strong> Our team works hard to serve fresh, high-quality halal food and timing may vary slightly to ensure the best experience for your guests.</div>
         <p class="clause">We ask that you treat our staff with dignity and respect. Any concerns should be directed calmly to our team lead on site. The BBQ Guys Chicago reserves the right to cancel services if this clause is violated through unreasonable pressure or disrespectful conduct.</p>
         <ul class="clause-list">
@@ -824,8 +824,8 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 
     <!-- 6. Cancellation Policy -->
     <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>❌ 6. Cancellation &amp; Rescheduling Policy</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
+      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>❌ 6. Cancellation &amp; Rescheduling Policy</span><span class="toggle-icon">&#9660;</span></div>
+      <div class="section-body">
         <div class="sub-heading">Cancellation by Client:</div>
         <ul class="clause-list">
           <li><strong>More than 60 days before event:</strong> Non-refundable retainer is forfeited; no additional fee.</li>
@@ -912,8 +912,8 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
     </div>
     <!-- 11. Payment Terms & Late Fees -->
     <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>💳 11. Payment Terms &amp; Late Fees</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
+      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>💳 11. Payment Terms &amp; Late Fees</span><span class="toggle-icon">&#9660;</span></div>
+      <div class="section-body">
         <div class="sub-heading">Deposit:</div>
         <p class="clause">A non-refundable $200 deposit is due at the time of booking to secure your event date.</p>
         <div class="sub-heading">Final Payment:</div>
@@ -1121,9 +1121,9 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
     </div>
 
     <div class="submit-wrap">
-      <div class="checkbox-row highlight" style="max-width:520px;margin:0 auto 16px;text-align:left;">
+      <div class="checkbox-row highlight" style="max-width:520px;margin:0 auto 16px;text-align:left;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:12px 14px;">
         <input type="checkbox" id="read_all_sections"/>
-        <label for="read_all_sections"><strong>I confirm I have read and understood all sections of this contract</strong> and agree to be bound by all terms herein.</label>
+        <label for="read_all_sections" style="color:rgba(255,255,255,0.85);font-family:'Inter',sans-serif;font-size:0.88rem;"><strong style="color:#fff;">I confirm I have read and understood all sections of this contract</strong> and agree to be bound by all terms herein.</label>
       </div>
       <button class="btn-submit" id="submitBtn" onclick="submitContract()">Submit &amp; Agree to Contract</button>
       <p class="submit-note">Submitting constitutes your legally binding electronic signature and full agreement to all catering terms above.</p>
@@ -1685,7 +1685,10 @@ function renderPrintCard(){
   try{const events=JSON.parse(raw['events']||'[]');if(events.length>0){const ev=events[0];setText('pm_date',ev.edate?fmtDate(ev.edate):'—');if(ev.etype)setText('pm_event_type',ev.etype);}}catch(e){}
   const foodWrap=document.getElementById('pm_food_sections');let foodHtml='';
   try{
-    const food=JSON.parse(raw['food']||'{}');
+    let foodRaw = raw['food']||'{}';
+    // Handle double-encoding
+    try { JSON.parse(foodRaw); } catch(e) { try { foodRaw = decodeURIComponent(foodRaw); } catch(e2) {} }
+    const food=JSON.parse(foodRaw);
     // Collect ALL items from all sections into flat lists by category
     const mainItems=[];const appItems=[];const dessertItems=[];const breadItems=[];
     FOOD_SECTIONS.forEach(sec=>{
@@ -1868,7 +1871,9 @@ window.submitContract=async function(){
     if (evList.length > 0) {
       const ev = evList[0];
       const evDate = ev.edate || ''; // YYYY-MM-DD
-      const startTime = document.querySelector('[id^="c_start_"]')?.value || '18:00';
+      // Get start time from filled client fields
+      let startTime = '18:00';
+      document.querySelectorAll('[id^="c_start_"]').forEach(el => { if(el.value) startTime = el.value; });
       const [sh, sm] = startTime.split(':').map(Number);
       // Build DTSTART and DTEND (2hr service window)
       const dtBase = evDate.replace(/-/g,'');
@@ -1876,8 +1881,10 @@ window.submitContract=async function(){
       const endHr = sh + 2;
       const dtEnd = dtBase + 'T' + String(endHr).padStart(2,'0') + String(sm).padStart(2,'0') + '00';
       const clientName = raw['client_names'] || cnEl.value || 'Client';
-      const venue = venueFirst[0] || '';
-      const addr = document.querySelector('[id^="c_addr_"]')?.value || '';
+      let venue = venueFirst[0] || '';
+      if(!venue) document.querySelectorAll('[id^="c_venue_"]').forEach(el => { if(el.value) venue = el.value; });
+      let addr = '';
+      document.querySelectorAll('[id^="c_addr_"]').forEach(el => { if(el.value) addr = el.value; });
       const guests = raw['guest_count'] || '—';
       const pkg = raw['pkg'] || '—';
       const total = raw['total_remaining'] || '—';
