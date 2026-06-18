@@ -2222,6 +2222,7 @@ window.submitContract=async function(){
     submitted_at:new Date().toLocaleString('en-US',{timeZone:'America/Chicago'}),
     client_ip:clientIP,quote_date:raw['quote_date']||'—',
     contract_version:'v2.0 – BBQ Guys Chicago',
+    contract_num:raw['contract_num']||'—',
     print_link:printLinkEmail||printLink,
     cal_link:calLink||'No calendar link available',
     to_email:ceEl.value.trim()||'',
