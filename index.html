@@ -1566,18 +1566,52 @@ function duplicateContract(){
 }
 
 function previewContract(){
-  if(!validateHostPanel()){ return; }
-  // Temporarily generate link and open in new tab
-  const saved = document.getElementById('generatedLinkBox').style.display;
-  const savedVal = document.getElementById('generatedLinkInput').value;
-  generateLink();
-  const url = document.getElementById('generatedLinkInput').value;
-  if(url) window.open(url, '_blank');
-  // Restore state if it was hidden before
-  if(saved !== 'block'){
-    document.getElementById('generatedLinkBox').style.display = saved;
-    document.getElementById('generatedLinkInput').value = savedVal;
-  }
+  if(!validateHostPanel()) return;
+  // Build preview URL directly — same logic as generateLink but no side effects
+  const base = window.location.href.split('?')[0];
+  const p = new URLSearchParams();
+  p.set('d','1');
+  const cn = document.getElementById('h_client_names')?.value||'';
+  const cp = document.getElementById('h_client_phone')?.value||'';
+  const ce = document.getElementById('h_client_email')?.value||'';
+  if(cn) p.set('client_names',cn);
+  if(cp) p.set('client_phone',cp);
+  if(ce) p.set('client_email',ce);
+  const events=[];
+  document.querySelectorAll('.host-event-block').forEach(block=>{
+    const id=block.id.replace('hev_','');
+    const etype=document.getElementById(`h_etype_${id}`)?.value||'';
+    const edate=document.getElementById(`h_edate_${id}`)?.value||'';
+    if(etype||edate) events.push({etype,edate});
+  });
+  p.set('events',JSON.stringify(events));
+  const pkg=document.getElementById('h_pkg')?.value||'';
+  const guests=document.getElementById('h_guest_count')?.value||'';
+  const svc=document.getElementById('h_service_type')?.value||'';
+  if(pkg) p.set('pkg',pkg);
+  if(guests) p.set('guest_count',guests);
+  if(svc) p.set('service_type',svc);
+  const rate=cleanNum('h_fee_single');
+  const travel=cleanNum('h_fee_travel');
+  const chafing=cleanNum('h_fee_chafing');
+  const deposit=cleanNum('h_fee_retainer')||200;
+  const foodSub=rate*(parseInt(guests)||0);
+  const tax=foodSub*TAX_RATE;
+  const totalRem=foodSub+tax+travel+chafing-deposit;
+  if(rate) p.set('rate_pp',rate.toFixed(2));
+  if(foodSub) p.set('food_sub',fmt$(foodSub));
+  if(tax) p.set('tax_amt',fmt$(tax));
+  if(travel) p.set('travel_fee',travel.toFixed(2));
+  if(chafing) p.set('chafing_fee',chafing.toFixed(2));
+  p.set('deposit',deposit.toFixed(2));
+  if(totalRem) p.set('total_remaining',fmt$(totalRem));
+  const food=collectFood();
+  p.set('food',JSON.stringify(food));
+  try{ p.set('foodb64', btoa(unescape(encodeURIComponent(JSON.stringify(food))))); }catch(e){}
+  const celebration=document.getElementById('h_celebration')?.value||'';
+  if(celebration) p.set('celebration',celebration);
+  // Open preview in new tab
+  window.open(base+'?'+p.toString(), '_blank');
 }
 
 function generateLink(){
@@ -1619,7 +1653,7 @@ function generateLink(){
   p.set('chafing_fee', ch > 0 ? ch.toFixed(2) : '0');
   p.set('deposit', dep.toFixed(2));
   p.set('addons','0');
-  p.set('food_sub',fmt$(foodSub));p.set('pre_tax_total',fmt$(foodSub+travel+chafing));p.set('tax_amt',fmt$(tax));p.set('total_remaining',fmt$(totalRem));
+  p.set('food_sub',fmt$(foodSub));p.set('pre_tax_total',fmt$(foodSub+tr+ch));p.set('tax_amt',fmt$(tax));p.set('total_remaining',fmt$(totalRem));
   const celebration=document.getElementById('h_celebration')?.value||'';
   if(celebration)p.set('celebration',celebration);
   if(pkg)p.set('pkg',pkg);
