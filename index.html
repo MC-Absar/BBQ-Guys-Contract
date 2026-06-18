@@ -1061,7 +1061,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
               <span style="font-size:1.1rem;flex-shrink:0;">🔥</span>
               <div style="flex:1;">
                 <div class="sig-box-label">Authorized Signature</div>
-                <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:rgba(255,255,255,0.6);">The BBQ Guys Chicago</div>
+                <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:rgba(255,255,255,0.6);">Asmar Najam</div>
               </div>
             </div>
             <div class="sig-date-box">
@@ -1103,7 +1103,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
     <div class="ring-wrap"><svg viewBox="0 0 80 80"><circle class="ring" cx="40" cy="40" r="36"/><polyline class="chk" points="24,40 35,52 56,28"/></svg></div>
     <h2>Contract Signed! 🔥</h2>
     <p>Thank you! Your catering agreement has been recorded. The BBQ Guys Chicago will be in touch shortly to finalize your event details.</p>
-    <p style="margin-top:10px;font-size:0.8rem;color:var(--muted);font-family:'Inter',sans-serif;">Refer a friend who books with us and receive a <strong style="color:var(--crimson);">$200 credit</strong> toward your next event! 🎉</p>
+    <p style="margin-top:10px;font-size:0.8rem;color:var(--muted);font-family:'Inter',sans-serif;">Refer a friend who books with us and receive a <strong style="color:var(--crimson);">$100 credit</strong> toward your next event! 🎉</p>
     <div class="retainer-card">
       <div class="rc-title">⚡ Next Step — Submit Your $200 Deposit</div>
       <div class="rc-row"><span class="rc-key">Zelle / Venmo</span><span class="rc-val">Contact The BBQ Guys Chicago for payment details</span></div>
@@ -1332,7 +1332,7 @@ function addClientEvent(prefill={}){
     </div>
     <div class="cfield-row two">
       <div class="field-group"><label>Event Type <span class="req-badge">REQUIRED</span></label>
-        <select id="c_etype_${idx}">${EVENT_TYPES.map(t=>`<option>${t}</option>`).join('')}</select>
+        <select id="c_etype_${idx}" style="border:none;border-bottom:1.5px solid var(--border);background:transparent;padding:7px 2px;font-size:0.92rem;font-family:'Inter',sans-serif;color:var(--body);outline:none;width:100%;">${EVENT_TYPES.map(t=>`<option>${t}</option>`).join('')}</select>
       </div>
       <div class="field-group"><label>Event Date <span class="req-badge">REQUIRED</span></label><input type="date" id="c_edate_${idx}"/></div>
     </div>
@@ -1355,7 +1355,13 @@ function addClientEvent(prefill={}){
       </div>
     </div>`;
   document.getElementById('clientEventList').appendChild(div);
-  if(typeName){const el=document.getElementById(`c_etype_${idx}`);if(el){el.value=typeName;el.classList.add('prefilled');}}
+  if(typeName){
+    const el=document.getElementById(`c_etype_${idx}`);
+    if(el){el.value=typeName;el.style.borderBottomColor='var(--gold)';el.style.fontWeight='600';el.style.color='var(--dark)';}
+    // Hide the type dropdown row since badge already shows it clearly
+    const typeRow=el?.closest('.cfield-row');
+    if(typeRow){typeRow.style.display='none';}
+  }
   if(dateVal){const el=document.getElementById(`c_edate_${idx}`);if(el){el.value=dateVal;el.readOnly=true;el.classList.add('prefilled');}}
 }
 function removeClientEvent(idx){const el=document.getElementById(`cev_${idx}`);if(el)el.remove();}
