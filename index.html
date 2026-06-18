@@ -1078,12 +1078,11 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 
     <!-- 19. Media -->
     <div class="section">
-      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>📸 19. Media &amp; Content Release</span><span class="toggle-icon">&#9660;</span></div>
+      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>📸 19. Media &amp; Content Release</span><span class="toggle-icon">&#9660;</span></div>
       <div class="section-body">
-        <p class="clause">By signing this agreement, the Client grants The BBQ Guys Chicago permission to photograph, film, and share catering setup, live cooking, food presentation, and behind-the-scenes content from the event for use on social media (@thebbqguyschicago on Instagram) and promotional materials. Clients who prefer limited sharing may discuss specific restrictions with The BBQ Guys Chicago prior to signing; any agreed restrictions must be documented in writing as an addendum.</p>
-        <div class="checkbox-row"><input type="checkbox" id="media_release_agree"/><label for="media_release_agree"><strong>I acknowledge and agree to the Media &amp; Content Release above.</strong> (Required)</label></div>
-        <div class="checkbox-row"><input type="checkbox" id="permit_vendor_tags"/><label for="permit_vendor_tags">Client also permits tagging of venue and other vendors in shared content. <span style="font-size:0.65rem;background:#e8f4e8;color:#2d7a2d;border-radius:3px;padding:1px 5px;font-weight:700;">OPTIONAL</span></label></div>
-      </div>
+        <p class="clause">The BBQ Guys Chicago reserves the right to photograph, film, and record food presentation, live cooking, and behind-the-scenes content at any event serviced under this agreement for use in promotional materials, social media (<strong>@thebbqguyschicago</strong> on Instagram and Facebook), and marketing purposes. No prior approval from the Client is required for such content.</p>
+        <p class="clause">Content will focus on The BBQ Guys Chicago's food and service. Guests and hosts will not be identified by name without their consent. If the Client has specific restrictions regarding filming or photography at their event, these must be communicated in writing to The BBQ Guys Chicago at least <strong>7 days before the event</strong> and documented as an addendum to this agreement.</p>
+        <div class="checkbox-row"><input type="checkbox" id="permit_vendor_tags"/><label for="permit_vendor_tags">Client also permits tagging of venue and other vendors in shared content. <span style="font-size:0.65rem;background:#e8f4e8;color:#2d7a2d;border-radius:3px;padding:1px 5px;font-weight:700;font-family:'Inter',sans-serif;">OPTIONAL</span></label></div></div>
     </div>
 
     <!-- FAQ -->
@@ -2040,7 +2039,7 @@ window.submitContract=async function(){
   if(!document.getElementById('cancellation_confirm')?.checked){const el=document.getElementById('cancellation_confirm');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you have read the Cancellation Policy.');return;}
   if(!document.getElementById('chargeback_confirm')?.checked){const el=document.getElementById('chargeback_confirm');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm the Chargeback Protection clause.');return;}
   if(!document.getElementById('menu_confirm')?.checked){const el=document.getElementById('menu_confirm');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm your menu selections in Section 2.');return;}
-  if(!document.getElementById('media_release_agree')?.checked){const el=document.getElementById('media_release_agree');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please acknowledge the Media & Content Release in Section 18.');return;}
+
   if(!document.getElementById('review_acknowledge')?.checked){const el=document.getElementById('review_acknowledge');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm Section 19 — Review & Referral.');return;}
   if(!document.getElementById('retainer_confirm')?.checked){document.getElementById('retainer_confirm')?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you understand the $200 non-refundable deposit is due immediately upon signing.');return;}
   if(!document.getElementById('read_all_sections')?.checked){document.getElementById('read_all_sections')?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you have read and understood all sections of this contract.');return;}
