@@ -536,12 +536,26 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <div class="food-section-wrap">
         <div class="food-section-title">Sec 7 — Gravy Entrees</div>
         <div class="food-items-grid">
-          <div class="food-cb-row"><input type="checkbox" class="h_food_gravy"/><label>Karahi (Chk or Mutton)</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_gravy"/><label>Chk Kashmiri Handi</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_gravy"/><label>Butter Chicken</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_gravy"/><label>Chk Reshmi Handi</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_gravy"/><label>Beef Nihari</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_gravy"/><label>Qorma (Chk or Goat)</label></div>
+          <div class="fcb">
+            <input type="checkbox" id="gravy_karahi_cb" class="h_food_gravy" onchange="toggleProtein('gravy_karahi_protein',this.checked)"/>
+            <label style="margin-right:8px;">Karahi</label>
+            <select id="gravy_karahi_protein" disabled style="border:1px solid var(--border);border-radius:4px;padding:4px 8px;font-size:0.8rem;font-family:'Inter',sans-serif;color:var(--body);background:var(--field-bg);opacity:0.4;cursor:not-allowed;transition:all 0.2s;">
+              <option value="Chicken">Chicken</option>
+              <option value="Mutton">Mutton</option>
+            </select>
+          </div>
+          <div class="fcb"><input type="checkbox" class="h_food_gravy"/><label>Chk Kashmiri Handi</label></div>
+          <div class="fcb"><input type="checkbox" class="h_food_gravy"/><label>Butter Chicken</label></div>
+          <div class="fcb"><input type="checkbox" class="h_food_gravy"/><label>Chk Reshmi Handi</label></div>
+          <div class="fcb"><input type="checkbox" class="h_food_gravy"/><label>Beef Nihari</label></div>
+          <div class="fcb">
+            <input type="checkbox" id="gravy_qorma_cb" class="h_food_gravy" onchange="toggleProtein('gravy_qorma_protein',this.checked)"/>
+            <label style="margin-right:8px;">Qorma</label>
+            <select id="gravy_qorma_protein" disabled style="border:1px solid var(--border);border-radius:4px;padding:4px 8px;font-size:0.8rem;font-family:'Inter',sans-serif;color:var(--body);background:var(--field-bg);opacity:0.4;cursor:not-allowed;transition:all 0.2s;">
+              <option value="Chicken">Chicken</option>
+              <option value="Goat">Goat</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -549,12 +563,30 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <div class="food-section-wrap">
         <div class="food-section-title">Sec 8 — Rice Entrees</div>
         <div class="food-items-grid">
-          <div class="food-cb-row"><input type="checkbox" class="h_food_rice"/><label>Zeera Rice</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_rice"/><label>Chickpea Rice</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_rice"/><label>Frontier Rice</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_rice"/><label>Fried Rice</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_rice"/><label>Pulao (Chk/Beef/Goat)</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_rice"/><label>Biryani (Chk/Beef/Goat)</label></div>
+          <div class="fcb"><input type="checkbox" class="h_food_rice"/><label>Zeera Rice</label></div>
+          <div class="fcb"><input type="checkbox" class="h_food_rice"/><label>Chickpea Rice</label></div>
+          <div class="fcb"><input type="checkbox" class="h_food_rice"/><label>Frontier Rice</label></div>
+          <div class="fcb"><input type="checkbox" class="h_food_rice"/><label>Fried Rice</label></div>
+        </div>
+        <div style="margin-top:8px;">
+          <div class="fcb" style="margin-bottom:6px;">
+            <input type="checkbox" id="rice_pulao_cb" class="h_food_rice" onchange="toggleProtein('rice_pulao_protein',this.checked)"/>
+            <label style="margin-right:8px;">Pulao</label>
+            <select id="rice_pulao_protein" disabled style="border:1px solid var(--border);border-radius:4px;padding:4px 8px;font-size:0.8rem;font-family:'Inter',sans-serif;color:var(--body);background:var(--field-bg);opacity:0.4;cursor:not-allowed;transition:all 0.2s;">
+              <option value="Chicken">Chicken</option>
+              <option value="Beef">Beef</option>
+              <option value="Goat">Goat</option>
+            </select>
+          </div>
+          <div class="fcb">
+            <input type="checkbox" id="rice_biryani_cb" class="h_food_rice" onchange="toggleProtein('rice_biryani_protein',this.checked)"/>
+            <label style="margin-right:8px;">Biryani</label>
+            <select id="rice_biryani_protein" disabled style="border:1px solid var(--border);border-radius:4px;padding:4px 8px;font-size:0.8rem;font-family:'Inter',sans-serif;color:var(--body);background:var(--field-bg);opacity:0.4;cursor:not-allowed;transition:all 0.2s;">
+              <option value="Chicken">Chicken</option>
+              <option value="Beef">Beef</option>
+              <option value="Goat">Goat</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -793,7 +825,6 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
             <tr><td>Chafing Setup</td><td class="prefilled-cell" id="d_chafing_fee">—</td></tr>
             <tr><td><strong>Non-Refundable Deposit Paid</strong></td><td class="prefilled-cell" id="d_deposit">—</td></tr>
             <tr><td>TOTAL REMAINING</td><td class="prefilled-cell" id="d_fee_retainer">—</td></tr>
-            <tr><td>Remaining Balance (due 14 days before event)</td><td class="prefilled-cell" id="d_fee_balance">—</td></tr>
             <tr class="total-row"><td>TOTAL REMAINING</td><td id="d_total_remaining">—</td></tr>
           </tbody>
         </table>
@@ -1191,24 +1222,24 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 </div>
 
 <script>
-const EMAILJS_PUBLIC_KEY  = 'YOUR_EMAILJS_PUBLIC_KEY';
-const EMAILJS_SERVICE_ID  = 'YOUR_EMAILJS_SERVICE_ID';
-const EMAILJS_TEMPLATE_ID = 'YOUR_EMAILJS_TEMPLATE_ID';
+const EMAILJS_PUBLIC_KEY  = 'fht2-kw4VKBW7XNc1';
+const EMAILJS_SERVICE_ID  = 'service_vs453nz';
+const EMAILJS_TEMPLATE_ID = 'template_f16mo5a';
 const TAX_RATE = 0.1025; // 10.25% Chicago tax rate
 const EVENT_TYPES = ['Wedding Reception','Mehndi','Nikkah','Walima','Baraat','Engagement','Birthday','Corporate Event','Anniversary','Graduation','Dholki','Other'];
 const FOOD_SECTIONS = [
-  {key:'tikka',   label:'Chicken Tikka (Sec 1)',      cls:'hf_tikka'},
-  {key:'boti',    label:'Chicken Boti (Sec 2)',       cls:'hf_boti'},
-  {key:'kabab',   label:'Kabab / Beef (Sec 3)',       cls:'hf_kabab'},
-  {key:'goat',    label:'Goat Delicacies (Sec 4)',    cls:'hf_goat'},
-  {key:'seafood', label:'Seafood (Sec 5)',            cls:'hf_seafood'},
-  {key:'veg',     label:'Vegetarian (Sec 6)',         cls:'hf_veg'},
-  {key:'gravy',   label:'Gravy Entrees (Sec 7)',      cls:'hf_gravy'},
-  {key:'rice',    label:'Rice Entrees (Sec 8)',       cls:'hf_rice'},
-  {key:'bread',   label:'Bread (Sec 9)',              cls:'hf_bread'},
-  {key:'american',label:'American Grill (Sec 10)',    cls:'hf_american'},
-  {key:'apps',    label:'Appetizers',                 cls:'hf_apps'},
-  {key:'dessert', label:'Desserts & Drinks (Sec 11)', cls:'hf_dessert'},
+  {key:'tikka',   label:'Chicken Tikka (Sec 1)',      cls:'h_food_tikka'},
+  {key:'boti',    label:'Chicken Boti (Sec 2)',       cls:'h_food_boti'},
+  {key:'kabab',   label:'Kabab / Beef (Sec 3)',       cls:'h_food_kabab'},
+  {key:'goat',    label:'Goat Delicacies (Sec 4)',    cls:'h_food_goat'},
+  {key:'seafood', label:'Seafood (Sec 5)',            cls:'h_food_seafood'},
+  {key:'veg',     label:'Vegetarian (Sec 6)',         cls:'h_food_veg'},
+  {key:'gravy',   label:'Gravy Entrees (Sec 7)',      cls:'h_food_gravy'},
+  {key:'rice',    label:'Rice Entrees (Sec 8)',       cls:'h_food_rice'},
+  {key:'bread',   label:'Bread (Sec 9)',              cls:'h_food_bread'},
+  {key:'american',label:'American Grill (Sec 10)',    cls:'h_food_american'},
+  {key:'apps',    label:'Appetizers',                 cls:'h_food_apps'},
+  {key:'dessert', label:'Desserts & Drinks (Sec 11)', cls:'h_food_dessert'},
   {key:'custom',  label:'Custom / Special Items',     cls:'hf_custom'},
 ];
 
@@ -1252,6 +1283,15 @@ function addHostEvent(){
 function removeHostEvent(idx){const el=document.getElementById(`hev_${idx}`);if(el)el.remove();}
 addHostEvent();
 
+// ── Protein dropdown toggle ──
+function toggleProtein(selectId, checked) {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  sel.disabled = !checked;
+  sel.style.opacity = checked ? '1' : '0.4';
+  sel.style.cursor = checked ? 'pointer' : 'not-allowed';
+}
+
 // ── Custom item management ──
 let customItemCount = 0;
 function addCustomItem() {
@@ -1279,13 +1319,46 @@ function collectFood(){
   const result={};
   FOOD_SECTIONS.forEach(sec=>{
     if (sec.key === 'custom') {
-      // Collect custom text inputs
       const items = [];
       document.querySelectorAll('[id^="custom_text_"]').forEach(input => {
         const val = input.value.trim();
         if (val) items.push(val);
       });
       if (items.length > 0) result['custom'] = items;
+      return;
+    }
+    if (sec.key === 'rice') {
+      const items = [];
+      document.querySelectorAll('.h_food_rice:checked').forEach(cb => {
+        if (cb.id === 'rice_pulao_cb') {
+          const protein = document.getElementById('rice_pulao_protein')?.value||'Chicken';
+          items.push('Pulao ('+protein+')');
+        } else if (cb.id === 'rice_biryani_cb') {
+          const protein = document.getElementById('rice_biryani_protein')?.value||'Chicken';
+          items.push('Biryani ('+protein+')');
+        } else {
+          const lbl = cb.parentElement?.querySelector('label')?.textContent?.trim();
+          if (lbl) items.push(lbl);
+        }
+      });
+      if (items.length > 0) result['rice'] = items;
+      return;
+    }
+    if (sec.key === 'gravy') {
+      const items = [];
+      document.querySelectorAll('.h_food_gravy:checked').forEach(cb => {
+        if (cb.id === 'gravy_karahi_cb') {
+          const protein = document.getElementById('gravy_karahi_protein')?.value||'Chicken';
+          items.push('Karahi ('+protein+')');
+        } else if (cb.id === 'gravy_qorma_cb') {
+          const protein = document.getElementById('gravy_qorma_protein')?.value||'Chicken';
+          items.push('Qorma ('+protein+')');
+        } else {
+          const lbl = cb.parentElement?.querySelector('label')?.textContent?.trim();
+          if (lbl) items.push(lbl);
+        }
+      });
+      if (items.length > 0) result['gravy'] = items;
       return;
     }
     const cbs=document.querySelectorAll(`.${sec.cls}:checked`);
@@ -1315,14 +1388,17 @@ function generateLink(){
   const gc=document.getElementById('h_guest_count')?.value||'';
   const svc=document.getElementById('h_service_type')?.value||'';
   const rpp=document.getElementById('h_rate_pp')?.value||'';
-  const travel=document.getElementById('h_travel_fee')?.value||document.getElementById('h_fee_travel')?.value||'0';
-  const chafing=document.getElementById('h_chafing_fee')?.value||document.getElementById('h_fee_chafing')?.value||'0';
-  const deposit=document.getElementById('h_deposit')?.value||document.getElementById('h_fee_retainer')?.value?.replace('$','')||'200';
-  const addons='0';
+  // Read from host panel fee fields (the ones the host actually fills in)
+  const rateVal = document.getElementById('h_fee_single')?.value?.replace('$','')||document.getElementById('h_rate_pp')?.value||'0';
+  const travel = document.getElementById('h_fee_travel')?.value?.replace('$','')||document.getElementById('h_travel_fee')?.value||'0';
+  const chafing = document.getElementById('h_fee_chafing')?.value?.replace('$','')||document.getElementById('h_chafing_fee')?.value||'0';
+  const deposit = document.getElementById('h_fee_retainer')?.value?.replace('$','')||document.getElementById('h_deposit')?.value||'200';
+  const addons = '0';
   if(pkg)p.set('pkg',pkg);if(gc)p.set('guest_count',gc);
-  if(svc)p.set('service_type',svc);if(rpp)p.set('rate_pp',rpp);
+  if(svc)p.set('service_type',svc);
+  p.set('rate_pp',rateVal);
   p.set('travel_fee',travel);p.set('chafing_fee',chafing);p.set('deposit',deposit);p.set('addons',addons);
-  const gNum=parseInt(gc)||0;const rNum=parseFloat(rpp)||0;
+  const gNum=parseInt(gc)||0;const rNum=parseFloat(rateVal)||0;
   const foodSub=gNum*rNum;const tax=foodSub*TAX_RATE;
   const dep=parseFloat(deposit)||200;const tr=parseFloat(travel)||0;
   const ch=parseFloat(chafing)||0;const ad=parseFloat(addons)||0;
@@ -1368,10 +1444,8 @@ function addClientEvent(prefill={}){
       <div class="field-group"><label>Venue Name <span class="req-badge">REQUIRED</span></label><input type="text" id="c_venue_${idx}" placeholder="Venue name"/></div>
       <div class="field-group"><label>Venue Address <span class="req-badge">REQUIRED</span></label><input type="text" id="c_addr_${idx}" placeholder="Full address"/></div>
     </div>
-    <div class="cfield-row three">
-      <div class="field-group"><label>Guest Arrival Time <span class="req-badge">REQUIRED</span></label><input type="time" id="c_arrival_${idx}"/></div>
-      <div class="field-group"><label>Food Service Start <span class="req-badge">REQUIRED</span></label><input type="time" id="c_start_${idx}"/></div>
-      <div class="field-group"><label>Estimated End Time <span class="req-badge">REQUIRED</span></label><input type="time" id="c_end_${idx}"/></div>
+    <div class="cfield-row full">
+      <div class="field-group"><label>Food Service Start Time <span class="req-badge">REQUIRED</span></label><input type="time" id="c_start_${idx}"/></div>
     </div>
     <div class="cfield-row two">
       <div class="field-group"><label>Confirmed Guest Count <span class="req-badge">REQUIRED</span></label><input type="text" inputmode="numeric" pattern="[0-9]*" id="c_guests_${idx}" placeholder="e.g. 150"/></div>
@@ -1541,14 +1615,14 @@ window.submitContract=async function(){
     const id=blocks[i].id.replace('cev_','');const n=i+1;
     const ed=document.getElementById(`c_edate_${id}`);const ve=document.getElementById(`c_venue_${id}`);
     const ad=document.getElementById(`c_addr_${id}`);const st=document.getElementById(`c_start_${id}`);
-    const en=document.getElementById(`c_end_${id}`);const gu=document.getElementById(`c_guests_${id}`);
-    const ar=document.getElementById(`c_arrival_${id}`);
+    const en=null;const gu=document.getElementById(`c_guests_${id}`);
+    const ar=null;
     if(!ed?.value){fieldErr(ed,`Please enter the event date for Event ${n}.`);return;}
     if(!ve?.value?.trim()){fieldErr(ve,`Please enter the venue name for Event ${n}.`);return;}
     if(!ad?.value?.trim()){fieldErr(ad,`Please enter the venue address for Event ${n}.`);return;}
-    if(!ar?.value){fieldErr(ar,`Please enter the guest arrival time for Event ${n}.`);return;}
+    
     if(!st?.value){fieldErr(st,`Please enter the food service start time for Event ${n}.`);return;}
-    if(!en?.value){fieldErr(en,`Please enter the estimated end time for Event ${n}.`);return;}
+    
     if(!gu?.value){fieldErr(gu,`Please enter the confirmed guest count for Event ${n}.`);return;}
   }
   if(!document.getElementById('menu_confirm')?.checked){const el=document.getElementById('menu_confirm');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm your menu selections in Section 2.');return;}
@@ -1574,13 +1648,13 @@ window.submitContract=async function(){
     const edate=fmtDate(document.getElementById(`c_edate_${id}`)?.value||'');
     const venue=document.getElementById(`c_venue_${id}`)?.value||'—';
     const addr=document.getElementById(`c_addr_${id}`)?.value||'—';
-    const arrival=fmtTime(document.getElementById(`c_arrival_${id}`)?.value||'');
+    const arrival='';
     const start=fmtTime(document.getElementById(`c_start_${id}`)?.value||'');
-    const end=fmtTime(document.getElementById(`c_end_${id}`)?.value||'');
+    const end='';
     const guests=document.getElementById(`c_guests_${id}`)?.value||'—';
     const timeline=document.getElementById(`c_timeline_${id}`)?.value||'';
     venueFirst.push(venue);
-    eventLines.push(`${etype} — ${edate}\nVenue: ${venue}, ${addr}\nGuests: ${guests} | Arrival: ${arrival} | Food Service: ${start} | End: ${end}${timeline?'\nTimeline: '+timeline:''}`);
+    eventLines.push(`${etype} — ${edate}\nVenue: ${venue}, ${addr}\nGuests: ${guests} | Food Service Start: ${start}${timeline?'\nTimeline: '+timeline:''}`);
   });
 
   let foodSummary='';
