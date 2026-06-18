@@ -565,6 +565,10 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <div class="host-section-label">Service Type</div>
       <div class="hrow two">
         <div class="hf">
+          <label>Estimated Guest Count</label>
+          <input type="text" id="h_guest_count" placeholder="e.g. 150" inputmode="numeric" oninput="updateLivePreview()"/>
+        </div>
+        <div class="hf">
           <label>Service Style</label>
           <select id="h_service_type">
             <option value="">Select…</option>
