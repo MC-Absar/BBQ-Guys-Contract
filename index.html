@@ -637,7 +637,8 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <div class="host-section-label">Fees</div>
       <div class="fee-grid">
         <div class="hf"><label>Per-Person Rate</label><input type="text" id="h_fee_single" placeholder="$0.00"/></div>
-        <div class="hf"><label>Add-Ons / Extras</label><input type="text" id="h_fee_addons" placeholder="$0.00"/></div>
+        <div class="hf"><label>Travel Fee</label><input type="text" id="h_fee_travel" placeholder="$0.00"/></div>
+        <div class="hf"><label>Chafing Setup Fee</label><input type="text" id="h_fee_chafing" placeholder="$0.00"/></div>
         <div class="hf"><label>Retainer (due on signing — $200 minimum)</label><input type="text" id="h_fee_retainer" value="$200.00"/></div>
         <div class="hf"><label>Remaining Balance</label><input type="text" id="h_fee_balance" placeholder="$0.00"/></div>
         <div class="hf"><label>Total</label><input type="text" id="h_fee_total" placeholder="$0.00"/></div>
@@ -790,7 +791,6 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
             <tr style="font-style:italic;"><td>Tax (10.25% Chicago rate — food items only)</td><td class="prefilled-cell" id="d_tax">—</td></tr>
             <tr><td>Travel Fee</td><td class="prefilled-cell" id="d_travel_fee">—</td></tr>
             <tr><td>Chafing Setup</td><td class="prefilled-cell" id="d_chafing_fee">—</td></tr>
-            <tr><td>Add-Ons / Extras</td><td class="prefilled-cell" id="d_addons">—</td></tr>
             <tr><td><strong>Non-Refundable Deposit Paid</strong></td><td class="prefilled-cell" id="d_deposit">—</td></tr>
             <tr><td>TOTAL REMAINING</td><td class="prefilled-cell" id="d_fee_retainer">—</td></tr>
             <tr><td>Remaining Balance (due 14 days before event)</td><td class="prefilled-cell" id="d_fee_balance">—</td></tr>
@@ -1316,10 +1316,10 @@ function generateLink(){
   const gc=document.getElementById('h_guest_count')?.value||'';
   const svc=document.getElementById('h_service_type')?.value||'';
   const rpp=document.getElementById('h_rate_pp')?.value||'';
-  const travel=document.getElementById('h_travel_fee')?.value||'0';
-  const chafing=document.getElementById('h_chafing_fee')?.value||'0';
-  const deposit=document.getElementById('h_deposit')?.value||'200';
-  const addons=document.getElementById('h_addons')?.value||'0';
+  const travel=document.getElementById('h_travel_fee')?.value||document.getElementById('h_fee_travel')?.value||'0';
+  const chafing=document.getElementById('h_chafing_fee')?.value||document.getElementById('h_fee_chafing')?.value||'0';
+  const deposit=document.getElementById('h_deposit')?.value||document.getElementById('h_fee_retainer')?.value?.replace('$','')||'200';
+  const addons='0';
   if(pkg)p.set('pkg',pkg);if(gc)p.set('guest_count',gc);
   if(svc)p.set('service_type',svc);if(rpp)p.set('rate_pp',rpp);
   p.set('travel_fee',travel);p.set('chafing_fee',chafing);p.set('deposit',deposit);p.set('addons',addons);
