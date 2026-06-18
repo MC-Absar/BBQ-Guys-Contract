@@ -1171,7 +1171,15 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
   <div class="success-screen" id="successScreen">
     <div style="margin:0 auto 24px;font-family:'Georgia',serif;text-align:center;"><div style="font-size:1.6rem;font-weight:900;color:#1a1a1a;letter-spacing:0.06em;line-height:1.1;">THE BBQ GUYS</div><div style="font-size:0.85rem;font-weight:700;color:#C9950A;letter-spacing:0.2em;text-transform:uppercase;margin-top:2px;">CHICAGO</div></div>
     <h2>Contract Signed! 🔥</h2>
-    <p>Thank you! Your catering agreement has been recorded. The BBQ Guys Chicago will be in touch shortly to finalize your event details.</p>
+    <div style="background:linear-gradient(135deg,#1a0a0a,#3d0000);border-radius:12px;padding:20px 22px;margin:16px 0;text-align:center;">
+      <div style="font-size:1rem;font-weight:700;color:#C9950A;font-family:'Georgia',serif;margin-bottom:8px;">Thank you for choosing The BBQ Guys Chicago!</div>
+      <div style="font-size:0.82rem;color:rgba(255,255,255,0.75);font-family:'Inter',sans-serif;line-height:1.7;">Your catering agreement has been recorded. To secure your date, please send the <strong style="color:#fff;">$200 non-refundable retainer</strong> at your earliest convenience.</div>
+      <div style="margin-top:14px;padding:12px 16px;background:rgba(201,149,10,0.12);border:1px solid rgba(201,149,10,0.3);border-radius:8px;">
+        <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:4px;">Send Retainer via Zelle</div>
+        <div style="font-size:1.2rem;font-weight:900;color:#C9950A;letter-spacing:0.04em;">(224) 400-2402</div>
+        <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);margin-top:2px;">Include your name &amp; event date in the note</div>
+      </div>
+    </div>
     <p style="margin-top:10px;font-size:0.8rem;color:var(--muted);font-family:'Inter',sans-serif;">Refer a friend who books with us and receive a <strong style="color:var(--crimson);">$100 credit</strong> toward your next event! 🎉</p>
     <div class="retainer-card">
       <div class="rc-title">⚡ Submit Your $200 Non-Refundable Retainer to Secure Your Date</div>
@@ -1479,6 +1487,23 @@ function validateHostPanel(){
 function setChafingFee(val){
   const input = document.getElementById('h_fee_chafing');
   if(input){ input.value = val || '0'; updateLivePreview(); }
+}
+
+function openPrintCard(){
+  // Build print URL from current page URL — most reliable approach
+  const currentUrl = window.location.href;
+  let printUrl = currentUrl.includes('?d=1')
+    ? currentUrl.replace('?d=1','?print=1')
+    : currentUrl.replace('&d=1','&print=1');
+  if(!printUrl.includes('print=1')){
+    // Fallback: build from raw params
+    const raw = getRaw();
+    const p = new URLSearchParams();
+    p.set('print','1');
+    Object.keys(raw).forEach(k => { if(k !== 'd') p.set(k, raw[k]); });
+    printUrl = window.location.href.split('?')[0] + '?' + p.toString();
+  }
+  window.open(printUrl, '_blank');
 }
 
 function showContractSummary(){
@@ -2179,12 +2204,18 @@ window.submitContract=async function(){
 
     const gcalDesc = encodeURIComponent(
       'CONTRACT: ' + (cNum||'—') + '\n' +
-      'CLIENT: ' + clientName + ' | ' + (raw['client_phone']||'') + '\n' +
-      'EVENT: ' + fmtTime(startTime) + ' | ' + evDate + '\n' +
-      'VENUE: ' + venue + (addr ? ', ' + addr : '') + '\n' +
-      'GUESTS: ' + guests + '\n' +
-      (menuLines ? 'MENU:\n' + menuLines + '\n' : '') +
-      'PRE-TAX: ' + preTax + ' | TOTAL: ' + total
+      '\n--- CLIENT ---\n' +
+      clientName + '\n' +
+      (raw['client_phone']||'') + '\n' +
+      '\n--- EVENT ---\n' +
+      evDate + ' at ' + fmtTime(startTime) + '\n' +
+      venue + '\n' +
+      (addr ? addr + '\n' : '') +
+      'Guests: ' + guests + '\n' +
+      (menuLines ? '\n--- MENU ---\n' + menuLines + '\n' : '') +
+      '\n--- FEES ---\n' +
+      'Pre-Tax: ' + preTax + '\n' +
+      'Total w/ Tax: ' + total
     );
 
     const gcalText = encodeURIComponent(autoTitle);
