@@ -774,9 +774,18 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
             <tr><td>Travel Fee</td><td class="prefilled-cell" id="d_travel_fee">—</td></tr>
             <tr><td>Chafing Setup</td><td class="prefilled-cell" id="d_chafing_fee">—</td></tr>
             <tr><td><strong>Non-Refundable Deposit Paid</strong></td><td class="prefilled-cell" id="d_deposit">—</td></tr>
+            <tr><td>Add-Ons</td><td class="prefilled-cell" id="d_addons">—</td></tr>
             <tr class="total-row"><td>TOTAL REMAINING</td><td id="d_total_remaining">—</td></tr>
           </tbody>
         </table>
+        <!-- Hidden calc elements for JS setText calls -->
+        <span id="calc_food_sub" style="display:none;"></span>
+        <span id="calc_tax" style="display:none;"></span>
+        <span id="calc_travel_disp" style="display:none;"></span>
+        <span id="calc_chafing_disp" style="display:none;"></span>
+        <span id="calc_addons_disp" style="display:none;"></span>
+        <span id="calc_deposit_disp" style="display:none;"></span>
+        <span id="calc_total_remaining" style="display:none;"></span>
         <p class="clause" style="font-size:0.82rem;color:var(--muted);">Payment methods accepted: Cash &nbsp;|&nbsp; Zelle &nbsp;|&nbsp; Venmo &nbsp;|&nbsp; Check (payable to The BBQ Guys Chicago)</p>
         <p class="clause" style="font-size:0.82rem;">The non-refundable retainer of <strong>$200.00 minimum</strong> is due immediately upon signing this agreement and secures The BBQ Guys Chicago's availability for your event date(s). The remaining balance is due no later than <strong>14 days</strong> prior to the event.</p>
       </div>
@@ -1287,7 +1296,7 @@ function addHostEvent(){
   div.className='host-event-block';div.id=`hev_${idx}`;
   div.innerHTML=`<div class="host-event-label">Event ${idx}<button class="btn-remove-ev" onclick="removeHostEvent(${idx})">✕</button></div>
     <div class="hrow two">
-      <div class="hf"><label>Event Type</label><select id="h_etype_${idx}">${EVENT_TYPES.map(t=>`<option>${t}</option>`).join('')}</select></div>
+      <div class="hf"><label>Event Type</label><select id="h_etype_${idx}">${EVENT_TYPES.map(t=>`<option${t===typeName?' selected':''}>` + t + `</option>`).join('')}</select></div>
       <div class="hf"><label>Date</label><input type="date" id="h_edate_${idx}" min="${new Date().toISOString().split('T')[0]}"/></div>
     </div>`;
   document.getElementById('hostEventList').appendChild(div);
@@ -1667,11 +1676,11 @@ function addClientEvent(prefill={}){
     <div style="display:grid;gap:18px;padding:8px 0;">
       <div class="field-group">
         <label>① Event Type <span class="req-badge">REQUIRED</span></label>
-        <select id="c_etype_${idx}" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;">${EVENT_TYPES.map(t=>`<option>${t}</option>`).join('')}</select>
+        <select id="c_etype_${idx}" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;">${EVENT_TYPES.map(t=>`<option${t===typeName?' selected':''}>` + t + `</option>`).join('')}</select>
       </div>
       <div class="field-group">
         <label>② Event Date <span class="req-badge">REQUIRED</span></label>
-        <input type="date" id="c_edate_${idx}" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;"/>
+        <input type="date" id="c_edate_${idx}" value="${dateVal}" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;"/>
       </div>
       <div class="field-group">
         <label>③ Venue Name <span class="req-badge">REQUIRED</span></label>
@@ -1761,8 +1770,10 @@ function loadClientView(){
   }
   setText('d_rate_pp',raw['rate_pp']?'$'+parseFloat(raw['rate_pp']).toFixed(2)+'/person':'—');
   setText('d_food_sub',raw['food_sub']||'—');
+  setText('d_pretax',raw['pre_tax_total']||'—');
   setText('d_tax',raw['tax_amt']||'—');
   setText('d_travel_fee',raw['travel_fee']&&parseFloat(raw['travel_fee'])>0?'$'+parseFloat(raw['travel_fee']).toFixed(2):'Not applicable');
+  setText('d_addons',raw['addons']&&parseFloat(raw['addons'])>0?'$'+parseFloat(raw['addons']).toFixed(2):'—');
   setText('d_chafing_fee',raw['chafing_fee']&&parseFloat(raw['chafing_fee'])>0?'$'+parseFloat(raw['chafing_fee']).toFixed(2):'Not booked');
   setText('d_addons',raw['addons']&&parseFloat(raw['addons'])>0?'$'+parseFloat(raw['addons']).toFixed(2):'—');
   setText('d_deposit','$'+parseFloat(raw['deposit']||200).toFixed(2)+' (paid)');
@@ -2027,23 +2038,28 @@ window.submitContract=async function(){
   if(raw['celebration']) pp.set('celebration',raw['celebration']);
   // Build full print link — stored as-is for use in contract
   const printLink=baseUrl+'?'+pp.toString();
-  // Build a short print link for email (strip food JSON to keep URL short)
-  const ppShort=new URLSearchParams();ppShort.set('print','1');
-  ppShort.set('client_names',raw['client_names']||cnEl.value||'');
-  ppShort.set('guest_count',raw['guest_count']||'');
-  ppShort.set('pkg',raw['pkg']||'');
-  ppShort.set('service_type',raw['service_type']||'');
-  ppShort.set('events',raw['events']||'[]');
-  ppShort.set('venue',venueFirst[0]||'');
-  if(raw['celebration']) ppShort.set('celebration',raw['celebration']);
-  // Encode food as base64 to prevent URL encoding corruption
-  try {
-    const foodB64 = btoa(unescape(encodeURIComponent(raw['food']||'{}')));
-    ppShort.set('foodb64', foodB64);
-  } catch(e) {
-    ppShort.set('food', raw['food']||'{}');
+  // Print link for email — reuse current contract URL, swap d=1 for print=1
+  // This is the most reliable approach since the URL is already working
+  const currentPageUrl = window.location.href;
+  let printLinkEmail = '';
+  if(currentPageUrl.includes('?d=1') || currentPageUrl.includes('&d=1')){
+    printLinkEmail = currentPageUrl.replace('?d=1','?print=1').replace('&d=1','&print=1');
+  } else {
+    // Fallback: build from params
+    const ppShort=new URLSearchParams();ppShort.set('print','1');
+    ppShort.set('client_names',raw['client_names']||cnEl.value||'');
+    ppShort.set('guest_count',raw['guest_count']||'');
+    ppShort.set('pkg',raw['pkg']||'');
+    ppShort.set('service_type',raw['service_type']||'');
+    ppShort.set('events',raw['events']||'[]');
+    ppShort.set('venue',venueFirst[0]||'');
+    if(raw['celebration']) ppShort.set('celebration',raw['celebration']);
+    try {
+      const foodB64 = btoa(unescape(encodeURIComponent(raw['food']||'{}')));
+      ppShort.set('foodb64', foodB64);
+    } catch(e) { ppShort.set('food', raw['food']||'{}'); }
+    printLinkEmail = baseUrl+'?'+ppShort.toString();
   }
-  const printLinkEmail = baseUrl+'?'+ppShort.toString();
 
   // ── Build .ics calendar link for team ──
   let calLink = '';
@@ -2093,7 +2109,7 @@ window.submitContract=async function(){
     const foodSum = foodSummary.split('\n').slice(0,8).join(', ');
       // Auto-generate title: "BBQ Guys - [FirstName] [GuestCount] ppl - [EventType abbrev]"
       const firstName = clientName.split(' ')[0];
-      const etypeAbbrev = (etype||'Event').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,4);
+      const etypeAbbrev = (etype||'Event').split(' ').map(w=>w.slice(0,2).toUpperCase()).join('').slice(0,4);
       const autoTitle = 'BBQ Guys - ' + firstName + ' ' + guests + ' ppl - ' + etypeAbbrev;
 
       const desc = [
@@ -2152,19 +2168,30 @@ window.submitContract=async function(){
         'END:VCALENDAR'
       ].join('\r\n');
 
-      // Build Google Calendar link manually — URLSearchParams encodes / in dates which breaks it
-      const gcalDetails = encodeURIComponent(desc.slice(0, 1500));
-      const gcalLocation = encodeURIComponent(venue + (addr ? ', ' + addr : ''));
+      // Build Google Calendar link — use %26 so EmailJS doesn't double-encode &
       const gcalText = encodeURIComponent(autoTitle);
+      const gcalLoc = encodeURIComponent(venue + (addr ? ', ' + addr : ''));
+      // Keep details short — just the essentials to avoid URL length issues
+      const gcalDesc = encodeURIComponent(
+        'Client: ' + clientName + '\n' +
+        'Phone: ' + (raw['client_phone']||'') + '\n' +
+        'Guests: ' + guests + '\n' +
+        'Venue: ' + venue + '\n' +
+        (addr ? 'Address: ' + addr + '\n' : '') +
+        'Package: ' + pkg + '\n' +
+        'Total Remaining: ' + total
+      );
+      // Use %26 in place of & so EmailJS href encoding doesn't break it
       calLink = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
-        + '&text=' + gcalText
-        + '&dates=' + dtStart + '/' + dtEnd
-        + '&details=' + gcalDetails
-        + '&location=' + gcalLocation;
+        + '%26text=' + gcalText
+        + '%26dates=' + dtStart + '/' + dtEnd
+        + '%26details=' + gcalDesc
+        + '%26location=' + gcalLoc;
+      // Replace the leading ? separator correctly
+      calLink = calLink.replace('?action=TEMPLATE%26', '?action=TEMPLATE&');
   } catch(e) { calLink = ''; }
 
   const templateParams={
-    celebration:raw['celebration']||'The BBQ Guys Chicago',
     celebration:raw['celebration']||'Catering Event',
     event_date_short:(()=>{ try{ const evs=JSON.parse(raw['events']||'[]'); return evs[0]?.edate ? new Date(evs[0].edate+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—'; } catch(e){ return '—'; }})(),
     client_names:raw['client_names']||cnEl.value||'—',
@@ -2178,7 +2205,6 @@ window.submitContract=async function(){
     pre_tax_total:raw['pre_tax_total']||'—',
     tax_amt:raw['tax_amt']||'—',
     travel_fee:raw['travel_fee']&&parseFloat(raw['travel_fee'])>0?'$'+parseFloat(raw['travel_fee']).toFixed(2):'Not applicable',
-    chafing_fee:raw['chafing_fee']&&parseFloat(raw['chafing_fee'])>0?'$'+parseFloat(raw['chafing_fee']).toFixed(2):'Not booked',
     addons:raw['addons']&&parseFloat(raw['addons'])>0?'$'+parseFloat(raw['addons']).toFixed(2):'—',
     deposit:'$'+parseFloat(raw['deposit']||200).toFixed(2),
     total_remaining:raw['total_remaining']||'—',
@@ -2270,9 +2296,9 @@ window.submitContract=async function(){
   const bar=document.getElementById('progressBar');if(bar)bar.style.display='none';
   // Mark as submitted so refresh can't resubmit
   try{sessionStorage.setItem('bbq_submitted','1');}catch(e){}
-  window.submitContract=function(){return;};
+  
   const wb=document.getElementById('welcomeBanner');if(wb)wb.style.display='none';
-  window.submitContract=function(){return;};
+  
   window.scrollTo({top:0,behavior:'smooth'});
   // Check on load if already submitted this session
   try{
