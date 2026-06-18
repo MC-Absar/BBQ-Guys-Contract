@@ -2109,7 +2109,7 @@ window.submitContract=async function(){
     const foodSum = foodSummary.split('\n').slice(0,8).join(', ');
       // Auto-generate title: "BBQ Guys - [FirstName] [GuestCount] ppl - [EventType abbrev]"
       const firstName = clientName.split(' ')[0];
-      const etypeAbbrev = (etype||'Event').split(' ').map(w=>w.slice(0,2).toUpperCase()).join('').slice(0,4);
+      const etypeAbbrev = (etype||'Event').split(' ').map(w=>w.slice(0,3).toUpperCase()).join('').slice(0,4);
       const autoTitle = 'BBQ Guys - ' + firstName + ' ' + guests + ' ppl - ' + etypeAbbrev;
 
       const desc = [
@@ -2168,10 +2168,9 @@ window.submitContract=async function(){
         'END:VCALENDAR'
       ].join('\r\n');
 
-      // Build Google Calendar link — use %26 so EmailJS doesn't double-encode &
+      // Build Google Calendar link with proper & separators
       const gcalText = encodeURIComponent(autoTitle);
       const gcalLoc = encodeURIComponent(venue + (addr ? ', ' + addr : ''));
-      // Keep details short — just the essentials to avoid URL length issues
       const gcalDesc = encodeURIComponent(
         'Client: ' + clientName + '\n' +
         'Phone: ' + (raw['client_phone']||'') + '\n' +
@@ -2181,15 +2180,13 @@ window.submitContract=async function(){
         'Package: ' + pkg + '\n' +
         'Total Remaining: ' + total
       );
-      // Use %26 in place of & so EmailJS href encoding doesn't break it
+      // Use literal & — EmailJS plain text links preserve & correctly
       calLink = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
-        + '%26text=' + gcalText
-        + '%26dates=' + dtStart + '/' + dtEnd
-        + '%26details=' + gcalDesc
-        + '%26location=' + gcalLoc;
-      // Replace the leading ? separator correctly
-      calLink = calLink.replace('?action=TEMPLATE%26', '?action=TEMPLATE&');
-  } catch(e) { calLink = ''; }
+        + '&text=' + gcalText
+        + '&dates=' + dtStart + '/' + dtEnd
+        + '&details=' + gcalDesc
+        + '&location=' + gcalLoc;
+      } catch(e) { calLink = ''; }
 
   const templateParams={
     celebration:raw['celebration']||'Catering Event',
