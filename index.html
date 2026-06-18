@@ -1117,13 +1117,6 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
               <input type="date" id="client_date" style="border:none;background:transparent;font-size:0.95rem;font-family:'Playfair Display',serif;color:#fff;outline:none;width:100%;cursor:pointer;"/>
             </div>
           </div>
-          <div class="sig-date-box active" style="margin-top:12px;">
-            <div style="flex:1;">
-              <div class="sig-box-label" style="margin-bottom:6px;">Last 4 Digits of Photo ID <span class="req-badge">REQUIRED</span></div>
-              <input type="text" id="client_id_last4" inputmode="numeric" maxlength="4" placeholder="e.g. 4821" style="border:none;background:transparent;font-size:1.1rem;font-family:'Playfair Display',serif;color:#fff;outline:none;width:100%;letter-spacing:0.2em;"/>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -1821,7 +1814,6 @@ window.submitContract=async function(){
   if(!document.getElementById('retainer_confirm')?.checked){document.getElementById('retainer_confirm')?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you understand the $200 non-refundable deposit is due immediately upon signing.');return;}
   if(!document.getElementById('read_all_sections')?.checked){document.getElementById('read_all_sections')?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you have read and understood all sections of this contract.');return;}
   const sigEl=document.getElementById('client_sig_name');if(!sigEl?.value?.trim()){fieldErr(sigEl,'Please type your full legal name to sign the contract.');return;}
-  const idEl=document.getElementById('client_id_last4');if(!idEl?.value?.trim()||idEl.value.trim().length<4){fieldErr(idEl,'Please enter the last 4 digits of your photo ID.');return;}
   const cdEl=document.getElementById('client_date');if(!cdEl?.value){fieldErr(cdEl,'Please enter your signing date.');return;}
 
   const btn=document.getElementById('submitBtn');
@@ -1983,7 +1975,6 @@ window.submitContract=async function(){
     venue_coord:(document.getElementById('venue_coord_name')?.value?.trim()||'None')+(document.getElementById('venue_coord_phone')?.value?.trim()?' — '+document.getElementById('venue_coord_phone').value.trim():''),
     vendor_tags:document.getElementById('permit_vendor_tags')?.checked?'Yes':'No',
     client_sig:sigEl.value.trim(),client_date:fmtDate(cdEl.value),
-    client_id_last4:document.getElementById('client_id_last4')?.value?.trim()||'Not provided',
     mc_date:fmtDate(new Date().toISOString().split('T')[0]),
     submitted_at:new Date().toLocaleString('en-US',{timeZone:'America/Chicago'}),
     client_ip:clientIP,quote_date:raw['quote_date']||'—',
