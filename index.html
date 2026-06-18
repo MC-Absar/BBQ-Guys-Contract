@@ -148,10 +148,22 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 .checkbox-row input[type=checkbox] { margin-top:3px; accent-color:var(--crimson-mid); width:17px; height:17px; flex-shrink:0; }
 
 /* ── Signatures ── */
-.sig-section { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:28px; margin-bottom:80px; box-shadow:var(--shadow-md); }
-.sig-intro { font-size:0.88rem; color:var(--muted); font-style:italic; margin-bottom:20px; line-height:1.7; font-family:'Inter',sans-serif; }
-.sig-grid { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
-.sig-block h4 { font-family:'Inter',sans-serif; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:10px; }
+.sig-section { background:linear-gradient(160deg,var(--dark) 0%,var(--dark2) 100%); border:1px solid rgba(201,149,10,0.25); border-radius:var(--radius); padding:40px 36px; margin-bottom:80px; box-shadow:var(--shadow-lg); }
+.sig-intro { font-size:0.9rem; color:rgba(255,255,255,0.55); font-style:italic; margin-bottom:28px; line-height:1.85; font-family:'Inter',sans-serif; }
+.sig-grid { display:grid; grid-template-columns:1fr 1fr; gap:36px; }
+.sig-block h4 { font-family:'Inter',sans-serif; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; color:var(--gold); margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid rgba(201,149,10,0.3); }
+.sig-box { background:rgba(255,255,255,0.04); border:1.5px solid rgba(201,149,10,0.25); border-radius:10px; padding:22px 24px; display:flex; align-items:center; gap:14px; min-height:100px; transition:border-color 0.2s; }
+.sig-box.active { border-color:var(--gold); background:rgba(201,149,10,0.06); cursor:text; }
+.sig-box:hover { border-color:rgba(201,149,10,0.5); }
+.sig-box-label { font-family:'Inter',sans-serif; font-size:0.6rem; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+.sig-box input { border:none; outline:none; width:100%; font-family:'Playfair Display',serif; font-size:1.6rem; font-style:italic; color:#fff; background:transparent; letter-spacing:0.02em; }
+.sig-box input::placeholder { color:rgba(255,255,255,0.2); font-size:1.1rem; }
+.sig-name-display { font-family:'Playfair Display',serif; font-size:1.6rem; font-style:italic; color:rgba(255,255,255,0.65); letter-spacing:0.02em; }
+.sig-date-box { margin-top:14px; background:rgba(255,255,255,0.04); border-radius:10px; padding:16px 22px; display:flex; align-items:center; gap:14px; border:1.5px solid rgba(201,149,10,0.2); min-height:64px; transition:border-color 0.2s; }
+.sig-date-box.active { border-color:var(--gold); background:rgba(201,149,10,0.06); }
+.sig-date-box input { border:none; background:transparent; font-size:1rem; font-family:'Playfair Display',serif; color:#fff; outline:none; width:100%; }
+.sig-section-title { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:600; color:#fff; letter-spacing:0.04em; margin-bottom:6px; }
+.sig-section-sub { font-size:0.72rem; color:rgba(255,255,255,0.4); letter-spacing:0.08em; text-transform:uppercase; font-family:'Inter',sans-serif; margin-bottom:24px; }
 
 /* ── Submit ── */
 .submit-wrap { text-align:center; padding:12px 0 20px; }
@@ -1047,12 +1059,15 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 
     <!-- Signatures -->
     <div class="sig-section">
-      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>✍️ Electronic Agreement &amp; Signature</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body">
-        <p class="sig-intro">By typing your full legal name and submitting this form, you acknowledge that you have read, understood, and agreed to all terms of this Catering Services Agreement. Your typed name constitutes a legally binding electronic signature under the Illinois Electronic Commerce Security Act (5 ILCS 175) and the federal E-SIGN Act.</p>
-        <div class="checkbox-row warning" style="margin-bottom:16px;">
-          <input type="checkbox" id="retainer_confirm"/>
-          <label for="retainer_confirm"><strong>I understand that the non-refundable $200 deposit is due immediately upon submitting this contract</strong> to secure my event date. Failure to submit payment does not cancel this agreement or release me from its terms. I am liable for all agreed payments.</label>
+      <div style="text-align:center;margin-bottom:28px;">
+        <div class="sig-section-title">✍️ Electronic Agreement &amp; Signature</div>
+        <div class="sig-section-sub">Legally binding under the Illinois E-Commerce Security Act &amp; federal E-SIGN Act</div>
+      </div>
+      <div class="section-body" style="background:transparent;padding:0;">
+        <p class="sig-intro">By typing your full legal name below, you acknowledge that you have read, understood, and agreed to all terms of this Catering Services Agreement. Your typed name constitutes a legally binding electronic signature.</p>od, and agreed to all terms of this Catering Services Agreement. Your typed name constitutes a legally binding electronic signature under the Illinois Electronic Commerce Security Act (5 ILCS 175) and the federal E-SIGN Act.</p>
+        <div style="background:rgba(139,0,0,0.3);border:1px solid rgba(139,0,0,0.5);border-radius:8px;padding:14px 18px;margin-bottom:28px;display:flex;align-items:flex-start;gap:12px;font-size:0.9rem;font-family:'Inter',sans-serif;">
+          <input type="checkbox" id="retainer_confirm" style="margin-top:3px;accent-color:var(--gold);width:18px;height:18px;flex-shrink:0;"/>
+          <label for="retainer_confirm" style="color:rgba(255,255,255,0.85);"><strong style="color:#fff;">I understand that the non-refundable $200 deposit is due immediately upon submitting this contract</strong> to secure my event date. Failure to submit payment does not cancel this agreement or release me from its terms. I am liable for all agreed payments.</label>
         </div>
         <div class="sig-grid">
           <div class="sig-block">
