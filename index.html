@@ -108,11 +108,14 @@ body {
 .client-field-row.three { grid-template-columns:1fr 1fr 1fr; }
 .client-field-row.full { grid-template-columns:1fr; }
 .field-group { display:flex; flex-direction:column; gap:5px; }
-.field-group label { font-family:'Inter',sans-serif; font-size:0.68rem; font-weight:600; color:var(--muted); letter-spacing:0.07em; text-transform:uppercase; }
-.field-group input, .field-group select { border:none; border-bottom:1.5px solid var(--border); background:transparent; padding:8px 2px; font-size:0.94rem; font-family:'Inter',sans-serif; color:var(--body); outline:none; transition:border-color 0.2s; width:100%; }
+.field-group label { font-family:'Inter',sans-serif; font-size:0.7rem; font-weight:700; color:var(--dark); letter-spacing:0.09em; text-transform:uppercase; margin-bottom:2px; }
+.field-group input, .field-group select { border:none; border-bottom:2px solid #C8BFB0; background:transparent; padding:10px 2px; font-size:1rem; font-family:'Inter',sans-serif; color:var(--dark); outline:none; transition:border-color 0.2s; width:100%; font-weight:500; }
 .field-group input:focus, .field-group select:focus { border-bottom-color:var(--crimson-mid); }
-.field-group input.prefilled { color:var(--dark); border-bottom-color:var(--crimson-mid); font-weight:500; }
-.field-group input[readonly].prefilled { cursor:default; opacity:0.85; }
+.field-group input::placeholder, .field-group textarea::placeholder { color:#BBADA0; font-weight:400; font-size:0.92rem; }
+.field-group textarea { border:1.5px solid #C8BFB0; border-radius:6px; padding:10px 12px; resize:vertical; min-height:60px; background:transparent; font-size:0.92rem; font-family:'Inter',sans-serif; color:var(--dark); outline:none; width:100%; }
+.field-group textarea:focus { border-color:var(--crimson-mid); }
+.field-group input.prefilled { color:var(--dark); border-bottom-color:var(--gold); font-weight:600; }
+.field-group input[readonly].prefilled { cursor:default; opacity:0.9; }
 .btn-add-client-event { width:100%; padding:11px; border:1.5px dashed var(--border); background:transparent; border-radius:8px; font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:500; color:var(--muted); cursor:pointer; margin-top:6px; transition:all 0.2s; letter-spacing:0.03em; }
 .btn-add-client-event:hover { border-color:var(--crimson-mid); color:var(--crimson-mid); background:rgba(139,0,0,0.04); }
 .btn-remove-client-event { background:none; border:none; color:#ccc; font-size:0.82rem; cursor:pointer; margin-left:auto; font-family:'Inter',sans-serif; font-weight:500; padding:2px 6px; border-radius:4px; transition:all 0.2s; }
@@ -740,7 +743,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 
         <div class="sub-heading" style="margin-bottom:12px;">Event Date(s) &amp; Venue</div>
         <div id="clientEventList"></div>
-        <button class="btn-add-client-event" onclick="addClientEvent()">+ Add Another Event Date</button>
+
       </div>
     </div>
 
@@ -1063,8 +1066,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <div class="sig-section-title">✍️ Electronic Agreement &amp; Signature</div>
         <div class="sig-section-sub">Legally binding under the Illinois E-Commerce Security Act &amp; federal E-SIGN Act</div>
       </div>
-      <div class="section-body" style="background:transparent;padding:0;">
-        <p class="sig-intro">By typing your full legal name below, you acknowledge that you have read, understood, and agreed to all terms of this Catering Services Agreement. Your typed name constitutes a legally binding electronic signature.</p>od, and agreed to all terms of this Catering Services Agreement. Your typed name constitutes a legally binding electronic signature under the Illinois Electronic Commerce Security Act (5 ILCS 175) and the federal E-SIGN Act.</p>
+      <div class="section-body" style="background:transparent;padding:0;">od, and agreed to all terms of this Catering Services Agreement. Your typed name constitutes a legally binding electronic signature under the Illinois Electronic Commerce Security Act (5 ILCS 175) and the federal E-SIGN Act.</p>
         <div style="background:rgba(139,0,0,0.3);border:1px solid rgba(139,0,0,0.5);border-radius:8px;padding:14px 18px;margin-bottom:28px;display:flex;align-items:flex-start;gap:12px;font-size:0.9rem;font-family:'Inter',sans-serif;">
           <input type="checkbox" id="retainer_confirm" style="margin-top:3px;accent-color:var(--gold);width:18px;height:18px;flex-shrink:0;"/>
           <label for="retainer_confirm" style="color:rgba(255,255,255,0.85);"><strong style="color:#fff;">I understand that the non-refundable $200 deposit is due immediately upon submitting this contract</strong> to secure my event date. Failure to submit payment does not cancel this agreement or release me from its terms. I am liable for all agreed payments.</label>
