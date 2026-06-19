@@ -322,7 +322,15 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 .btn-print-trigger { background:linear-gradient(135deg,var(--crimson-mid),var(--crimson)); color:#fff; border:none; padding:12px 32px; font-size:0.85rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; border-radius:6px; cursor:pointer; transition:all 0.2s; }
 </style>
 </head>
-<body>
+<body><script>
+// Hide host panel immediately if print or client mode — before CSS loads
+(function(){
+  var s=window.location.search;
+  if(s.indexOf('print=1')>-1||s.indexOf('d=1')>-1){
+    document.write('<style>#hostPanel{display:none!important}#contractView{display:'+(s.indexOf('print=1')>-1?'none':'block')+'!important}</style>');
+  }
+})();
+</script>
 
 <!-- ══════════════════════════════════════════
      HOST PREP PANEL
@@ -531,7 +539,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 11 — Desserts &amp; Drinks</div>
         <div class="food-items-grid food-section-body" style="display:none;">
           <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Jalebi</label></div>
-          <div class="food-item"><input type="checkbox" class="h_food_dessert"/><label>Gola Ganda</label></div>
+          <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Gola Ganda</label></div>
           <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Funnel Cake</label></div>
           <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Falooda</label></div>
           <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Sooji ka Halwa</label></div>
