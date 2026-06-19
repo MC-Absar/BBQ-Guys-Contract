@@ -626,6 +626,10 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
           <span style="font-size:0.9rem;font-weight:700;color:var(--dark);font-family:'Inter',sans-serif;" id="contractNumber">—</span>
         </div>
         <p>Share this link with your client to review and sign the contract.</p>
+        <!-- Print Menu Card -->
+        <div id="printMenuBtnWrap" style="display:none;margin-top:10px;">
+          <button onclick="openPrintCard()" style="width:100%;padding:12px;background:#1a0a0a;color:#C9950A;border:1px solid #C9950A;border-radius:8px;font-size:0.82rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.04em;">🖨️ Print Menu Card</button>
+        </div>
         <!-- Contract Status Tracker -->
         <div style="margin-top:14px;">
           <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);font-family:'Inter',sans-serif;margin-bottom:8px;">Contract Status</div>
@@ -1207,7 +1211,6 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <p style="margin-top:12px;font-size:0.72rem;color:#9ca3af;font-style:italic;text-align:center;font-family:'Inter',sans-serif;">Please include your name and event date in the payment note.</p>
     </div>
     <div style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-      <a href="#" onclick="openPrintCard()" style="display:inline-flex;align-items:center;gap:6px;background:#1a0a0a;color:#C9950A;border:1px solid #C9950A;padding:10px 18px;border-radius:50px;font-size:0.78rem;font-weight:700;text-decoration:none;font-family:'Inter',sans-serif;">🖨️ Print Menu Card</a>
       <a id="contractSummaryBtn" href="#" onclick="showContractSummary()" style="display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--muted);border:1px solid var(--border);padding:10px 18px;border-radius:50px;font-size:0.78rem;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;">📄 View Summary</a>
     </div>
     <div id="contractSummaryPanel" style="display:none;background:#fafaf8;border:1px solid var(--border);border-radius:10px;padding:18px;margin:12px 0;text-align:left;font-family:'Inter',sans-serif;font-size:0.82rem;line-height:1.8;color:var(--body);"></div>
@@ -1904,6 +1907,10 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
           <span style="font-size:0.9rem;font-weight:700;color:var(--dark);font-family:'Inter',sans-serif;" id="contractNumber">—</span>
         </div>
         <p>Share this link with your client to review and sign the contract.</p>
+        <!-- Print Menu Card -->
+        <div id="printMenuBtnWrap" style="display:none;margin-top:10px;">
+          <button onclick="openPrintCard()" style="width:100%;padding:12px;background:#1a0a0a;color:#C9950A;border:1px solid #C9950A;border-radius:8px;font-size:0.82rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.04em;">🖨️ Print Menu Card</button>
+        </div>
         <!-- Contract Status Tracker -->
         <div style="margin-top:14px;">
           <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);font-family:'Inter',sans-serif;margin-bottom:8px;">Contract Status</div>
@@ -2485,7 +2492,6 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <p style="margin-top:12px;font-size:0.72rem;color:#9ca3af;font-style:italic;text-align:center;font-family:'Inter',sans-serif;">Please include your name and event date in the payment note.</p>
     </div>
     <div style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-      <a href="#" onclick="openPrintCard()" style="display:inline-flex;align-items:center;gap:6px;background:#1a0a0a;color:#C9950A;border:1px solid #C9950A;padding:10px 18px;border-radius:50px;font-size:0.78rem;font-weight:700;text-decoration:none;font-family:'Inter',sans-serif;">🖨️ Print Menu Card</a>
       <a id="contractSummaryBtn" href="#" onclick="showContractSummary()" style="display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--muted);border:1px solid var(--border);padding:10px 18px;border-radius:50px;font-size:0.78rem;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;">📄 View Summary</a>
     </div>
     <div id="contractSummaryPanel" style="display:none;background:#fafaf8;border:1px solid var(--border);border-radius:10px;padding:18px;margin:12px 0;text-align:left;font-family:'Inter',sans-serif;font-size:0.82rem;line-height:1.8;color:var(--body);"></div>
@@ -3005,6 +3011,7 @@ function generateLink(){
   const cnEl2=document.getElementById('contractNumber');if(cnEl2)cnEl2.textContent=contractNum;
   document.getElementById('generatedLinkBox').style.display='block';
   document.getElementById('duplicateContractWrap').style.display='block';
+  document.getElementById('printMenuBtnWrap').style.display='block';
   document.getElementById('generatedLinkBox').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function copyLink(){
