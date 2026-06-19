@@ -651,7 +651,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 <!-- ══════════════════════════════════════════
      CLIENT CONTRACT VIEW
 ══════════════════════════════════════════ -->
-<div id="contractView">
+<div id="contractView" style="display:none;">
   <div class="header" style="position:relative;overflow:hidden;">
     <canvas id="headerCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:0.5;"></canvas>
     <!-- BBQ Guys Logo -->
@@ -684,7 +684,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <span style="color:#A81010;font-size:0.85rem;letter-spacing:0.2em;">🔥</span>
       <div style="flex:1;max-width:80px;height:1px;background:linear-gradient(to left,transparent,#A81010);"></div>
     </div>
-    <p>This contract is legally binding once signed by both parties. A non-refundable $200 retainer reserves your date.</p>
+    <p>Thank you for choosing The BBQ Guys Chicago! 🔥 To secure your date, send your <strong>$200 non-refundable retainer</strong> via Zelle to <strong>(224) 400-2402</strong> (Asmar) or by Cash/Check payable to The BBQ Guys Chicago.</p>
   </div>
 
   <div id="welcomeBanner">
@@ -1230,12 +1230,12 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
     <div class="pm-header">
       <div class="pm-header-left">
         <div class="pm-event-type" id="pm_event_type">Dinner</div>
-        <div class="pm-event-date" id="pm_date">—</div>
-        <div class="pm-venue-name" id="pm_venue">—</div>
-        <div class="pm-venue-name" id="pm_client" style="margin-top:4px;font-size:0.8rem;color:#aaa;"></div>
-        <div id="pm_guests" style="font-size:0.72rem;color:#aaa;letter-spacing:0.08em;"></div>
         <div id="pm_submitted_at" style="display:none;"></div>
         <div id="pm_svc" style="display:none;"></div>
+        <div id="pm_date" style="display:none;"></div>
+        <div id="pm_venue" style="display:none;"></div>
+        <div id="pm_client" style="display:none;"></div>
+        <div id="pm_guests" style="display:none;"></div>
       </div>
       <div class="pm-logo-text">THE BBQ GUYS<span>CHICAGO</span></div>
     </div>
@@ -1902,6 +1902,11 @@ function loadClientView(){
   if(vDisp && cNum) vDisp.textContent='Contract #'+cNum+' · v2.0 · The BBQ Guys Chicago';
   const cdInput=document.getElementById('client_date');
   if(cdInput && !cdInput.value) cdInput.value=new Date().toISOString().split('T')[0];
+}
+
+// Show correct panel based on URL params
+if(!isClientMode && !isPrintMode){
+  document.getElementById('hostPanel').style.display='block';
 }
 
 if(isClientMode){
