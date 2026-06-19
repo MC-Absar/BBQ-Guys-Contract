@@ -1174,10 +1174,14 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
     <div style="background:linear-gradient(135deg,#1a0a0a,#3d0000);border-radius:12px;padding:20px 22px;margin:16px 0;text-align:center;">
       <div style="font-size:1rem;font-weight:700;color:#C9950A;font-family:'Georgia',serif;margin-bottom:8px;">Thank you for choosing The BBQ Guys Chicago!</div>
       <div style="font-size:0.82rem;color:rgba(255,255,255,0.75);font-family:'Inter',sans-serif;line-height:1.7;">Your catering agreement has been recorded. To secure your date, please send the <strong style="color:#fff;">$200 non-refundable retainer</strong> at your earliest convenience.</div>
-      <div style="margin-top:14px;padding:12px 16px;background:rgba(201,149,10,0.12);border:1px solid rgba(201,149,10,0.3);border-radius:8px;">
-        <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:4px;">Send Retainer via Zelle</div>
-        <div style="font-size:1.2rem;font-weight:900;color:#C9950A;letter-spacing:0.04em;">(224) 400-2402</div>
-        <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);margin-top:2px;">Include your name &amp; event date in the note</div>
+      <div style="margin-top:14px;padding:14px 16px;background:rgba(201,149,10,0.15);border:1px solid rgba(201,149,10,0.4);border-radius:8px;">
+        <div style="font-size:0.68rem;color:rgba(255,255,255,0.5);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px;">Send $200 Non-Refundable Retainer via Zelle</div>
+        <div style="font-size:1.4rem;font-weight:900;color:#C9950A;letter-spacing:0.04em;">(224) 400-2402</div>
+        <div style="font-size:0.72rem;color:rgba(255,255,255,0.45);margin-top:4px;">Include your name &amp; event date in the note</div>
+        <div style="margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+          <a href="sms:2244002402&body=Hi Asmar! I just signed the BBQ Guys Chicago catering contract. Please confirm receipt. Thank you!" style="display:inline-flex;align-items:center;gap:6px;background:#34C759;color:#fff;padding:8px 16px;border-radius:50px;font-size:0.75rem;font-weight:700;text-decoration:none;font-family:'Inter',sans-serif;">💬 Text Asmar</a>
+          <a href="tel:2244002402" style="display:inline-flex;align-items:center;gap:6px;background:#007AFF;color:#fff;padding:8px 16px;border-radius:50px;font-size:0.75rem;font-weight:700;text-decoration:none;font-family:'Inter',sans-serif;">📞 Call</a>
+        </div>
       </div>
     </div>
     <p style="margin-top:10px;font-size:0.8rem;color:var(--muted);font-family:'Inter',sans-serif;">Refer a friend who books with us and receive a <strong style="color:var(--crimson);">$100 credit</strong> toward your next event! 🎉</p>
@@ -1202,6 +1206,11 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       </div>
       <p style="margin-top:12px;font-size:0.72rem;color:#9ca3af;font-style:italic;text-align:center;font-family:'Inter',sans-serif;">Please include your name and event date in the payment note.</p>
     </div>
+    <div style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <a href="#" onclick="openPrintCard()" style="display:inline-flex;align-items:center;gap:6px;background:#1a0a0a;color:#C9950A;border:1px solid #C9950A;padding:10px 18px;border-radius:50px;font-size:0.78rem;font-weight:700;text-decoration:none;font-family:'Inter',sans-serif;">🖨️ Print Menu Card</a>
+      <a id="contractSummaryBtn" href="#" onclick="showContractSummary()" style="display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--muted);border:1px solid var(--border);padding:10px 18px;border-radius:50px;font-size:0.78rem;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;">📄 View Summary</a>
+    </div>
+    <div id="contractSummaryPanel" style="display:none;background:#fafaf8;border:1px solid var(--border);border-radius:10px;padding:18px;margin:12px 0;text-align:left;font-family:'Inter',sans-serif;font-size:0.82rem;line-height:1.8;color:var(--body);"></div>
     <div style="margin-top:18px;text-align:center;">
       <a href="https://instagram.com/thebbqguyschicago" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;font-family:'Inter',sans-serif;font-weight:700;font-size:0.86rem;padding:12px 26px;border-radius:50px;text-decoration:none;margin-bottom:10px;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -1881,7 +1890,7 @@ function loadClientView(){
   });
   try{
     let fRaw='{}';
-    if(raw['foodb64']){try{fRaw=decodeURIComponent(escape(atob(raw['foodb64'])));}catch(e){}}
+    if(raw['foodb64']){try{fRaw=atob(raw['foodb64']);}catch(e){}}
     if(fRaw==='{}'&&raw['food']){fRaw=raw['food'];}
     renderMenuDisplay(JSON.parse(fRaw));
   }catch(e){renderMenuDisplay({});}
@@ -1945,7 +1954,7 @@ function renderPrintCard(){
     let foodRaw = '{}';
     // Try base64 first (more reliable through email links)
     if(raw['foodb64']) {
-      try { foodRaw = decodeURIComponent(escape(atob(raw['foodb64']))); } catch(e) {}
+      try { foodRaw=atob(raw['foodb64']); } catch(e) {}
     }
     // Fall back to raw food param
     if(foodRaw === '{}' && raw['food']) {
@@ -2203,19 +2212,21 @@ window.submitContract=async function(){
     } catch(e) {}
 
     const gcalDesc = encodeURIComponent(
-      'CONTRACT: ' + (cNum||'—') + '\n' +
-      '\n--- CLIENT ---\n' +
-      clientName + '\n' +
-      (raw['client_phone']||'') + '\n' +
-      '\n--- EVENT ---\n' +
-      evDate + ' at ' + fmtTime(startTime) + '\n' +
-      venue + '\n' +
-      (addr ? addr + '\n' : '') +
-      'Guests: ' + guests + '\n' +
-      (menuLines ? '\n--- MENU ---\n' + menuLines + '\n' : '') +
-      '\n--- FEES ---\n' +
+      'Contract #: ' + (cNum||'—') + '\n\n' +
+      'Customer form:\n\n' +
+      'Client name: ' + clientName + '\n' +
+      'Email: ' + (raw['client_email']||'—') + '\n' +
+      'Phone: ' + (raw['client_phone']||'—') + '\n' +
+      'Event Date: ' + evDate + '\n' +
+      'Event serving time: ' + fmtTime(startTime) + '\n' +
+      '# of guests: ' + guests + '\n' +
+      'Event address: ' + venue + (addr ? ', ' + addr : '') + '\n' +
+      (menuLines ? '\nMenu selection:\n' + menuLines + '\n' : '') +
+      '\nQuote:\n' +
       'Pre-Tax: ' + preTax + '\n' +
-      'Total w/ Tax: ' + total
+      'Total w/ Tax: ' + total + '\n' +
+      'Cash, Zelle or Check\n' +
+      'Zelle: (224) 400-2402'
     );
 
     const gcalText = encodeURIComponent(autoTitle);
