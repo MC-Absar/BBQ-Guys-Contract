@@ -2783,20 +2783,37 @@ function setChafingFee(val){
 }
 
 function openPrintCard(){
-  // Build print URL from current page URL — most reliable approach
   const currentUrl = window.location.href;
-  let printUrl = currentUrl.includes('?d=1')
-    ? currentUrl.replace('?d=1','?print=1')
-    : currentUrl.replace('&d=1','&print=1');
-  if(!printUrl.includes('print=1')){
-    // Fallback: build from raw params
-    const raw = getRaw();
-    const p = new URLSearchParams();
-    p.set('print','1');
-    Object.keys(raw).forEach(k => { if(k !== 'd') p.set(k, raw[k]); });
-    printUrl = window.location.href.split('?')[0] + '?' + p.toString();
+  // If we're on the client contract page (?d=1), swap to print=1
+  if(currentUrl.includes('?d=1') || currentUrl.includes('&d=1')){
+    const printUrl = currentUrl.replace('?d=1','?print=1').replace('&d=1','&print=1');
+    window.open(printUrl, '_blank');
+    return;
   }
-  window.open(printUrl, '_blank');
+  // Otherwise we're on the host panel — build print URL from form fields
+  const base = currentUrl.split('?')[0];
+  const p = new URLSearchParams();
+  p.set('print','1');
+  const celebration = document.getElementById('h_celebration')?.value||'';
+  if(celebration) p.set('celebration', celebration);
+  const cn = document.getElementById('h_client_names')?.value||'';
+  if(cn) p.set('client_names', cn);
+  const guests = document.getElementById('h_guest_count')?.value||'';
+  if(guests) p.set('guest_count', guests);
+  const events = [];
+  document.querySelectorAll('.host-event-block').forEach(block=>{
+    const id = block.id.replace('hev_','');
+    const etype = document.getElementById(`h_etype_${id}`)?.value||'';
+    const edate = document.getElementById(`h_edate_${id}`)?.value||'';
+    if(etype||edate) events.push({etype,edate});
+  });
+  p.set('events', JSON.stringify(events));
+  const food = collectFood();
+  p.set('food', JSON.stringify(food));
+  try{ p.set('foodb64', btoa(unescape(encodeURIComponent(JSON.stringify(food))))); }catch(e){}
+  const notes = document.getElementById('h_food_notes')?.value||'';
+  if(notes) p.set('food_notes', notes);
+  window.open(base+'?'+p.toString(), '_blank');
 }
 
 function showContractSummary(){
@@ -3527,7 +3544,8 @@ window.submitContract=async function(){
       'Pre-Tax: ' + preTax + '\n' +
       'Total w/ Tax: ' + total + '\n' +
       'Cash, Zelle or Check\n' +
-      'Zelle: (224) 400-2402'
+      'Zelle: (224) 400-2402\\n\\n' +
+      'PRINT MENU CARD:\\n' + printLinkEmail
     );
 
     const gcalText = encodeURIComponent(autoTitle);
