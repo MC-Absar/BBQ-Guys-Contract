@@ -327,7 +327,9 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 (function(){
   var s=window.location.search;
   if(s.indexOf('print=1')>-1||s.indexOf('d=1')>-1){
-    document.write('<style>#hostPanel{display:none!important}#contractView{display:'+(s.indexOf('print=1')>-1?'none':'block')+'!important}</style>');
+    var st=document.createElement('style');
+    st.textContent='#hostPanel{display:none!important}' + (s.indexOf('print=1')>-1?'#contractView{display:none!important}':'');
+    document.head?document.head.appendChild(st):(document.documentElement.appendChild(st));
   }
 })();
 </script>
