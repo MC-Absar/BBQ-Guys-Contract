@@ -35,7 +35,7 @@ body {
 }
 
 /* ── Host panel ── */
-#hostPanel { min-height:100vh; display:none; align-items:center; justify-content:center; background:linear-gradient(135deg, #0d0603 0%, #1A1008 50%, #2C1A0E 100%); padding:24px; }
+#hostPanel { min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #0d0603 0%, #1A1008 50%, #2C1A0E 100%); padding:24px; }
 .host-card { background:#fff; border-radius:var(--radius); width:100%; max-width:680px; overflow:hidden; box-shadow:var(--shadow-lg); }
 .host-card-header { background:linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%); padding:32px 36px 24px; border-bottom:3px solid var(--crimson-mid); }
 .host-card-header h1 { color:#fff; font-family:'Playfair Display', Georgia, serif; font-size:1.5rem; letter-spacing:0.04em; font-weight:600; }
@@ -398,7 +398,12 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <div class="food-section-wrap">
         <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 3 — Kabab Chk/Beef (4 pcs)</div>
         <div class="food-items-grid food-section-body" style="display:none;">
-          <div class="food-cb-row"><input type="checkbox" class="h_food_kabab"/><label>Seekh Kabab</label></div>
+          <div class="food-cb-row"><input type="checkbox" class="h_food_kabab" id="toggle_seekh_kabab" onclick="toggleProtein('seekh_kabab_protein',this)"/><label>Seekh Kabab</label>
+          <select id="seekh_kabab_protein" disabled style="opacity:0.4;font-size:0.75rem;margin-left:8px;border:1px solid var(--border);border-radius:4px;padding:2px 4px;font-family:'Inter',sans-serif;">
+            <option value="Chicken">Chicken</option>
+            <option value="Beef">Beef</option>
+            <option value="Mutton">Mutton</option>
+          </select></div>
           <div class="food-cb-row"><input type="checkbox" class="h_food_kabab"/><label>Turkish Kabab</label></div>
           <div class="food-cb-row"><input type="checkbox" class="h_food_kabab"/><label>Cheese Kabab</label></div>
           <div class="food-cb-row"><input type="checkbox" class="h_food_kabab"/><label>Beef Bihari Kabab</label></div>
@@ -526,6 +531,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 11 — Desserts &amp; Drinks</div>
         <div class="food-items-grid food-section-body" style="display:none;">
           <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Jalebi</label></div>
+          <div class="food-item"><input type="checkbox" class="h_food_dessert"/><label>Gola Ganda</label></div>
           <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Funnel Cake</label></div>
           <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Falooda</label></div>
           <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Sooji ka Halwa</label></div>
@@ -655,7 +661,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 <!-- ══════════════════════════════════════════
      CLIENT CONTRACT VIEW
 ══════════════════════════════════════════ -->
-<div id="contractView" style="display:none;">
+<div id="contractView">
   <div class="header" style="position:relative;overflow:hidden;">
     <canvas id="headerCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:0.5;"></canvas>
     <!-- BBQ Guys Logo -->
@@ -1316,7 +1322,7 @@ body {
 }
 
 /* ── Host panel ── */
-#hostPanel { min-height:100vh; display:none; align-items:center; justify-content:center; background:linear-gradient(135deg, #0d0603 0%, #1A1008 50%, #2C1A0E 100%); padding:24px; }
+#hostPanel { min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #0d0603 0%, #1A1008 50%, #2C1A0E 100%); padding:24px; }
 .host-card { background:#fff; border-radius:var(--radius); width:100%; max-width:680px; overflow:hidden; box-shadow:var(--shadow-lg); }
 .host-card-header { background:linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%); padding:32px 36px 24px; border-bottom:3px solid var(--crimson-mid); }
 .host-card-header h1 { color:#fff; font-family:'Playfair Display', Georgia, serif; font-size:1.5rem; letter-spacing:0.04em; font-weight:600; }
@@ -1936,7 +1942,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 <!-- ══════════════════════════════════════════
      CLIENT CONTRACT VIEW
 ══════════════════════════════════════════ -->
-<div id="contractView" style="display:none;">
+<div id="contractView">
   <div class="header" style="position:relative;overflow:hidden;">
     <canvas id="headerCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:0.5;"></canvas>
     <!-- BBQ Guys Logo -->
@@ -2688,7 +2694,15 @@ function collectFood(){
       return;
     }
     const cbs=document.querySelectorAll(`.${sec.cls}:checked`);
-    if(cbs.length>0){const labels=[];cbs.forEach(cb=>{const lbl=cb.parentElement?.querySelector('label')?.textContent?.trim();if(lbl)labels.push(lbl);});result[sec.key]=labels;}
+    if(cbs.length>0){const labels=[];cbs.forEach(cb=>{
+      // Special case: Seekh Kabab has protein options
+      if(cb.id === 'toggle_seekh_kabab'){
+        const protein = document.getElementById('seekh_kabab_protein')?.value || 'Chicken';
+        labels.push('Seekh Kabab (' + protein + ')');
+      } else {
+        const lbl=cb.parentElement?.querySelector('label')?.textContent?.trim();if(lbl)labels.push(lbl);
+      }
+    });result[sec.key]=labels;}
   });
   return result;
 }
@@ -3039,6 +3053,13 @@ function copyLink(){
 const params=new URLSearchParams(window.location.search);
 const isClientMode=params.has('d');
 const isPrintMode=params.has('print');
+// Hide host panel immediately if in print or client mode
+if(isPrintMode || isClientMode){
+  document.addEventListener('DOMContentLoaded', function(){
+    const hp = document.getElementById('hostPanel');
+    if(hp) hp.style.display='none';
+  });
+}
 
 let clientEventCount=0;
 function addClientEvent(prefill={}){
@@ -3205,11 +3226,6 @@ function loadClientView(){
   if(cdInput && !cdInput.value) cdInput.value=new Date().toISOString().split('T')[0];
 }
 
-// Show correct panel based on URL params
-if(!isClientMode && !isPrintMode){
-  document.getElementById('hostPanel').style.display='flex';
-}
-
 if(isClientMode){
   // Check 30-day expiry
   const expiresParam = params.get('expires');
@@ -3239,8 +3255,8 @@ if(isClientMode){
 
 function renderPrintCard(){
   // Hide everything else with !important
-  document.getElementById('hostPanel').style.cssText='display:none !important';
-  document.getElementById('contractView').style.cssText='display:none !important';
+  document.getElementById('hostPanel').style.display='none';
+  document.getElementById('contractView').style.display='none';
   // Show print card
   const pmv = document.getElementById('printMenuView');
   pmv.style.display='block';
@@ -3544,8 +3560,10 @@ window.submitContract=async function(){
       'Pre-Tax: ' + preTax + '\n' +
       'Total w/ Tax: ' + total + '\n' +
       'Cash, Zelle or Check\n' +
-      'Zelle: (224) 400-2402\\n\\n' +
-      'PRINT MENU CARD:\\n' + printLinkEmail
+      'Zelle: (224) 400-2402\n\n' +
+      '---\n' +
+      'PRINT MENU CARD:\n' +
+      printLinkEmail
     );
 
     const gcalText = encodeURIComponent(autoTitle);
