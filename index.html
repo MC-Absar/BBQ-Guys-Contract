@@ -3554,7 +3554,7 @@ window.submitContract=async function(){
     } catch(e) {}
 
     const gcalDesc = encodeURIComponent(
-      'Contract #: ' + (cNum||'—') + '\n\n' +
+      'Contract #: ' + (cNum||raw['contract_num']||'—') + '\n\n' +
       'Customer form:\n\n' +
       'Client name: ' + clientName + '\n' +
       'Email: ' + (raw['client_email']||'—') + '\n' +
@@ -3569,8 +3569,7 @@ window.submitContract=async function(){
       'Total w/ Tax: ' + total + '\n' +
       'Cash, Zelle or Check\n' +
       'Zelle: (224) 400-2402\n\n' +
-      '---\n' +
-      'PRINT MENU CARD:\n' +
+      '--- PRINT MENU CARD ---\n' +
       printLinkEmail
     );
 
