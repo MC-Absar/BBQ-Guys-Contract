@@ -35,1304 +35,7 @@ body {
 }
 
 /* ── Host panel ── */
-#hostPanel { min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #0d0603 0%, #1A1008 50%, #2C1A0E 100%); padding:24px; }
-.host-card { background:#fff; border-radius:var(--radius); width:100%; max-width:680px; overflow:hidden; box-shadow:var(--shadow-lg); }
-.host-card-header { background:linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%); padding:32px 36px 24px; border-bottom:3px solid var(--crimson-mid); }
-.host-card-header h1 { color:#fff; font-family:'Playfair Display', Georgia, serif; font-size:1.5rem; letter-spacing:0.04em; font-weight:600; }
-.host-card-header p { color:#9ca3af; font-size:0.8rem; font-style:italic; margin-top:6px; }
-.host-logo { display:flex; align-items:center; gap:14px; margin-bottom:20px; }
-.host-logo img { width:64px; height:64px; border-radius:50%; border:2px solid var(--gold); object-fit:cover; object-position:center center; }
-.host-logo-text h2 { color:#fff; font-family:'Playfair Display',serif; font-size:1.1rem; }
-.host-logo-text p { color:#9ca3af; font-size:0.75rem; margin-top:2px; }
-.host-card-body { padding:32px 36px; }
-.host-section-label { font-family:'Inter',sans-serif; font-size:0.68rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--dark); border-bottom:2px solid var(--crimson-mid); padding-bottom:7px; margin:24px 0 16px; }
-.host-section-label:first-child { margin-top:0; }
-.hf { display:flex; flex-direction:column; gap:5px; margin-bottom:14px; }
-.hf label { font-family:'Inter',sans-serif; font-size:0.68rem; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; }
-.hf input, .hf select, .hf textarea { border:none; border-bottom:1.5px solid var(--border); background:transparent; padding:8px 2px; font-size:0.92rem; font-family:'Inter',sans-serif; color:var(--body); outline:none; width:100%; transition:border-color 0.2s; }
-.hf input:focus, .hf select:focus, .hf textarea:focus { border-bottom-color:var(--crimson-mid); }
-.hf textarea { resize:vertical; min-height:60px; border:1px solid var(--border); border-radius:4px; padding:8px; }
-.hrow { display:grid; gap:16px; margin-bottom:0; }
-.hrow.two { grid-template-columns:1fr 1fr; }
-.hrow.three { grid-template-columns:1fr 1fr 1fr; }
-.hrow.full { grid-template-columns:1fr; }
-
-/* ── Food Selection Host ── */
-.food-section-wrap { border:1px solid var(--border); border-radius:8px; margin-bottom:8px; background:var(--card); overflow:hidden; }
-/* ── Live fee preview ── */
-.live-preview { background:linear-gradient(135deg,var(--dark),var(--dark2)); border:1px solid rgba(201,149,10,0.3); border-radius:10px; padding:18px 20px; margin:16px 0; }
-.live-preview-title { font-size:0.68rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:14px; font-family:'Inter',sans-serif; }
-.live-preview-row { display:flex; justify-content:space-between; align-items:center; padding:5px 0; font-size:0.82rem; font-family:'Inter',sans-serif; border-bottom:1px solid rgba(255,255,255,0.06); }
-.live-preview-row:last-child { border-bottom:none; }
-.live-preview-label { color:rgba(255,255,255,0.55); }
-.live-preview-value { color:#fff; font-weight:600; }
-.live-preview-total { display:flex; justify-content:space-between; align-items:center; padding:12px 0 4px; margin-top:8px; border-top:1px solid var(--gold); }
-.live-preview-total .live-preview-label { color:var(--gold); font-weight:700; font-size:0.88rem; }
-.live-preview-total .live-preview-value { color:var(--gold); font-weight:700; font-size:1.05rem; }
-/* ── Collapsible food sections ── */
-.food-section-title { cursor:pointer; user-select:none; display:flex; justify-content:space-between; align-items:center; padding:12px 16px; font-size:0.75rem; font-weight:700; color:var(--crimson-mid); text-transform:uppercase; letter-spacing:0.07em; font-family:'Inter',sans-serif; background:var(--card); }
-.food-section-title::after { content:'▸'; font-size:0.75rem; color:var(--muted); }
-.food-section-title.open::after { content:'▾'; }
-/* food-section-body controlled via JS display:none */
-/* ── Validation error highlight ── */
-.host-field-error { border-bottom-color:#E74C3C !important; }
-.host-error-msg { font-size:0.72rem; color:#E74C3C; font-family:'Inter',sans-serif; margin-top:4px; display:none; }
-.host-error-msg.visible { display:block; }
-.food-section-title { font-family:'Inter',sans-serif; font-size:0.72rem; font-weight:700; color:var(--crimson-mid); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:10px; }
-.food-items-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:12px 16px 14px; border-top:1px solid var(--border); }
-.food-cb-row { display:flex; align-items:center; gap:8px; font-size:0.82rem; font-family:'Inter',sans-serif; color:var(--body); padding:4px 0; }
-.food-cb-row input[type=checkbox] { accent-color:var(--crimson-mid); width:15px; height:15px; flex-shrink:0; }
-.food-note { font-size:0.75rem; color:var(--muted); font-style:italic; margin-top:8px; }
-
-.host-cb-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:0.88rem; font-family:'Inter',sans-serif; color:var(--body); }
-.host-cb-row input[type=checkbox] { accent-color:var(--crimson-mid); width:16px; height:16px; flex-shrink:0; }
-.fee-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.host-event-block { border:1px solid var(--border); border-radius:6px; padding:16px; margin-bottom:12px; position:relative; background:var(--field-bg); }
-.host-event-block .event-label { font-family:'Arial',sans-serif; font-size:0.72rem; font-weight:700; color:var(--crimson-mid); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; }
-.btn-remove-event { background:none; border:none; color:#ccc; font-size:1rem; cursor:pointer; padding:0 2px; line-height:1; }
-.btn-remove-event:hover { color:var(--red); }
-.btn-add-event { width:100%; padding:9px; border:1.5px dashed var(--border); background:transparent; border-radius:5px; font-family:'Arial',sans-serif; font-size:0.8rem; color:var(--muted); cursor:pointer; margin-bottom:4px; transition:all 0.2s; letter-spacing:0.04em; }
-.btn-add-event:hover { border-color:var(--crimson-mid); color:var(--crimson-mid); }
-.btn-generate { width:100%; margin-top:24px; padding:15px; background:linear-gradient(135deg, var(--crimson-mid) 0%, var(--crimson) 100%); color:#fff; border:none; border-radius:8px; font-family:'Inter',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 16px rgba(139,0,0,0.4); }
-.btn-generate:hover { transform:translateY(-1px); box-shadow:0 6px 24px rgba(139,0,0,0.5); }
-.generated-link-box { display:none; margin-top:16px; background:var(--field-bg); border:1px solid var(--border); border-radius:4px; padding:14px 16px; }
-.generated-link-box p { font-family:'Arial',sans-serif; font-size:0.8rem; color:var(--muted); margin-bottom:8px; }
-.link-copy-row { display:flex; gap:8px; }
-.link-copy-row input { flex:1; border:1px solid var(--border); border-radius:3px; padding:7px 10px; font-size:0.78rem; font-family:monospace; background:#fff; color:var(--body); outline:none; }
-.btn-copy { background:var(--dark); color:#fff; border:none; border-radius:3px; padding:7px 14px; font-size:0.78rem; font-family:'Arial',sans-serif; font-weight:700; cursor:pointer; white-space:nowrap; }
-.btn-copy:hover { background:#2d1a0f; }
-.copy-tip { font-size:0.72rem; color:var(--crimson-mid); margin-top:6px; font-family:'Arial',sans-serif; display:none; }
-.host-lock-note { font-size:0.75rem; color:var(--muted); font-style:italic; margin-top:4px; font-family:'Arial',sans-serif; }
-
-/* ── Contract view ── */
-#contractView { display:none; }
-.header { background:linear-gradient(160deg, #0d0603 0%, #1A1008 60%, #2C1A0E 100%); color:#fff; text-align:center; padding:52px 24px 40px; position:relative; overflow:hidden; }
-.header::after { content:''; display:block; height:4px; background:linear-gradient(to right, transparent, var(--crimson-mid), var(--gold), var(--crimson-mid), transparent); position:absolute; bottom:0;left:0;right:0; }
-.header-logo-text {
-  font-family:'Georgia',serif;
-  text-align:center;
-  line-height:1.1;
-  margin:0 auto;
-}
-.header-logo-text { font-size:1.8rem; font-weight:900; color:#fff; letter-spacing:0.08em; display:block; }
-.header-logo-text span { display:block; font-size:0.75rem; font-weight:700; color:#C9950A; letter-spacing:0.25em; text-transform:uppercase; margin-top:2px; }
-.header h1 { font-family:'Playfair Display', Georgia, serif; font-size:2rem; letter-spacing:0.06em; font-weight:700; text-shadow:0 2px 20px rgba(139,0,0,0.3); }
-.header .tagline { font-size:0.9rem; color:var(--gold-light); font-style:italic; margin-top:8px; letter-spacing:0.1em; font-family:'Inter',sans-serif; }
-.header .contact { font-size:0.78rem; color:#9ca3af; margin-top:12px; font-family:'Inter',sans-serif; letter-spacing:0.02em; }
-.header .contact a { color:var(--gold-light); text-decoration:none; }
-.contract-title { text-align:center; padding:32px 24px 12px; }
-.contract-title h2 { font-family:'Playfair Display', Georgia, serif; font-size:1.5rem; letter-spacing:0.12em; color:var(--dark); text-transform:uppercase; font-weight:600; }
-.contract-title p { font-size:0.82rem; color:var(--muted); font-style:italic; margin-top:8px; font-family:'Inter',sans-serif; }
-.container { max-width:820px; margin:0 auto; padding:0 16px 80px; }
-
-/* ── Client event blocks ── */
-.client-event-block { border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; margin-bottom:14px; background:var(--field-bg); box-shadow:var(--shadow-sm); }
-.client-event-block .event-badge { font-family:'Inter',sans-serif; font-size:0.68rem; font-weight:700; color:var(--crimson); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
-.event-badge-name { background:linear-gradient(135deg, var(--crimson-mid) 0%, var(--crimson) 100%); color:#fff; padding:3px 10px; border-radius:12px; font-size:0.65rem; font-family:'Inter',sans-serif; font-weight:700; letter-spacing:0.06em; }
-.client-field-row { display:grid; gap:12px; margin-bottom:12px; }
-.client-field-row.two { grid-template-columns:1fr 1fr; }
-.client-field-row.three { grid-template-columns:1fr 1fr 1fr; }
-.client-field-row.full { grid-template-columns:1fr; }
-.field-group { display:flex; flex-direction:column; gap:5px; }
-.field-group label { font-family:'Inter',sans-serif; font-size:0.7rem; font-weight:700; color:var(--dark); letter-spacing:0.09em; text-transform:uppercase; margin-bottom:2px; }
-.field-group input, .field-group select { border:none; border-bottom:2px solid #C8BFB0; background:transparent; padding:10px 2px; font-size:1rem; font-family:'Inter',sans-serif; color:var(--dark); outline:none; transition:border-color 0.2s; width:100%; font-weight:500; }
-.field-group input:focus, .field-group select:focus { border-bottom-color:var(--crimson-mid); }
-.field-group input::placeholder, .field-group textarea::placeholder { color:#BBADA0; font-weight:400; font-size:0.92rem; }
-.field-group textarea { border:1.5px solid #C8BFB0; border-radius:6px; padding:10px 12px; resize:vertical; min-height:60px; background:transparent; font-size:0.92rem; font-family:'Inter',sans-serif; color:var(--dark); outline:none; width:100%; }
-.field-group textarea:focus { border-color:var(--crimson-mid); }
-.field-group input.prefilled { color:var(--dark); border-bottom-color:var(--gold); font-weight:600; }
-.field-group input[readonly].prefilled { cursor:default; opacity:0.9; }
-.btn-add-client-event { width:100%; padding:11px; border:1.5px dashed var(--border); background:transparent; border-radius:8px; font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:500; color:var(--muted); cursor:pointer; margin-top:6px; transition:all 0.2s; letter-spacing:0.03em; }
-.btn-add-client-event:hover { border-color:var(--crimson-mid); color:var(--crimson-mid); background:rgba(139,0,0,0.04); }
-.btn-remove-client-event { background:none; border:none; color:#ccc; font-size:0.82rem; cursor:pointer; margin-left:auto; font-family:'Inter',sans-serif; font-weight:500; padding:2px 6px; border-radius:4px; transition:all 0.2s; }
-.btn-remove-client-event:hover { color:var(--red); background:rgba(220,38,38,0.06); }
-
-/* ── Menu selection display (client view) ── */
-.menu-display-wrap { background:var(--field-bg); border:1px solid var(--border); border-radius:8px; padding:16px 20px; margin-bottom:12px; }
-.menu-display-title { font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--crimson-mid); border-bottom:1px solid var(--border); padding-bottom:6px; margin-bottom:10px; font-family:'Inter',sans-serif; }
-.menu-tag { display:inline-block; background:linear-gradient(135deg, var(--crimson-mid) 0%, var(--crimson) 100%); color:#fff; font-size:0.7rem; padding:3px 10px; border-radius:12px; margin:3px 3px 3px 0; font-family:'Inter',sans-serif; font-weight:600; }
-.menu-tag.empty { background:var(--border); color:var(--muted); }
-
-/* ── Client food checkbox section ── */
-.client-food-section { border:1px solid var(--border); border-radius:8px; padding:16px 20px; margin-bottom:14px; background:var(--field-bg); }
-.client-food-title { font-family:'Inter',sans-serif; font-size:0.7rem; font-weight:700; color:var(--crimson-mid); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:4px; }
-.client-food-subtitle { font-size:0.75rem; color:var(--muted); font-style:italic; margin-bottom:12px; font-family:'Inter',sans-serif; }
-.client-food-items { display:grid; grid-template-columns:1fr 1fr; gap:5px; }
-.client-food-cb { display:flex; align-items:center; gap:8px; font-size:0.85rem; font-family:'Inter',sans-serif; color:var(--body); padding:4px 0; }
-.client-food-cb input[type=checkbox] { accent-color:var(--crimson-mid); width:15px; height:15px; flex-shrink:0; }
-.client-food-note { font-size:0.75rem; color:var(--muted); font-style:italic; margin-top:8px; font-family:'Inter',sans-serif; }
-
-p.clause { font-size:0.9rem; color:var(--body); margin-bottom:12px; line-height:1.75; font-family:'Inter',sans-serif; }
-ul.clause-list { margin:8px 0 14px 20px; font-size:0.9rem; color:var(--body); font-family:'Inter',sans-serif; }
-ul.clause-list li { margin-bottom:7px; line-height:1.65; }
-.sub-heading { font-family:'Inter',sans-serif; font-size:0.82rem; font-weight:700; color:var(--dark); margin:16px 0 6px; letter-spacing:0.02em; }
-.fee-table { width:100%; border-collapse:collapse; font-family:'Inter',sans-serif; font-size:0.88rem; margin-bottom:14px; border-radius:8px; overflow:hidden; }
-.fee-table thead tr { background:linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%); color:#fff; }
-.fee-table thead th { padding:12px 14px; text-align:left; font-weight:600; letter-spacing:0.05em; font-size:0.78rem; text-transform:uppercase; }
-.fee-table tbody tr:nth-child(even) { background:var(--field-bg); }
-.fee-table tbody td { padding:10px 14px; border-bottom:1px solid var(--border); color:var(--body); }
-.fee-table .prefilled-cell { font-weight:700; color:var(--dark); font-size:0.95rem; }
-.fee-table .total-row td { font-weight:700; font-size:0.95rem; color:var(--crimson); border-top:2px solid var(--crimson-mid); background:rgba(139,0,0,0.06); }
-.checkbox-row { display:flex; align-items:flex-start; gap:12px; margin-bottom:12px; font-size:0.9rem; font-family:'Inter',sans-serif; }
-.checkbox-row input[type=checkbox] { margin-top:3px; accent-color:var(--crimson-mid); width:17px; height:17px; flex-shrink:0; }
-
-/* ── Signatures ── */
-.sig-section { background:linear-gradient(160deg,var(--dark) 0%,var(--dark2) 100%); border:1px solid rgba(201,149,10,0.25); border-radius:var(--radius); padding:40px 36px; margin-bottom:80px; box-shadow:var(--shadow-lg); }
-.sig-intro { font-size:0.9rem; color:rgba(255,255,255,0.55); font-style:italic; margin-bottom:28px; line-height:1.85; font-family:'Inter',sans-serif; }
-.sig-grid { display:grid; grid-template-columns:1fr 1fr; gap:36px; }
-.sig-block h4 { font-family:'Inter',sans-serif; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; color:var(--gold); margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid rgba(201,149,10,0.3); }
-.sig-box { background:rgba(255,255,255,0.04); border:1.5px solid rgba(201,149,10,0.25); border-radius:10px; padding:22px 24px; display:flex; align-items:center; gap:14px; min-height:100px; transition:border-color 0.2s; }
-.sig-box.active { border-color:var(--gold); background:rgba(201,149,10,0.06); cursor:text; }
-.sig-box:hover { border-color:rgba(201,149,10,0.5); }
-.sig-box-label { font-family:'Inter',sans-serif; font-size:0.6rem; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
-.sig-box input { border:none; outline:none; width:100%; font-family:'Playfair Display',serif; font-size:1.6rem; font-style:italic; color:#fff; background:transparent; letter-spacing:0.02em; }
-.sig-box input::placeholder { color:rgba(255,255,255,0.2); font-size:1.1rem; }
-.sig-name-display { font-family:'Playfair Display',serif; font-size:1.6rem; font-style:italic; color:rgba(255,255,255,0.65); letter-spacing:0.02em; }
-.sig-date-box { margin-top:14px; background:rgba(255,255,255,0.04); border-radius:10px; padding:16px 22px; display:flex; align-items:center; gap:14px; border:1.5px solid rgba(201,149,10,0.2); min-height:64px; transition:border-color 0.2s; }
-.sig-date-box.active { border-color:var(--gold); background:rgba(201,149,10,0.06); }
-.sig-date-box input { border:none; background:transparent; font-size:1rem; font-family:'Playfair Display',serif; color:#fff; outline:none; width:100%; }
-.sig-section-title { font-family:'Playfair Display',serif; font-size:1.15rem; font-weight:600; color:#fff; letter-spacing:0.04em; margin-bottom:6px; }
-.sig-section-sub { font-size:0.72rem; color:rgba(255,255,255,0.4); letter-spacing:0.08em; text-transform:uppercase; font-family:'Inter',sans-serif; margin-bottom:24px; }
-
-/* ── Submit ── */
-.submit-wrap { text-align:center; padding:12px 0 20px; }
-.btn-submit { background:linear-gradient(135deg, var(--crimson-mid) 0%, var(--crimson) 100%); color:#fff; border:none; padding:16px 56px; font-size:0.95rem; font-family:'Inter',sans-serif; font-weight:700; letter-spacing:0.1em; border-radius:8px; cursor:pointer; text-transform:uppercase; box-shadow:0 4px 20px rgba(139,0,0,0.4); transition:all 0.2s; position:relative; overflow:hidden; }
-.btn-submit::after { content:''; position:absolute; top:0; left:-100%; width:60%; height:100%; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); animation:shimmer 2.5s infinite; transform:skewX(-20deg); }
-.btn-submit:hover { transform:translateY(-1px); box-shadow:0 6px 28px rgba(139,0,0,0.5); }
-.btn-submit:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
-.submit-note { font-size:0.75rem; color:var(--lighter); margin-top:10px; font-style:italic; font-family:'Inter',sans-serif; }
-@keyframes shimmer { 0%{left:-100%} 100%{left:200%} }
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* ── Success ── */
-.success-screen { display:none; text-align:center; padding:60px 24px; }
-.success-screen .checkmark-ring { width:80px; height:80px; margin:0 auto 24px; position:relative; }
-.success-screen .checkmark-ring svg { width:80px; height:80px; }
-.success-screen .checkmark-ring .ring { stroke:var(--crimson-mid); stroke-width:4; fill:none; stroke-dasharray:226; stroke-dashoffset:226; animation:drawRing 0.8s ease forwards 0.1s; }
-.success-screen .checkmark-ring .check { stroke:var(--crimson-mid); stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:60; stroke-dashoffset:60; animation:drawCheck 0.4s ease forwards 0.7s; }
-@keyframes drawRing { to { stroke-dashoffset:0; } }
-@keyframes drawCheck { to { stroke-dashoffset:0; } }
-.success-screen h2 { font-size:1.6rem; color:var(--dark); margin-bottom:10px; }
-.success-screen p { color:var(--muted); font-size:0.92rem; max-width:400px; margin:0 auto; }
-.footer { text-align:center; padding:20px; font-size:0.78rem; color:var(--lighter); font-style:italic; border-top:1px solid var(--border); font-family:'Inter',sans-serif; }
-
-/* ── Progress bar ── */
-#progressBar { position:sticky; top:0; z-index:100; background:#fff; border-bottom:1px solid var(--border); padding:10px 16px; display:none; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
-.progress-inner { max-width:780px; margin:0 auto; }
-.progress-label { font-family:'Arial',sans-serif; font-size:0.72rem; font-weight:700; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:6px; display:flex; justify-content:space-between; }
-.progress-label span { color:var(--crimson-mid); }
-.progress-track { height:5px; background:var(--border); border-radius:99px; overflow:hidden; }
-.progress-fill { height:100%; background:linear-gradient(to right, var(--crimson-mid), var(--gold)); border-radius:99px; transition:width 0.3s ease; width:0%; }
-
-/* ── Collapsible sections ── */
-.section { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); margin-bottom:10px; overflow:hidden; box-shadow:var(--shadow-sm); transition:box-shadow 0.2s; }
-.section:hover { box-shadow:var(--shadow-md); }
-.section-title { font-family:'Inter',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--dark); padding:15px 20px; border-bottom:2px solid var(--crimson-mid); margin-bottom:0; cursor:pointer; display:flex; align-items:center; justify-content:space-between; user-select:none; transition:background 0.15s; background:linear-gradient(to right, rgba(139,0,0,0.04), transparent); }
-.section-title:hover { background:linear-gradient(to right, rgba(139,0,0,0.09), rgba(139,0,0,0.02)); }
-.section-title .toggle-icon { font-size:0.85rem; color:var(--crimson-mid); transition:transform 0.25s; flex-shrink:0; margin-left:8px; }
-.section-title.collapsed .toggle-icon { transform:rotate(-90deg); }
-.section-title.collapsed { border-bottom:none; }
-.section-body { padding:22px 24px; }
-.section-body.collapsed { display:none; }
-.section-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; margin-right:10px; }
-.section-dot.required { background:var(--red); box-shadow:0 0 0 2px rgba(220,38,38,0.15); }
-.section-dot.optional { background:#d1d5db; }
-.section-check { display:none; width:18px; height:18px; background:#2d7a2d; border-radius:50%; align-items:center; justify-content:center; font-size:0.65rem; color:#fff; flex-shrink:0; margin-left:8px; font-family:Arial,sans-serif; }
-.section-check.show { display:flex; }
-
-/* ── Welcome banner ── */
-#welcomeBanner { display:none; background:linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%); border-bottom:3px solid var(--crimson-mid); padding:16px 24px; text-align:center; }
-#welcomeBanner p { font-family:'Georgia',serif; font-size:1rem; color:#fff; margin:0; }
-#welcomeBanner span { color:var(--gold-light); font-style:italic; }
-
-/* ── Sticky submit bar ── */
-#stickySubmit { position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid var(--border); padding:12px 20px; z-index:100; display:none; box-shadow:0 -2px 12px rgba(0,0,0,0.08); }
-#stickySubmit .btn-submit { width:100%; max-width:500px; display:block; margin:0 auto; }
-
-/* Halal badge */
-.halal-badge { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg, #16a34a, #166534); color:#fff; font-family:'Inter',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.08em; padding:5px 14px; border-radius:50px; margin-bottom:12px; }
-
-::-webkit-scrollbar { width:6px; }
-::-webkit-scrollbar-track { background:var(--bg); }
-::-webkit-scrollbar-thumb { background:var(--crimson-mid); border-radius:99px; }
-
-@media (max-width:560px) {
-  .hrow.two, .hrow.three, .client-field-row.two, .client-field-row.three, .fee-grid, .sig-grid, .food-items-grid, .client-food-items { grid-template-columns:1fr; }
-  .section-body, .host-card-body { padding:16px; }
-  .header h1 { font-size:1.5rem; }
-}
-
-/* ── Print Menu Card View ── */
-#printMenuView { display:none; }
-
-@media print {
-  #hostPanel, #contractView { display:none !important; }
-  #printMenuView { display:block !important; }
-  .no-print { display:none !important; }
-  body { background:#fff; }
-  @page { margin:15mm; size:A4; }
-}
-
-.pm-card {
-  max-width:560px; margin:0 auto; padding:48px 40px;
-  font-family:'Helvetica Neue',Arial,sans-serif;
-  background:#FDFAF6; min-height:100vh;
-  position:relative; text-align:center;
-}
-.pm-header { display:flex; flex-direction:column; align-items:center; margin-bottom:28px; gap:16px; }
-.pm-header-left { text-align:center; }
-.pm-logo-text {
-  font-family:'Georgia',serif;
-  text-align:center;
-  line-height:1.1;
-  margin:0 auto 4px;
-  font-size:1.2rem;
-  font-weight:900;
-  color:#1A1A1A;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-}
-.pm-logo-text span {
-  display:block;
-  font-size:0.6rem;
-  font-weight:700;
-  color:#8B0000;
-  letter-spacing:0.25em;
-  margin-top:2px;
-}
-.pm-event-type { font-size:2.8rem; font-weight:900; letter-spacing:0.03em; color:#1A1A1A; text-transform:uppercase; line-height:1.05; margin-bottom:6px; font-family:'Georgia',serif; }
-.pm-event-date { font-size:0.82rem; color:#888; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:3px; }
-.pm-venue-name { font-size:0.82rem; color:#888; letter-spacing:0.08em; }
-
-.pm-divider { height:1px; background:#1A1A1A; margin:24px 0 32px; }
-
-.pm-section-block { margin-bottom:28px; text-align:center; }
-.pm-section-name { font-size:0.82rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#8B0000; margin-bottom:12px; padding-bottom:6px; border-bottom:2px solid #1A1A1A; display:inline-block; }
-.pm-item-list { list-style:none; padding:0; margin:0 auto; display:inline-block; text-align:center; }
-.pm-item-list li { font-size:1rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:#2a2a2a; padding:7px 0; line-height:1.6; border-bottom:1px solid #EDE8E0; }
-.pm-item-list li:last-child { border-bottom:none; }
-
-.pm-footer-row { display:flex; justify-content:center; align-items:center; gap:24px; margin-top:40px; padding-top:16px; border-top:1px solid #ccc; flex-wrap:wrap; }
-.pm-ig-handle { font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#333; }
-.pm-qr-area { font-size:0.7rem; text-align:center; color:#888; letter-spacing:0.06em; }
-
-.no-print { text-align:center; margin-top:24px; }
-.scroll-top-btn { position:fixed; bottom:80px; right:16px; width:44px; height:44px; border-radius:50%; background:var(--crimson-mid); color:#fff; border:none; font-size:1.2rem; cursor:pointer; display:none; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(139,0,0,0.4); z-index:999; transition:all 0.2s; }
-.scroll-top-btn:hover { background:var(--crimson); transform:translateY(-2px); }
-.btn-print-trigger { background:linear-gradient(135deg,var(--crimson-mid),var(--crimson)); color:#fff; border:none; padding:12px 32px; font-size:0.85rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; border-radius:6px; cursor:pointer; transition:all 0.2s; }
-</style>
-</head>
-<body><script>
-// Hide host panel immediately if print or client mode — before CSS loads
-(function(){
-  var s=window.location.search;
-  if(s.indexOf('print=1')>-1||s.indexOf('d=1')>-1){
-    var st=document.createElement('style');
-    st.textContent='#hostPanel{display:none!important}' + (s.indexOf('print=1')>-1?'#contractView{display:none!important}':'');
-    document.head?document.head.appendChild(st):(document.documentElement.appendChild(st));
-  }
-})();
-</script>
-
-<!-- ══════════════════════════════════════════
-     HOST PREP PANEL
-══════════════════════════════════════════ -->
-<div id="hostPanel">
-  <div class="host-card">
-    <div class="host-card-header">
-      <div class="host-logo">
-        
-        <div class="host-logo-text">
-          <h2>The BBQ Guys Chicago</h2>
-          <p>Halal Live BBQ · Catering · Delivery</p>
-        </div>
-      </div>
-      <h1>Prepare Client Contract</h1>
-      <p>Fill in client info &amp; food selections — client completes venue details &amp; signs.</p>
-    </div>
-    <div class="host-card-body">
-
-      <div class="host-section-label">Client Info</div>
-      <div class="hrow full">
-        <div class="hf"><label>Celebration / Event Title <span style="font-size:0.65rem;background:#fdecea;color:#c0392b;border-radius:3px;padding:2px 6px;font-weight:700;">REQUIRED</span></label>
-          <input type="text" id="h_celebration" placeholder="e.g. Fatima & Ali's Wedding, Baby Shower, Eid Dinner…"/>
-        </div>
-      </div>
-      <div class="hrow two">
-        <div class="hf"><label>Client Name(s) <span style="font-size:0.65rem;background:#fdecea;color:#c0392b;border-radius:3px;padding:1px 5px;font-weight:700;">REQUIRED</span></label><input type="text" id="h_client_names" placeholder="Full name(s)"/>
-        <span class="host-error-msg" id="err_client_names">Please enter client name(s)</span></div>
-        <div class="hf"><label>Primary Contact Phone <span style="font-size:0.65rem;background:#fdecea;color:#c0392b;border-radius:3px;padding:1px 5px;font-weight:700;">REQUIRED</span></label><input type="text" id="h_client_phone" placeholder="(000) 000-0000"/></div>
-      </div>
-      <div class="hrow full">
-        <div class="hf"><label>Client Email</label><input type="text" id="h_client_email" placeholder="email@example.com"/></div>
-      </div>
-      <div class="hrow two">
-        <div class="hf"><label>Client Instagram / FB <span style="font-size:0.6rem;color:var(--muted);">optional</span></label><input type="text" id="h_client_social" placeholder="@handle or facebook.com/name"/></div>
-        <div class="hf"><label>Other Food Vendors? <span style="font-size:0.6rem;color:var(--muted);">optional</span></label><input type="text" id="h_other_vendors" placeholder="e.g. Acai dessert stand, cake vendor"/></div>
-      </div>
-      <div class="hrow full">
-        <div class="hf"><label>COI / Permit Requirements <span style="font-size:0.6rem;color:var(--muted);">optional</span></label><input type="text" id="h_coi_requirements" placeholder="e.g. Park requires COI, banquet hall needs vendor certificate"/></div>
-      </div>
-
-      <div class="host-section-label">Event Date(s)</div>
-      <div id="hostEventList"></div>
-      <button class="btn-add-event" onclick="addHostEvent()">+ Add Event Date</button>
-
-      <!-- ── Sec 1: Chk Tikka ── -->
-      <div class="food-section-wrap">
-        <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 1 — Chicken Tikka (2 pcs) · Pick up to 2</div>
-        <div class="food-items-grid food-section-body" style="display:none;">
-          <div class="food-cb-row"><input type="checkbox" class="h_food_tikka"/><label>Red Tikka</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_tikka"/><label>Malai Tikka</label></div>
-          
-          <div class="food-cb-row"><input type="checkbox" class="h_food_tikka"/><label>Green Tikka</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_tikka"/><label>Afghani Tikka</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_tikka"/><label>Bihari Tikka</label></div>
-        </div>
-      </div>
-
-      <!-- ── Sec 2: Chk Boti ── -->
-      <div class="food-section-wrap">
-        <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 2 — Chicken Boti (5 pcs) · Pick up to 2</div>
-        <div class="food-items-grid food-section-body" style="display:none;">
-          <div class="food-cb-row"><input type="checkbox" class="h_food_boti"/><label>Red Boti</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_boti"/><label>Malai Boti</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_boti"/><label>Cheese Boti</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_boti"/><label>Green Boti</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_boti"/><label>Garlic Boti</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_boti"/><label>Afghani Boti</label></div>
-        </div>
-      </div>
-
-      <!-- ── Sec 3: Kabab ── -->
-      <div class="food-section-wrap">
-        <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 3 — Kabab Chk/Beef (4 pcs)</div>
-        <div class="food-items-grid food-section-body" style="display:none;">
-          <div class="food-cb-row"><input type="checkbox" class="h_food_kabab" id="toggle_seekh_kabab" onclick="toggleProtein('seekh_kabab_protein',this)"/><label>Seekh Kabab</label>
-          <select id="seekh_kabab_protein" disabled style="opacity:0.4;font-size:0.75rem;margin-left:8px;border:1px solid var(--border);border-radius:4px;padding:2px 4px;font-family:'Inter',sans-serif;">
-            <option value="Chicken">Chicken</option>
-            <option value="Beef">Beef</option>
-            <option value="Mutton">Mutton</option>
-          </select></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_kabab"/><label>Turkish Kabab</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_kabab"/><label>Cheese Kabab</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_kabab"/><label>Beef Bihari Kabab</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_kabab"/><label>Beef Bihari Boti</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_kabab"/><label>Chapli Kabab</label></div>
-        </div>
-      </div>
-
-      <!-- ── Sec 4: Goat ── -->
-      <div class="food-section-wrap">
-        <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 4 — Goat Delicacies (2 pcs)</div>
-        <div class="food-items-grid food-section-body" style="display:none;">
-          <div class="food-cb-row"><input type="checkbox" class="h_food_goat"/><label>Namkeen Chops</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_goat"/><label>Masala Chops</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_goat"/><label>Mutton Seekh Kabab</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_goat"/><label>Beef Bihari Kabab</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_goat"/><label>Beef Bihari Boti</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_goat"/><label>Chapli Kabab</label></div>
-        </div>
-      </div>
-
-      <!-- ── Sec 5: Seafood ── -->
-      <div class="food-section-wrap">
-        <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 5 — Seafood (4 pcs)</div>
-        <div class="food-items-grid food-section-body" style="display:none;">
-          <div class="food-cb-row"><input type="checkbox" class="h_food_seafood"/><label>Dynamite Shrimp</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_seafood"/><label>Masala Shrimp</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_seafood"/><label>Fish Tikka</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_seafood"/><label>Lahori Fried Fish</label></div>
-        </div>
-      </div>
-
-      <!-- ── Sec 6: Vegetarian ── -->
-      <div class="food-section-wrap">
-        <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 6 — Vegetarian</div>
-        <div class="food-items-grid food-section-body" style="display:none;">
-          <div class="food-cb-row"><input type="checkbox" class="h_food_veg"/><label>Paneer / Tofu Tikka</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_veg"/><label>Street Corn</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_veg"/><label>Daal Fry</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_veg"/><label>Vegi Skewers</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_veg"/><label>Aloo Masala</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_veg"/><label>Chana Masala</label></div>
-        </div>
-      </div>
-
-      <!-- ── Sec 7: Gravy Entrees ── -->
-      <div class="food-section-wrap">
-        <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 7 — Gravy Entrees</div>
-        <div class="food-items-grid food-section-body" style="display:none;">
-          <div class="fcb">
-            <input type="checkbox" id="gravy_karahi_cb" class="h_food_gravy" onchange="toggleProtein('gravy_karahi_protein',this.checked)"/>
-            <label style="margin-right:8px;">Karahi</label>
-            <select id="gravy_karahi_protein" disabled style="border:1px solid var(--border);border-radius:4px;padding:4px 8px;font-size:0.8rem;font-family:'Inter',sans-serif;color:var(--body);background:var(--field-bg);opacity:0.4;cursor:not-allowed;transition:all 0.2s;">
-              <option value="Chicken">Chicken</option>
-              <option value="Mutton">Mutton</option>
-            </select>
-          </div>
-          <div class="fcb"><input type="checkbox" class="h_food_gravy"/><label>Chk Kashmiri Handi</label></div>
-          <div class="fcb"><input type="checkbox" class="h_food_gravy"/><label>Butter Chicken</label></div>
-          <div class="fcb"><input type="checkbox" class="h_food_gravy"/><label>Chk Reshmi Handi</label></div>
-          <div class="fcb"><input type="checkbox" class="h_food_gravy"/><label>Beef Nihari</label></div>
-          <div class="fcb">
-            <input type="checkbox" id="gravy_qorma_cb" class="h_food_gravy" onchange="toggleProtein('gravy_qorma_protein',this.checked)"/>
-            <label style="margin-right:8px;">Qorma</label>
-            <select id="gravy_qorma_protein" disabled style="border:1px solid var(--border);border-radius:4px;padding:4px 8px;font-size:0.8rem;font-family:'Inter',sans-serif;color:var(--body);background:var(--field-bg);opacity:0.4;cursor:not-allowed;transition:all 0.2s;">
-              <option value="Chicken">Chicken</option>
-              <option value="Goat">Goat</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── Sec 8: Rice ── -->
-      <div class="food-section-wrap">
-        <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 8 — Rice Entrees</div>
-        <div class="food-items-grid food-section-body" style="display:none;">
-          <div class="fcb"><input type="checkbox" class="h_food_rice"/><label>Zeera Rice</label></div>
-          <div class="fcb"><input type="checkbox" class="h_food_rice"/><label>Chickpea Rice</label></div>
-          <div class="fcb"><input type="checkbox" class="h_food_rice"/><label>Frontier Rice</label></div>
-          <div class="fcb"><input type="checkbox" class="h_food_rice"/><label>Fried Rice</label></div>
-          <div class="fcb" style="grid-column:1/-1;display:flex;align-items:center;gap:8px;margin-top:4px;">
-            <input type="checkbox" id="rice_pulao_cb" class="h_food_rice" onchange="toggleProtein('rice_pulao_protein',this.checked)"/>
-            <label style="margin-right:8px;">Pulao</label>
-            <select id="rice_pulao_protein" disabled style="border:1px solid var(--border);border-radius:4px;padding:4px 8px;font-size:0.8rem;font-family:'Inter',sans-serif;color:var(--body);background:var(--field-bg);opacity:0.4;cursor:not-allowed;transition:all 0.2s;">
-              <option value="Chicken">Chicken</option>
-              <option value="Beef">Beef</option>
-              <option value="Goat">Goat</option>
-            </select>
-          </div>
-          <div class="fcb" style="grid-column:1/-1;display:flex;align-items:center;gap:8px;">
-            <input type="checkbox" id="rice_biryani_cb" class="h_food_rice" onchange="toggleProtein('rice_biryani_protein',this.checked)"/>
-            <label style="margin-right:8px;">Biryani</label>
-            <select id="rice_biryani_protein" disabled style="border:1px solid var(--border);border-radius:4px;padding:4px 8px;font-size:0.8rem;font-family:'Inter',sans-serif;color:var(--body);background:var(--field-bg);opacity:0.4;cursor:not-allowed;transition:all 0.2s;">
-              <option value="Chicken">Chicken</option>
-              <option value="Beef">Beef</option>
-              <option value="Goat">Goat</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── Sec 9: Bread ── -->
-      <div class="food-section-wrap">
-        <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 9 — Bread</div>
-        <div class="food-items-grid food-section-body" style="display:none;">
-          <div class="food-cb-row"><input type="checkbox" class="h_food_bread"/><label>Naan</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_bread"/><label>Puri Paratha</label></div>
-        </div>
-      </div>
-
-      <!-- ── Appetizers ── -->
-      <div class="food-section-wrap">
-        <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Appetizers (add-on)</div>
-        <div class="food-items-grid food-section-body" style="display:none;">
-          <div class="food-cb-row"><input type="checkbox" class="h_food_apps"/><label>Pakora</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_apps"/><label>Samosa</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_apps"/><label>Fries</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_apps"/><label>Chk Wings</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_apps"/><label>Salad</label></div>
-        </div>
-      </div>
-
-      <!-- ── Desserts ── -->
-      <div class="food-section-wrap">
-        <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 11 — Desserts &amp; Drinks</div>
-        <div class="food-items-grid food-section-body" style="display:none;">
-          <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Jalebi</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Gola Ganda</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Funnel Cake</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Falooda</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Sooji ka Halwa</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Kulfi</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Chai</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Kashmiri Chai</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Lassi</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Dessert Cart</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Fruit Bar</label></div>
-        </div>
-      </div>
-
-      <!-- ── American Grill ── -->
-      <div class="food-section-wrap">
-        <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 10 — American Grill (1 pc)</div>
-        <div class="food-items-grid food-section-body" style="display:none;">
-          <div class="food-cb-row"><input type="checkbox" class="h_food_american"/><label>Smash Beef Burgers</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_american"/><label>Hot Dogs</label></div>
-          <div class="food-cb-row"><input type="checkbox" class="h_food_american"/><label>Wicked Chicken Pasta</label></div>
-        </div>
-      </div>
-
-      <div class="food-section-wrap">
-        <div class="food-section-title" onclick="toggleFoodSection(this)">Custom / Special Items</div>
-        <div class="food-section-body" style="display:none;padding:12px 16px 14px;border-top:1px solid var(--border);">
-          <p style="font-size:0.72rem;color:var(--muted);font-family:'Inter',sans-serif;margin-bottom:10px;">For unique dishes not on the standard menu.</p>
-          <div id="customItemsList"></div>
-          <button type="button" onclick="addCustomItem()" style="width:100%;padding:8px;border:1.5px dashed var(--border);background:transparent;border-radius:5px;font-size:0.78rem;color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;margin-top:4px;" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">+ Add Custom Item</button>
-        </div>
-      </div>
-
-      <div class="hf" style="margin-top:8px;">
-        <label>Special Instructions / Dietary Notes</label>
-        <textarea id="h_food_notes" placeholder="Allergy info, halal notes, custom requests…"></textarea>
-      </div>
-
-      <div class="host-section-label">Service Type</div>
-      <div class="hrow two">
-        <div class="hf">
-          <label>Estimated Guest Count</label>
-          <input type="text" id="h_guest_count" placeholder="e.g. 150" inputmode="numeric" oninput="updateLivePreview()"/>
-        </div>
-        <div class="hf">
-          <label>Service Style</label>
-          <select id="h_service_type">
-            <option value="">Select…</option>
-            <option>Live BBQ Station</option>
-            <option>Buffet Setup</option>
-            <option>Delivery Only</option>
-            
-            <option>Delivery + Setup</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="host-section-label">Fees</div>
-      <div class="fee-grid">
-        <div class="hf"><label>Per-Person Rate</label><input type="text" id="h_fee_single" placeholder="$0.00" oninput="updateLivePreview()"/>
-        <span class="host-error-msg" id="err_fee_single">Please enter a per-person rate</span></div>
-        <div class="hf"><label>Travel Fee</label><input type="text" id="h_fee_travel" placeholder="$0.00" oninput="updateLivePreview()"/></div>
-        <div class="hf">
-          <label>Chafing Setup</label>
-          <select id="h_chafing_tier" onchange="setChafingFee(this.value)" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:8px 2px;font-size:0.9rem;font-family:'Inter',sans-serif;color:var(--body);outline:none;width:100%;">
-            <option value="">None / Not booked</option>
-            <option value="200">Basic — $200</option>
-            <option value="250">Banquet — $250</option>
-            <option value="300">Fancy — $300</option>
-          </select>
-          <input type="hidden" id="h_fee_chafing" value="0"/>
-        </div>
-        <div class="hf"><label>Retainer (due on signing — $200 minimum)</label><input type="text" id="h_fee_retainer" value="$200.00" oninput="updateLivePreview()"/></div>
-        <div class="hf"><label>Discount <span style="font-size:0.6rem;color:var(--muted);">optional — dollar amount</span></label><input type="text" id="h_fee_discount" placeholder="$0.00" oninput="updateLivePreview()"/></div>
-      </div>
-      <!-- Live Fee Preview -->
-      <div class="live-preview">
-        <div class="live-preview-title">⚡ Live Fee Preview</div>
-        <div class="live-preview-row"><span class="live-preview-label">Per-Person Rate</span><span class="live-preview-value" id="lp_rate">—</span></div>
-        <div class="live-preview-row"><span class="live-preview-label">Guest Count</span><span class="live-preview-value" id="lp_guests">—</span></div>
-        <div class="live-preview-row"><span class="live-preview-label">Food Subtotal</span><span class="live-preview-value" id="lp_food_sub">—</span></div>
-        <div class="live-preview-row"><span class="live-preview-label">Pre-Tax Total</span><span class="live-preview-value" id="lp_pretax">—</span></div>
-        <div class="live-preview-row"><span class="live-preview-label">Tax (10.25%)</span><span class="live-preview-value" id="lp_tax">—</span></div>
-        <div class="live-preview-row"><span class="live-preview-label">Travel Fee</span><span class="live-preview-value" id="lp_travel">—</span></div>
-        <div class="live-preview-row"><span class="live-preview-label">Chafing Setup</span><span class="live-preview-value" id="lp_chafing">—</span></div>
-        <div class="live-preview-row" id="lp_discount_row" style="display:none;color:#2d7a2d;"><span class="live-preview-label">🎁 Discount Applied</span><span class="live-preview-value" id="lp_discount">—</span></div>
-        <div class="live-preview-row"><span class="live-preview-label">Non-Refundable Retainer (paid)</span><span class="live-preview-value" id="lp_deposit">—</span></div>
-        <div class="live-preview-total"><span class="live-preview-label">TOTAL REMAINING</span><span class="live-preview-value" id="lp_total">—</span></div>
-      </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <button class="btn-generate" style="flex:1;" onclick="generateLink()">Generate Client Contract Link →</button>
-        <button onclick="previewContract()" style="padding:14px 18px;background:transparent;border:2px solid var(--gold);color:var(--gold);border-radius:8px;font-size:0.82rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.06em;white-space:nowrap;transition:all 0.2s;" onmouseover="this.style.background='rgba(201,149,10,0.1)'" onmouseout="this.style.background='transparent'">👁 Preview</button>
-      </div>
-      <div id="duplicateContractWrap" style="display:none;margin-top:10px;">
-        <button onclick="duplicateContract()" style="width:100%;padding:12px;background:transparent;border:1.5px dashed var(--border);color:var(--muted);border-radius:8px;font-size:0.8rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.04em;">↩ Duplicate for Repeat Client</button>
-      </div>
-      <div class="generated-link-box" id="generatedLinkBox">
-        <div style="margin-bottom:12px;padding:10px 14px;background:rgba(201,149,10,0.1);border:1px solid rgba(201,149,10,0.3);border-radius:6px;display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);font-family:'Inter',sans-serif;">Contract #</span>
-          <span style="font-size:0.9rem;font-weight:700;color:var(--dark);font-family:'Inter',sans-serif;" id="contractNumber">—</span>
-        </div>
-        <p>Share this link with your client to review and sign the contract.</p>
-        <!-- Print Menu Card -->
-        <div id="printMenuBtnWrap" style="display:none;margin-top:10px;">
-          <button onclick="openPrintCard()" style="width:100%;padding:12px;background:#1a0a0a;color:#C9950A;border:1px solid #C9950A;border-radius:8px;font-size:0.82rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.04em;">🖨️ Print Menu Card</button>
-        </div>
-        <!-- Contract Status Tracker -->
-        <div style="margin-top:14px;">
-          <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);font-family:'Inter',sans-serif;margin-bottom:8px;">Contract Status</div>
-          <div style="display:flex;gap:6px;flex-wrap:wrap;">
-            <button onclick="setContractStatus('link_sent')" id="status_link_sent" style="padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-size:0.72rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s;">🔗 Link Sent</button>
-            <button onclick="setContractStatus('signed')" id="status_signed" style="padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-size:0.72rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s;">✅ Signed</button>
-            <button onclick="setContractStatus('deposit_received')" id="status_deposit_received" style="padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-size:0.72rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s;">💰 Retainer Rcvd</button>
-            <button onclick="setContractStatus('confirmed')" id="status_confirmed" style="padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-size:0.72rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s;">🔥 Confirmed</button>
-            <button onclick="setContractStatus('completed')" id="status_completed" style="padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-size:0.72rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s;">🏁 Completed</button>
-          </div>
-          <div id="statusTimestamp" style="font-size:0.68rem;color:var(--muted);font-family:'Inter',sans-serif;margin-top:6px;"></div>
-        </div>
-        <div class="link-copy-row">
-          <input type="text" id="generatedLinkInput" readonly/>
-          <button class="btn-copy" onclick="copyLink()">Copy</button>
-        </div>
-        <div class="copy-tip" id="copyTip">✓ Copied!</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     CLIENT CONTRACT VIEW
-══════════════════════════════════════════ -->
-<div id="contractView">
-  <div class="header" style="position:relative;overflow:hidden;">
-    <canvas id="headerCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:0.5;"></canvas>
-    <!-- BBQ Guys Logo -->
-    <div class="header-logo-text">THE BBQ GUYS<span>CHICAGO</span></div>
-
-    <div class="tagline">Halal Live BBQ · Live Event Catering · Chicago, IL</div>
-    <div class="contact">
-      <a href="https://thebbqguyschicago.com" target="_blank">thebbqguyschicago.com</a>
-      &nbsp;|&nbsp;
-      <a href="https://instagram.com/thebbqguyschicago" target="_blank">@thebbqguyschicago</a>
-    </div>
-    <div style="margin-top:14px;">
-      <a href="https://instagram.com/thebbqguyschicago" target="_blank" style="display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;font-family:'Inter',Arial,sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.06em;padding:8px 18px;border-radius:50px;text-decoration:none;box-shadow:0 3px 14px rgba(253,29,29,0.35);">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        @thebbqguyschicago
-      </a>
-    </div>
-  </div>
-
-  <div class="contract-title">
-    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:14px;">
-      <div style="flex:1;max-width:80px;height:1px;background:linear-gradient(to right,transparent,#A81010);"></div>
-      <span style="color:#A81010;font-size:0.85rem;letter-spacing:0.2em;">🔥</span>
-      <div style="flex:1;max-width:80px;height:1px;background:linear-gradient(to left,transparent,#A81010);"></div>
-    </div>
-    <div style="margin-bottom:10px;"></div>
-    <h2>Catering Services Agreement</h2>
-    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-top:14px;margin-bottom:6px;">
-      <div style="flex:1;max-width:80px;height:1px;background:linear-gradient(to right,transparent,#A81010);"></div>
-      <span style="color:#A81010;font-size:0.85rem;letter-spacing:0.2em;">🔥</span>
-      <div style="flex:1;max-width:80px;height:1px;background:linear-gradient(to left,transparent,#A81010);"></div>
-    </div>
-    <p>Thank you for choosing The BBQ Guys Chicago! 🔥 To secure your date, send your <strong>$200 non-refundable retainer</strong> via Zelle to <strong>(224) 400-2402</strong> (Asmar) or by Cash/Check payable to The BBQ Guys Chicago.</p>
-  </div>
-
-  <div id="welcomeBanner">
-    <p>Welcome, <span id="welcomeName">valued client</span>! Please review your catering agreement carefully before signing. 🔥</p>
-  </div>
-
-  <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
-  <div id="progressBar">
-    <div class="progress-inner">
-      <div class="progress-label">Reading progress <span id="progressPct">0%</span></div>
-      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-    </div>
-  </div>
-
-  <div class="container" id="contractForm">
-
-    <!-- 1. Event Details -->
-    <div class="section">
-      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>📅 1. Event Details</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body">
-        <div class="client-field-row two" style="margin-bottom:12px;">
-          <div class="field-group">
-            <label>Client Name(s) <span style="font-size:0.65rem;background:#fdecea;color:#c0392b;border-radius:3px;padding:1px 5px;font-weight:700;">REQUIRED</span></label>
-            <input type="text" id="client_names" placeholder="Full name(s)"/>
-          </div>
-          <div class="field-group">
-            <label>Primary Contact Phone <span style="font-size:0.65rem;background:#fdecea;color:#c0392b;border-radius:3px;padding:1px 5px;font-weight:700;">REQUIRED</span></label>
-            <input type="text" id="client_phone" placeholder="(000) 000-0000"/>
-          </div>
-        </div>
-        <div class="client-field-row full" style="margin-bottom:12px;">
-          <div class="field-group">
-            <label>Client Email Address <span style="font-size:0.65rem;background:#fdecea;color:#c0392b;border-radius:3px;padding:1px 5px;font-weight:700;">REQUIRED</span></label>
-            <input type="text" id="client_email" placeholder="email@example.com"/>
-          </div>
-        </div>
-        <div class="client-field-row two" style="margin-bottom:12px;">
-          <div class="field-group">
-            <label>Day-Of Contact Name <span style="font-size:0.65rem;background:#fdecea;color:#c0392b;border-radius:3px;padding:1px 5px;font-weight:700;">REQUIRED</span></label>
-            <input type="text" id="secondary_contact_name" placeholder="Full name"/>
-          </div>
-          <div class="field-group">
-            <label>Day-Of Contact Phone</label>
-            <input type="text" id="secondary_contact_phone" placeholder="(000) 000-0000"/>
-          </div>
-        </div>
-
-        <div class="sub-heading" style="margin-bottom:12px;">Event Date(s) &amp; Venue</div>
-        <div id="clientEventList"></div>
-
-      </div>
-    </div>
-
-    <!-- 2. Food Selections -->
-    <div class="section">
-      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>🍖 2. Menu Selections</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body">
-        <p class="clause">Your selected menu items are pre-confirmed by The BBQ Guys Chicago. Please review and verify your selections below. Any changes must be requested no later than 14 days before the event.</p>
-
-        <!-- Package display -->
-        <div class="menu-display-wrap" style="margin-bottom:16px;">
-          <div class="menu-display-title">Your Package &amp; Guest Count</div>
-          <div style="display:flex;gap:20px;flex-wrap:wrap;">
-            
-            <div><span style="font-size:0.7rem;color:var(--muted);font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:0.08em;">Estimated Guests</span><div style="font-weight:700;color:var(--dark);font-family:'Inter',sans-serif;margin-top:3px;" id="d_guest_count">—</div></div>
-            <div><span style="font-size:0.7rem;color:var(--muted);font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:0.08em;">Service Style</span><div style="font-weight:700;color:var(--dark);font-family:'Inter',sans-serif;margin-top:3px;" id="d_service_type">—</div></div>
-          </div>
-        </div>
-
-        <div id="menuDisplaySections"></div>
-
-        <div id="foodNotesDisplay" style="display:none;" class="menu-display-wrap">
-          <div class="menu-display-title">Special Instructions / Dietary Notes</div>
-          <p style="font-size:0.88rem;color:var(--body);font-family:'Inter',sans-serif;" id="d_food_notes"></p>
-        </div>
-
-        <div class="checkbox-row" style="margin-top:14px;background:#fff3f0;border:1px solid #fac8c1;border-radius:4px;padding:10px 14px;">
-          <input type="checkbox" id="menu_confirm"/>
-          <label for="menu_confirm"><strong>I confirm I have reviewed my menu selections above and they are correct.</strong> (Required)</label>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. Compensation -->
-    <div class="section">
-      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>💰 3. Compensation &amp; Payment</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body">
-        <div class="clause-highlight">Minimum booking spend is <strong>$3,000</strong>. A non-refundable <strong>$200 retainer</strong> is required at time of booking to secure your date.</div>
-        <div id="minimum_booking_warning" style="display:none;background:#fff3f0;border:1px solid #fac8c1;border-radius:6px;padding:10px 14px;margin-top:10px;font-size:0.82rem;font-family:'Inter',sans-serif;color:#8B0000;font-weight:600;">⚠️ Your current quote is below the $3,000 minimum. Please confirm your total with The BBQ Guys Chicago before proceeding.</div>
-        <table class="fee-table">
-          <thead><tr><th>Item</th><th>Amount</th></tr></thead>
-          <tbody>
-            <tr><td>Per-Person Rate</td><td class="prefilled-cell" id="d_rate_pp">—</td></tr>
-            <tr><td>Food Subtotal (rate × guests)</td><td class="prefilled-cell" id="d_food_sub">—</td></tr>
-            <tr><td>Pre-Tax Total</td><td class="prefilled-cell" id="d_pretax">—</td></tr>
-            <tr style="font-style:italic;"><td>Tax (10.25% Chicago rate — food items only)</td><td class="prefilled-cell" id="d_tax">—</td></tr>
-            <tr><td>Travel Fee</td><td class="prefilled-cell" id="d_travel_fee">—</td></tr>
-            <tr><td>Chafing Setup</td><td class="prefilled-cell" id="d_chafing_fee">—</td></tr>
-            <tr id="d_discount_row" style="display:none;color:#2d7a2d;font-weight:600;"><td>🎁 Discount Applied</td><td class="prefilled-cell" id="d_discount">—</td></tr>
-            <tr><td><strong>Non-Refundable Retainer Paid</strong></td><td class="prefilled-cell" id="d_deposit">—</td></tr>
-            <tr><td>Add-Ons</td><td class="prefilled-cell" id="d_addons">—</td></tr>
-            <tr class="total-row"><td>TOTAL REMAINING</td><td id="d_total_remaining">—</td></tr>
-          </tbody>
-        </table>
-        <!-- Hidden calc elements for JS setText calls -->
-        <span id="calc_food_sub" style="display:none;"></span>
-        <span id="calc_tax" style="display:none;"></span>
-        <span id="calc_travel_disp" style="display:none;"></span>
-        <span id="calc_chafing_disp" style="display:none;"></span>
-        <span id="calc_addons_disp" style="display:none;"></span>
-        <span id="calc_deposit_disp" style="display:none;"></span>
-        <span id="calc_total_remaining" style="display:none;"></span>
-        <p class="clause" style="font-size:0.82rem;color:var(--muted);">Payment methods accepted: Cash &nbsp;|&nbsp; Zelle &nbsp;|&nbsp; Check (payable to The BBQ Guys Chicago)</p>
-        <p class="clause" style="font-size:0.82rem;">The non-refundable retainer of <strong>$200.00 minimum</strong> is due immediately upon signing this agreement and secures The BBQ Guys Chicago's availability for your event date(s). The remaining balance is due at the <strong>start or end of your event</strong>, payable by Cash, Zelle, or Check.</p>
-      </div>
-    </div>
-
-    <!-- Grace Time -->
-    <div class="section">
-      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>&#9203; Grace Time &amp; Service Timeline</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body">
-        <div class="clause-highlight"><strong>Please allow a grace time of 30&#8211;45 minutes in your service time as the food we prepare is LIVE.</strong> Our team works hard to serve fresh, high-quality halal food and timing may vary slightly to ensure the best experience for your guests.</div>
-        <p class="clause">We ask that you treat our staff with dignity and respect. Any concerns should be directed calmly to our team lead on site. The BBQ Guys Chicago reserves the right to cancel services if this clause is violated through unreasonable pressure or disrespectful conduct.</p>
-        <ul class="clause-list">
-          <li>The catering team requires venue access at least <strong>2 hours</strong> before food service begins for setup</li>
-          <li>Client must provide a full event timeline at least 2 days before the event</li>
-          <li>Overtime beyond 2 hours of food service is billed at <strong>$200/hr</strong></li>
-        </ul>
-        <div class="checkbox-row" style="margin-top:12px;background:#fff3f0;border:1px solid #fac8c1;border-radius:4px;padding:10px 14px;">
-          <input type="checkbox" id="overtime_confirm"/>
-          <label for="overtime_confirm"><strong>I understand our team requires 2 hours setup time before food service, and overtime beyond 2 hours of food service is billed at $200/hr.</strong> (Required)</label>
-        </div>
-      </div>
-    </div>
-    <!-- 4. Scope of Services -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>🍽️ 4. Scope of Catering Services</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <p class="clause">The BBQ Guys Chicago ("Caterer") agrees to provide the following services for the above event(s):</p>
-        <ul class="clause-list">
-          <li>Live halal BBQ and/or buffet catering services as specified in the confirmed menu selection (Section 2)</li>
-          <li>Professional setup and breakdown of catering stations at the agreed venue</li>
-          <li>Serving equipment, chafing dishes, and necessary utensils for buffet service (unless otherwise agreed)</li>
-          <li>Food preparation and cooking to Halal standards as certified — no pork or non-Halal meat products will be served</li>
-          <li>Coordination with the venue manager or event coordinator regarding setup logistics</li>
-          <li>One (1) pre-event planning call to finalize guest count, menu, and setup requirements</li>
-          <li>Final confirmation of all details no later than 2 days before the event</li>
-        </ul>
-        <div class="sub-heading">Service Limitations:</div>
-        <ul class="clause-list">
-          <li>Tableware (plates, napkins, cups) and disposables are not included unless specifically added as a paid extra</li>
-          <li>Serving staff beyond the standard catering crew is subject to an additional staffing fee</li>
-          <li>Bar service, alcohol, and non-halal items are not provided under any circumstances</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 5. Catering Packages -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>📦 5. Pricing</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed"><p class="clause">Pricing is custom per event based on guest count, menu selections, and service requirements. Your per-person rate is confirmed at the time of booking and outlined in this agreement.</p></div>
-    </div>
-
-    <!-- 6. Cancellation Policy -->
-    <div class="section">
-      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>❌ 6. Cancellation &amp; Rescheduling Policy</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body">
-        <div class="sub-heading">Cancellation by Client:</div>
-        <ul class="clause-list">
-          <li><strong>More than 60 days before event:</strong> Non-refundable retainer is forfeited; no additional fee.</li>
-          <li><strong>31–60 days before event:</strong> 50% of the total contract value is due in addition to the forfeited retainer.</li>
-          <li><strong>30 days or fewer before event:</strong> 100% of the total contract value is due. Food costs and labor already incurred are non-negotiable.</li>
-        </ul>
-        <div class="sub-heading">Rescheduling by Client:</div>
-        <p class="clause">One (1) complimentary rescheduling is permitted if the new date is available and written notice is given at least 30 days in advance. Any subsequent reschedule is subject to a $150 rescheduling fee. Rescheduling within 14 days of the event is treated as a cancellation under the applicable cancellation tier.</p>
-        <div class="sub-heading">Cancellation by Caterer:</div>
-        <p class="clause">In the unlikely event The BBQ Guys Chicago must cancel, a full refund of all payments received will be issued and the Caterer will make reasonable efforts to provide a qualified referral or alternative catering arrangement.</p>
-        <div class="checkbox-row" style="margin-top:12px;background:#fff3f0;border:1px solid #fac8c1;border-radius:4px;padding:10px 14px;">
-          <input type="checkbox" id="cancellation_confirm"/>
-          <label for="cancellation_confirm"><strong>I have read and understand the Cancellation &amp; Rescheduling Policy above, including all applicable fees.</strong> (Required)</label>
-        </div>
-      </div>
-    </div>
-
-    <!-- 7. Client Responsibilities -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>✅ 7. Client Responsibilities</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <p class="clause">To ensure a smooth and successful catering experience, the Client agrees to the following:</p>
-        <ul class="clause-list">
-          <li>Provide a final confirmed guest count no later than <strong>2 days</strong> before the event. Guest count <strong>increases</strong> are accepted up to 2 days before, subject to availability. Guest count <strong>decreases</strong> must be requested at least <strong>14 days</strong> before the event; decreases of more than 15% within 14 days will not result in a reduction of contract fees.</li>
-          <li>Ensure the Caterer has access to the venue, including kitchen or prep area, electricity, and running water access. <strong>A water hose with outdoor access is required for live BBQ setups</strong> — please confirm availability with your venue in advance.</li>
-          <li>Provide accurate venue contact information and any applicable vendor load-in requirements, elevator access codes, or parking details at least 7 days prior.</li>
-          <li>Communicate all confirmed dietary restrictions, allergies, and Halal requirements clearly in the pre-event call.</li>
-          <li>Designate a day-of point of contact who is reachable throughout the event to coordinate with the catering team.</li>
-          <li>Ensure the venue permits live cooking and/or open-flame BBQ if applicable; any venue permits required for live fire cooking are the Client's responsibility to obtain.</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 8. Guest Count & Scale -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>👥 8. Guest Count &amp; Event Scale</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <div class="clause-highlight">Final confirmed guest count is due <strong>2 days prior</strong> to your event date. <strong>Increases</strong> are accepted up to 2 days before, subject to availability. <strong>Decreases</strong> must be requested at least <strong>14 days</strong> before the event — decreases within 14 days do not reduce the contract fee.</div>
-        <p class="clause">The Client agrees to disclose a reasonable and accurate estimate of expected guest attendance at the time of booking. If the actual guest count exceeds the confirmed estimate by more than <strong>20%</strong> on the day of the event, the Caterer reserves the right to:</p>
-        <ul class="clause-list">
-          <li>Adjust the total fee proportionally based on the actual guest count at the contracted per-person rate</li>
-          <li>Limit portions or modify the menu to accommodate the available food supply if advance notice was not provided</li>
-          <li>Invoice the Client for the overage within 48 hours of the event at the contracted per-person rate</li>
-        </ul>
-        <p class="clause">Events exceeding 150 guests are subject to custom pricing, additional staffing fees, and extended setup time. These must be discussed and agreed upon in writing at least 21 days before the event.</p>
-      </div>
-    </div>
-
-    <!-- 9. Outdoor Events -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>🌤️ 9. Outdoor Events &amp; Weather</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <p class="clause">For events held fully or partially outdoors, the Client is responsible for providing adequate shelter, shade, and weather protection for the catering team and equipment. This includes a covered tent or canopy structure sufficient to protect grills, food stations, and staff from precipitation and direct sun.</p>
-        <p class="clause">The Caterer reserves the right to pause or restructure service if outdoor conditions become unsafe or unworkable, including but not limited to extreme heat (above 95°F), heavy rain, lightning, or high winds. No refund will be issued for weather-related service interruptions beyond the Caterer's control.</p>
-        <p class="clause"><strong>Day-of Weather Force Majeure:</strong> If severe weather (tornado warning, flash flood emergency, or equivalent government-issued alert) forces a venue change or cancellation within 24 hours of the event, The BBQ Guys Chicago will make best efforts to reschedule at no additional rescheduling fee. If rescheduling is not possible, a credit of 50% of payments made (excluding the non-refundable retainer) will be applied toward a future booking within 12 months.</p>
-        <p class="clause">If the venue requires open-flame permits for live BBQ cooking, those permits are the Client's sole responsibility to obtain and provide to the Caterer at least 7 days before the event.</p>
-      </div>
-    </div>
-
-    <!-- 10. Food Safety & Halal Compliance -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>☪ 10. Food Safety &amp; Halal Compliance</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <p class="clause">The BBQ Guys Chicago is committed to providing fully Halal-compliant food service. All meats sourced and prepared by the Caterer are Halal-certified. The Caterer does not serve pork, pork-derived products, alcohol, or any non-Halal items at any event.</p>
-        <p class="clause">The Client is responsible for ensuring that no outside food or ingredients are introduced to the catering setup that could compromise Halal compliance. The Caterer is not responsible for cross-contamination caused by outside food brought to the event by guests, the Client, or other vendors.</p>
-        <p class="clause">The Caterer complies with applicable local health and food safety codes. Food will be held at safe serving temperatures per USDA food safety guidelines. The Caterer is not responsible for food-borne illness resulting from food held beyond the recommended serving window (generally 2 hours at room temperature or 1 hour above 90°F).</p>
-        <div class="sub-heading">Leftover Food Policy:</div>
-        <p class="clause">We will only leave items that are cooked and left unconsumed by guests. We will not cook additional food for leftovers or carryout, nor will we leave behind uncooked food items. The Client assumes full responsibility for any leftovers left behind after service ends.</p>
-        <div class="sub-heading">Allergy Disclaimer:</div>
-        <p class="clause">The Client is responsible for communicating all guest food allergies and dietary restrictions prior to the event. While the Caterer will make reasonable accommodations, The BBQ Guys Chicago operates in a kitchen that handles common allergens including nuts, dairy, gluten, shellfish, and eggs, and cannot guarantee an allergen-free environment.</p>
-      </div>
-    </div>
-
-    <!-- Substitution Policy -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>&#128260; Menu Cost &amp; Substitution Policy</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <p class="clause">All menu prices are subject to change within 14 days of your event due to market fluctuations. If a significant change in ingredient cost is established, you will have two options:</p>
-        <ul class="clause-list">
-          <li><strong>Option 1:</strong> Accept the updated cost while maintaining your current menu based on current market prices</li>
-          <li><strong>Option 2:</strong> Accept a comparable substitute menu item at the same per-person price</li>
-        </ul>
-        <p class="clause"><strong>Note:</strong> Menu items are subject to availability and may need to be changed if unavailable. We will notify the Client as early as possible if any substitution is required.</p>
-      </div>
-    </div>
-    <!-- 11. Payment Terms & Late Fees -->
-    <div class="section">
-      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>💳 11. Payment Terms &amp; Late Fees</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body">
-        <div class="sub-heading">Non-Refundable Retainer:</div>
-        <p class="clause">A non-refundable $200 retainer is due at the time of booking to secure your event date.</p>
-        <div class="sub-heading">Final Payment:</div>
-        <p class="clause">Final payment is due before the catering team departs the event. The BBQ Guys Chicago reserves the right to request full payment at any time during the event if the Client, their guests, or any third party exhibits disrespectful or troublesome behavior toward our team.</p>
-        <div class="sub-heading">Accepted Payment Methods:</div>
-        <p class="clause">Cash &middot; Zelle &middot; Check (payable to The BBQ Guys Chicago). All prices are based on cash/check purchase.</p>
-        <div class="sub-heading">Chargeback Protection:</div>
-        <p class="clause">The Client agrees not to initiate a chargeback or payment dispute without first contacting The BBQ Guys Chicago directly. Any fraudulent chargeback will result in pursuit of the full contract value plus applicable legal fees.</p>
-        <div class="checkbox-row" style="margin-top:12px;background:#fff3f0;border:1px solid #fac8c1;border-radius:4px;padding:10px 14px;">
-          <input type="checkbox" id="chargeback_confirm"/>
-          <label for="chargeback_confirm"><strong>I agree not to initiate a chargeback or payment dispute without first contacting The BBQ Guys Chicago directly.</strong> (Required)</label>
-        </div>
-        <div class="sub-heading">Late Payment:</div>
-        <ul class="clause-list">
-          <li>Remaining balance not received by the end of the event date will incur a one-time late fee of <strong>5% of the outstanding balance</strong> (minimum $50). An additional <strong>2% per week</strong> will accrue for each week the balance remains unpaid.</li>
-          <li>If the balance remains unpaid 72 hours before the event, The BBQ Guys Chicago reserves the right to withhold services until payment is received in full.</li>
-          <li>Failure to pay does not entitle the Client to a refund of the retainer or release from contractual obligations.</li>
-          <li>Returned checks will be charged a $35 returned check fee in addition to any outstanding balance.</li>
-        </ul>
-        <p class="clause">Accepted payment methods: Cash | Zelle | Check (payable to The BBQ Guys Chicago). All payments are final and non-reversible once processed.</p>
-      </div>
-    </div>
-
-    <!-- 12. Travel & Distance Fee -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>✈️ 12. Travel &amp; Distance Fee</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <p class="clause">The BBQ Guys Chicago serves events in the <strong>Chicago, IL</strong> metropolitan area. Standard travel fees apply:</p>
-        <ul class="clause-list">
-          <li>Events within 30 miles of Chicago, IL: Included in the base contract fee</li>
-          <li>31–60 miles from base city: $100 travel fee</li>
-          <li>61–100 miles from base city: $200 travel fee</li>
-          <li>Over 100 miles or out-of-area: Travel fee to be mutually agreed upon in writing prior to contract signing and added as a signed addendum</li>
-        </ul>
-        <p class="clause">Out-of-state events require a written addendum signed by both parties confirming travel logistics, accommodations, and any additional fees before the booking is finalized.</p>
-      </div>
-    </div>
-
-    <!-- 13. Liability -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>🛡️ 13. Limitation of Liability</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <p class="clause">The BBQ Guys Chicago assumes no responsibility for any damage or loss of merchandise, alcohol, equipment, furniture, clothing, or other valuables prior to, during, or after the event.</p>
-        <p class="clause">I, the Client, understand that by hosting an event at my home or venue, accidents, breakage, and damage may occur. I will not bill, charge, or sue The BBQ Guys Chicago for any resulting damages.</p>
-        <div class="sub-heading">Equipment Damage:</div>
-        <p class="clause">Any damage to The BBQ Guys Chicago equipment, grills, or supplies caused by guests, venue staff, or third parties is the Client's financial responsibility. The Client agrees to reimburse The BBQ Guys Chicago within 14 days of the event.</p>
-        <div class="sub-heading">Limitation of Liability:</div>
-        <p class="clause">The BBQ Guys Chicago's total liability to the Client under this agreement shall not exceed the total fees paid. The Caterer shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of enjoyment, emotional distress, or reputational harm.</p>
-        <div class="sub-heading">The Caterer is expressly not responsible for:</div>
-        <ul class="clause-list">
-          <li>Delays or disruptions caused by venue restrictions, venue staff, or third-party vendors</li>
-          <li>Food quality degradation caused by improper venue storage conditions, temperature failures of venue refrigeration, or power outages not within the Caterer's control</li>
-          <li>Guest count increases made by the Client fewer than 2 days before the event that result in insufficient food</li>
-          <li>Conduct, behavior, or actions of guests during the event</li>
-          <li>Acts of God, extreme weather, natural disasters, public health emergencies, or government-mandated restrictions</li>
-          <li>Outcomes resulting from incomplete, inaccurate, or late communication of event details by the Client</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 14. Force Majeure -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>🌪️ 14. Force Majeure</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <p class="clause">Neither party shall be held liable for failure to perform any obligation under this agreement resulting from circumstances beyond reasonable control, including but not limited to: acts of God, extreme weather, natural disasters, pandemic, epidemic, government-imposed restrictions, civil unrest, power outages, or supply chain disruptions affecting food availability.</p>
-        <p class="clause">In the event of force majeure, The BBQ Guys Chicago will make every reasonable effort to fulfill contracted services or propose an alternative. If the event is cancelled due to force majeure, the non-refundable retainer shall be retained by the Caterer as compensation for reserved capacity and preparation. Any payments beyond the retainer will be refunded on a pro-rated basis based on costs already incurred.</p>
-      </div>
-    </div>
-
-    <!-- 15. Caterer's Right to Refuse -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>🚫 15. Caterer's Right to Refuse Service</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <p class="clause">The BBQ Guys Chicago reserves the right to immediately cease services without refund if any member of the catering team is subjected to verbal abuse, threats, harassment, or physically unsafe conditions by the Client, their guests, or any third party at the event. The safety and dignity of our team members are non-negotiable.</p>
-        <p class="clause">The Caterer also reserves the right to refuse any request to serve non-Halal items, alcohol, or food items not agreed upon in this contract, regardless of instruction from the Client or event planner on the day of the event.</p>
-      </div>
-    </div>
-
-    <!-- 16. Indemnification -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>📋 16. Indemnification</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <p class="clause">The Client agrees to indemnify, defend, and hold harmless The BBQ Guys Chicago, its owners, staff, agents, and representatives from and against any and all claims, damages, losses, costs, and expenses (including reasonable attorney's fees) arising out of or relating to: (a) the Client's breach of any provision of this agreement; (b) the acts or omissions of the Client, their guests, or family members during the event; (c) any venue-related hazard, restriction, or incident not within the Caterer's control; or (d) any third-party claim related to the event not directly caused by the Caterer's own gross negligence or willful misconduct.</p>
-      </div>
-    </div>
-
-    <!-- Assignability -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>📋 Assignability</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <p class="clause">This contract is not assignable by the Client without the prior written consent of The BBQ Guys Chicago. The BBQ Guys Chicago may engage qualified subcontractors or additional staff to fulfill services under this agreement. All such personnel are held to the same standards of conduct and quality.</p>
-      </div>
-    </div>
-
-    <!-- 17. Governing Law -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>⚖️ 17. Governing Law &amp; Dispute Resolution</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <p class="clause">This agreement shall be governed by and construed in accordance with the laws of the State of Illinois, without regard to conflict of law provisions. Any disputes arising under this agreement shall first be submitted to good-faith mediation before any legal action is pursued.</p>
-        <p class="clause">If mediation fails, disputes shall be resolved exclusively in the courts of Cook County, Illinois. The Client agrees that any claim or cause of action arising from this agreement must be filed within one (1) year of the event date.</p>
-      </div>
-    </div>
-
-    <!-- 18. Confidentiality -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>🔒 18. Confidentiality &amp; Non-Disparagement</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <p class="clause">Both parties agree to keep the specific financial terms of this agreement confidential and not disclose them publicly or to third parties without mutual written consent.</p>
-        <p class="clause">The Client agrees not to make any false, misleading, or disparaging statements about The BBQ Guys Chicago, its services, staff, or business — whether publicly, on social media, or on review platforms — that are not based on factual, documented occurrences. The Caterer agrees to the same standard. This clause survives the termination of this agreement.</p>
-      </div>
-    </div>
-
-    <!-- 19. Media -->
-    <div class="section">
-      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>📸 19. Media &amp; Content Release</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body">
-        <p class="clause">The BBQ Guys Chicago reserves the right to photograph, film, and record food presentation, live cooking, and behind-the-scenes content at any event serviced under this agreement for use in promotional materials, social media (<strong>@thebbqguyschicago</strong> on Instagram and Facebook), and marketing purposes. No prior approval from the Client is required for such content.</p>
-        <p class="clause">Content will focus on The BBQ Guys Chicago's food and service. Guests and hosts will not be identified by name without their consent. If the Client has specific restrictions regarding filming or photography at their event, these must be communicated in writing to The BBQ Guys Chicago at least <strong>7 days before the event</strong> and documented as an addendum to this agreement.</p>
-        <div class="checkbox-row"><input type="checkbox" id="permit_vendor_tags"/><label for="permit_vendor_tags">Client also permits tagging of venue and other vendors in shared content. <span style="font-size:0.65rem;background:#e8f4e8;color:#2d7a2d;border-radius:3px;padding:1px 5px;font-weight:700;font-family:'Inter',sans-serif;">OPTIONAL</span></label></div></div>
-    </div>
-
-    <!-- FAQ -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>❓ Frequently Asked Questions</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <div class="sub-heading">Do you provide plates, napkins, and cutlery?</div>
-        <p class="clause">Standard packages do not include disposable tableware. If you need plates, napkins, cups, and cutlery, this can be added as a paid extra — please ask at the time of booking.</p>
-
-        <div class="sub-heading">What if my guest count changes after signing?</div>
-        <p class="clause">Final guest count is due 2 days before your event. <strong>Increases</strong> are accepted up to 2 days before, subject to availability. <strong>Decreases</strong> must be requested at least 14 days before — decreases within 14 days do not reduce the contract fee.</p>
-
-        <div class="sub-heading">How long does setup take?</div>
-        <p class="clause">Our team requires venue access at least 2 hours before food service begins. Please coordinate with your venue to ensure this window is available. For very large events (200+ guests), 3 hours may be needed.</p>
-
-        <div class="sub-heading">Is your food certified Halal?</div>
-        <p class="clause">Yes. All meats used by The BBQ Guys Chicago are sourced from certified Halal suppliers. We do not serve pork, pork-derived products, or alcohol at any event under any circumstances.</p>
-
-        <div class="sub-heading">Can we make menu changes after signing?</div>
-        <p class="clause">Menu change requests must be submitted at least 14 days before your event. We cannot guarantee availability of new items with less notice. Substitutions due to market unavailability may occur — we'll always notify you promptly.</p>
-
-        <div class="sub-heading">What happens if we need to reschedule?</div>
-        <p class="clause">One complimentary reschedule is permitted with at least 30 days written notice, subject to availability. A second reschedule incurs a $150 fee. Rescheduling within 14 days is treated as a cancellation.</p>
-
-        <div class="sub-heading">How do I pay the retainer?</div>
-        <p class="clause">The $200 non-refundable retainer is due immediately after signing. Send payment via Zelle (contact us for details), cash, or check payable to The BBQ Guys Chicago. Include your name and event date in the payment note.</p>
-
-        <div class="sub-heading">Will you tag us on social media?</div>
-        <p class="clause">We love to share our work! With your permission (Section 19), we'll tag @thebbqguyschicago on any photos or videos from your event. You can opt out or limit sharing — just let us know before the event.</p>
-      </div>
-    </div>
-
-    <!-- Gratuity Policy -->
-    <div class="section">
-      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>💰 Gratuity Policy</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body collapsed">
-        <p class="clause">Gratuity is <strong>not included</strong> in the contract price and is entirely at the Client's discretion. It is never expected or required. If you feel our team delivered exceptional service, gratuity is always deeply appreciated and shared equally among the entire catering crew.</p>
-        <p class="clause">Suggested gratuity range: <strong>10–15%</strong> of the food subtotal for exceptional service. This can be provided in cash to the team lead at the end of the event.</p>
-        <p class="clause">Gratuity does not affect service quality. Every client receives our full effort and dedication regardless of whether gratuity is provided.</p>
-      </div>
-    </div>
-
-    <!-- 20. Review & Referral -->
-    <div class="section">
-      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>⭐ 20. Review &amp; Referral Request</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body">
-        <p class="clause">The BBQ Guys Chicago kindly requests that satisfied Clients share an honest review via Instagram DM or Google to be featured on <strong>@thebbqguyschicago</strong>. Reviews help support a small, family-run Halal catering business and are deeply appreciated. There is no obligation to do so, and this request has no bearing on the services provided under this agreement.</p>
-        <p class="clause">If the Client refers another client who books and completes a catering event with The BBQ Guys Chicago, the referring Client will receive a <strong>$50 credit</strong> toward any future booking as a thank-you.</p>
-        <div class="checkbox-row"><input type="checkbox" id="review_acknowledge"/><label for="review_acknowledge"><strong>                Section 19 — Review &amp; Referral.</strong> (Required to proceed)</label>
-        </div>
-      </div>
-    </div>
-
-    <!-- Signatures -->
-    <div class="sig-section">
-      <div style="text-align:center;margin-bottom:32px;">
-        <div style="font-size:1.8rem;margin-bottom:10px;">✍️</div>
-        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:#fff;letter-spacing:0.04em;">Electronic Agreement &amp; Signature</div>
-        <div style="font-size:0.68rem;color:rgba(255,255,255,0.4);letter-spacing:0.12em;text-transform:uppercase;font-family:'Inter',sans-serif;margin-top:8px;">Legally binding under the Illinois E-Commerce Security Act &amp; federal E-SIGN Act</div>
-        <div style="font-size:0.65rem;color:rgba(255,255,255,0.25);letter-spacing:0.1em;font-family:'Inter',sans-serif;margin-top:6px;" id="contractVersionDisplay">Contract v2.0 · The BBQ Guys Chicago</div>
-        <div style="width:60px;height:2px;background:linear-gradient(to right,var(--crimson),var(--gold));margin:16px auto 0;border-radius:99px;"></div>
-      </div>
-      <p style="font-size:0.88rem;color:rgba(255,255,255,0.55);font-style:italic;margin-bottom:24px;line-height:1.8;font-family:'Inter',sans-serif;text-align:center;padding:0 10px;">By typing your full legal name below, you confirm you have read, understood, and agreed to all terms of this Catering Services Agreement.</p>
-      <div style="background:rgba(139,0,0,0.35);border:1px solid rgba(192,57,43,0.6);border-radius:10px;padding:16px 18px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;">
-        <input type="checkbox" id="retainer_confirm" style="margin-top:3px;accent-color:var(--gold);width:18px;height:18px;flex-shrink:0;cursor:pointer;"/>
-        <label for="retainer_confirm" style="font-size:0.88rem;color:rgba(255,255,255,0.9);font-family:'Inter',sans-serif;line-height:1.65;cursor:pointer;"><strong style="color:#fff;display:block;margin-bottom:4px;">I understand the non-refundable $200 retainer is due immediately upon signing</strong> to secure my event date. Failure to submit payment does not cancel this agreement or release me from its terms.</label>
-      </div>
-      <div class="sig-grid">
-        <div class="sig-block">
-          <h4>The BBQ Guys Chicago</h4>
-          <div class="sig-box" style="flex-direction:column;align-items:flex-start;min-height:110px;padding:20px 22px;">
-            <div class="sig-box-label">Authorized Signature</div>
-            <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-style:italic;color:rgba(255,255,255,0.75);letter-spacing:0.02em;margin-top:8px;">Asmar Najam</div>
-          </div>
-          <div class="sig-date-box" style="margin-top:12px;">
-            <div style="flex:1;">
-              <div class="sig-box-label" style="margin-bottom:6px;">Date Signed</div>
-              <input type="date" id="mc_date" readonly style="border:none;background:transparent;font-size:0.95rem;font-family:'Playfair Display',serif;color:#fff;outline:none;width:100%;"/>
-            </div>
-          </div>
-        </div>
-        <div class="sig-block">
-          <h4>Client Signature <span class="req-badge">REQUIRED</span></h4>
-          <div class="sig-box active" onclick="document.getElementById('client_sig_name').focus()" style="flex-direction:column;align-items:flex-start;min-height:110px;padding:20px 22px;cursor:text;">
-            <div class="sig-box-label">Type Your Full Legal Name</div>
-            <input type="text" id="client_sig_name" placeholder="Your full name here…" style="border:none;outline:none;width:100%;font-family:'Playfair Display',serif;font-size:1.5rem;font-style:italic;color:#fff;background:transparent;letter-spacing:0.02em;margin-top:8px;padding:0;"/>
-          </div>
-          <div class="sig-date-box active" style="margin-top:12px;">
-            <div style="flex:1;">
-              <div class="sig-box-label" style="margin-bottom:6px;">Your Signing Date <span class="req-badge">REQUIRED</span></div>
-              <input type="date" id="client_date" style="border:none;background:transparent;font-size:0.95rem;font-family:'Playfair Display',serif;color:#fff;outline:none;width:100%;cursor:pointer;"/>
-            </div>
-          </div>
-      </div>
-    </div>
-
-    <div class="submit-wrap">
-      <div class="checkbox-row highlight" style="max-width:520px;margin:0 auto 16px;text-align:left;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:6px;padding:12px 14px;">
-        <input type="checkbox" id="read_all_sections"/>
-        <label for="read_all_sections" style="color:rgba(255,255,255,0.85);font-family:'Inter',sans-serif;font-size:0.88rem;"><strong style="color:#fff;">I confirm I have read and understood all sections of this contract</strong> and agree to be bound by all terms herein.</label>
-      </div>
-      <button class="btn-submit" id="submitBtn" onclick="submitContract()">Submit &amp; Agree to Contract</button>
-      <p class="submit-note">Submitting constitutes your legally binding electronic signature and full agreement to all catering terms above.</p>
-    </div>
-
-  </div><!-- /contractForm -->
-
-  <!-- Success screen -->
-  <div class="success-screen" id="successScreen">
-    <div style="margin:0 auto 24px;font-family:'Georgia',serif;text-align:center;"><div style="font-size:1.6rem;font-weight:900;color:#1a1a1a;letter-spacing:0.06em;line-height:1.1;">THE BBQ GUYS</div><div style="font-size:0.85rem;font-weight:700;color:#C9950A;letter-spacing:0.2em;text-transform:uppercase;margin-top:2px;">CHICAGO</div></div>
-    <h2>Contract Signed! 🔥</h2>
-    <div style="background:linear-gradient(135deg,#1a0a0a,#3d0000);border-radius:12px;padding:20px 22px;margin:16px 0;text-align:center;">
-      <div style="font-size:1rem;font-weight:700;color:#C9950A;font-family:'Georgia',serif;margin-bottom:8px;">Thank you for choosing The BBQ Guys Chicago!</div>
-      <div style="font-size:0.82rem;color:rgba(255,255,255,0.75);font-family:'Inter',sans-serif;line-height:1.7;">Your catering agreement has been recorded. To secure your date, please send the <strong style="color:#fff;">$200 non-refundable retainer</strong> at your earliest convenience.</div>
-      <div style="margin-top:14px;padding:14px 16px;background:rgba(201,149,10,0.15);border:1px solid rgba(201,149,10,0.4);border-radius:8px;">
-        <div style="font-size:0.68rem;color:rgba(255,255,255,0.5);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px;">Send $200 Non-Refundable Retainer via Zelle</div>
-        <div style="font-size:1.4rem;font-weight:900;color:#C9950A;letter-spacing:0.04em;">(224) 400-2402</div>
-        <div style="font-size:0.72rem;color:rgba(255,255,255,0.45);margin-top:4px;">Include your name &amp; event date in the note</div>
-        <div style="margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
-          <a href="sms:2244002402&body=Hi Asmar! I just signed the BBQ Guys Chicago catering contract. Please confirm receipt. Thank you!" style="display:inline-flex;align-items:center;gap:6px;background:#34C759;color:#fff;padding:8px 16px;border-radius:50px;font-size:0.75rem;font-weight:700;text-decoration:none;font-family:'Inter',sans-serif;">💬 Text Asmar</a>
-          <a href="tel:2244002402" style="display:inline-flex;align-items:center;gap:6px;background:#007AFF;color:#fff;padding:8px 16px;border-radius:50px;font-size:0.75rem;font-weight:700;text-decoration:none;font-family:'Inter',sans-serif;">📞 Call</a>
-        </div>
-      </div>
-    </div>
-    <p style="margin-top:10px;font-size:0.8rem;color:var(--muted);font-family:'Inter',sans-serif;">Refer a friend who books with us and receive a <strong style="color:var(--crimson);">$100 credit</strong> toward your next event! 🎉</p>
-    <div class="retainer-card">
-      <div class="rc-title">⚡ Submit Your $200 Non-Refundable Retainer to Secure Your Date</div>
-      <div class="rc-row" style="background:#fdf3e3;border-radius:8px;padding:10px 14px;margin-bottom:6px;">
-        <span class="rc-key">📲 Zelle</span>
-        <span class="rc-val"><strong style="font-size:1rem;color:#8B0000;">(224) 400-2402</strong></span>
-      </div>
-      <div class="rc-row">
-        <span class="rc-key">Contact</span>
-        <span class="rc-val">Asmar — <a href="tel:2244002402" style="color:var(--crimson-mid);text-decoration:none;font-weight:700;">(224) 400-2402</a></span>
-      </div>
-      <div style="display:flex;gap:10px;margin:10px 0 4px;flex-wrap:wrap;justify-content:center;">
-        <a href="sms:2244002402&body=Hi! I just signed the catering contract and want to send the $200 non-refundable retainer. My name is [YOUR NAME] and my event date is [DATE]." style="display:inline-flex;align-items:center;gap:6px;background:#007AFF;color:#fff;font-size:0.78rem;font-weight:700;padding:8px 16px;border-radius:50px;text-decoration:none;font-family:'Inter',sans-serif;letter-spacing:0.04em;">💬 Text Us for Payment Info</a>
-        <a href="tel:2244002402" style="display:inline-flex;align-items:center;gap:6px;background:#34C759;color:#fff;font-size:0.78rem;font-weight:700;padding:8px 16px;border-radius:50px;text-decoration:none;font-family:'Inter',sans-serif;letter-spacing:0.04em;">📞 Call Us</a>
-      </div>
-      <div class="rc-row"><span class="rc-key">Cash / Check</span><span class="rc-val">Payable to The BBQ Guys Chicago</span></div>
-      <div class="rc-row"><span class="rc-key">Phone</span><span class="rc-val"><a href="tel:2244002402" style="color:var(--crimson-mid);text-decoration:none;">224-400-2402</a></span></div>
-      <div style="margin-top:10px;text-align:center;">
-        <a href="sms:2244002402&body=Hi Asmar! I just signed the BBQ Guys Chicago catering contract. Please confirm receipt. Thank you!" style="display:inline-flex;align-items:center;gap:8px;background:#34C759;color:#fff;padding:11px 22px;border-radius:50px;font-size:0.82rem;font-weight:700;text-decoration:none;font-family:'Inter',sans-serif;letter-spacing:0.04em;">💬 Text Asmar to Confirm</a>
-      </div>
-      <p style="margin-top:12px;font-size:0.72rem;color:#9ca3af;font-style:italic;text-align:center;font-family:'Inter',sans-serif;">Please include your name and event date in the payment note.</p>
-    </div>
-    <div style="margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-      <a id="contractSummaryBtn" href="#" onclick="showContractSummary()" style="display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--muted);border:1px solid var(--border);padding:10px 18px;border-radius:50px;font-size:0.78rem;font-weight:600;text-decoration:none;font-family:'Inter',sans-serif;">📄 View Summary</a>
-    </div>
-    <div id="contractSummaryPanel" style="display:none;background:#fafaf8;border:1px solid var(--border);border-radius:10px;padding:18px;margin:12px 0;text-align:left;font-family:'Inter',sans-serif;font-size:0.82rem;line-height:1.8;color:var(--body);"></div>
-    <div style="margin-top:18px;text-align:center;">
-      <a href="https://instagram.com/thebbqguyschicago" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;font-family:'Inter',sans-serif;font-weight:700;font-size:0.86rem;padding:12px 26px;border-radius:50px;text-decoration:none;margin-bottom:10px;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        @thebbqguyschicago
-      </a>
-    </div>
-  </div>
-
-  <div class="footer-bar">Thank you for choosing The BBQ Guys Chicago. We look forward to making your event unforgettable! 🔥 &nbsp;|&nbsp; thebbqguyschicago.com &nbsp;|&nbsp; 224-400-2402</div>
-  <div id="stickySubmit"><button class="btn-submit" onclick="submitContract()">Submit &amp; Agree to Contract</button></div>
-</div>
-
-<!-- PRINT MENU CARD -->
-<div id="printMenuView" style="display:none;min-height:100vh;background:#FDFAF6;font-family:'Helvetica Neue',Arial,sans-serif;">
-  <!-- Fully self-contained print card — no shared CSS dependencies -->
-  <div id="pm_inner" style="max-width:520px;margin:0 auto;padding:48px 32px;text-align:center;">
-
-    <!-- Logo -->
-    <div style="margin-bottom:6px;">
-      <div style="font-size:1.4rem;font-weight:900;color:#1a1a1a;letter-spacing:0.08em;font-family:'Georgia',serif;">THE BBQ GUYS</div>
-      <div style="font-size:0.62rem;font-weight:700;color:#8B0000;letter-spacing:0.28em;text-transform:uppercase;margin-top:2px;">CHICAGO</div>
-    </div>
-
-    <!-- Divider -->
-    <div style="border-top:1px solid #C9950A;margin:14px auto;width:60px;"></div>
-
-    <!-- Celebration title -->
-    <div id="pm_event_type" style="font-size:2.4rem;font-weight:900;color:#1a1a1a;font-family:'Georgia',serif;letter-spacing:0.02em;line-height:1.1;text-transform:uppercase;margin-bottom:4px;"></div>
-
-    <!-- Hidden fields kept for JS setText compatibility -->
-    <div id="pm_date" style="display:none;"></div>
-    <div id="pm_venue" style="display:none;"></div>
-    <div id="pm_client" style="display:none;"></div>
-    <div id="pm_guests" style="display:none;"></div>
-    <div id="pm_submitted_at" style="display:none;"></div>
-    <div id="pm_svc" style="display:none;"></div>
-
-    <!-- Divider -->
-    <div style="border-top:1px solid #ddd;margin:20px auto;width:80%;"></div>
-
-    <!-- Food sections -->
-    <div id="pm_food_sections" style="text-align:center;"></div>
-
-    <!-- Notes -->
-    <div id="pm_notes_wrap" style="display:none;margin-top:16px;">
-      <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.15em;color:#8B0000;text-transform:uppercase;margin-bottom:6px;">Notes</div>
-      <div id="pm_notes" style="font-size:0.82rem;color:#666;font-style:italic;"></div>
-    </div>
-
-    <!-- Divider -->
-    <div style="border-top:1px solid #ddd;margin:20px auto;width:80%;"></div>
-
-    <!-- Footer -->
-    <div style="font-size:0.72rem;color:#999;letter-spacing:0.08em;">
-      <div style="margin-bottom:3px;">@thebbqguyschicago</div>
-      <div>thebbqguyschicago.com &nbsp;·&nbsp; 224-400-2402</div>
-    </div>
-
-    <!-- Print button (hidden when printing) -->
-    <div style="margin-top:32px;" class="no-print">
-      <button onclick="window.print()" style="background:#8B0000;color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:0.85rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;letter-spacing:0.04em;">🖨️ Print / Save as PDF</button>
-    </div>
-  </div>
-</div>
-
-E html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Catering Agreement – The BBQ Guys Chicago</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"/>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<style>
-/* Fonts loaded via non-blocking link tag in head */
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --crimson:#8B0000; --crimson-mid:#A81010; --crimson-light:#C41E1E;
-  --gold:#C9950A; --gold-light:#E8A820; --gold-pale:#F5D98B;
-  --dark:#0F0A05; --dark2:#1E1208; --dark3:#2C1A0E;
-  --body:#1C1C1C; --muted:#6b7280; --lighter:#9ca3af;
-  --bg:#F7F4EF; --card:#FFFDF9; --border:#DDD5C8;
-  --field-bg:#F2EDE6; --red:#8B0000; --green:#15803d;
-  --shadow-sm: 0 1px 4px rgba(0,0,0,0.07);
-  --shadow-md: 0 4px 18px rgba(0,0,0,0.10);
-  --shadow-lg: 0 12px 48px rgba(0,0,0,0.16);
-  --radius:12px;
-  --transition:0.28s cubic-bezier(0.4,0,0.2,1);
-}
-
-body {
-  font-family: 'Inter', 'Georgia', serif;
-  background: var(--bg);
-  color: var(--body);
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* ── Host panel ── */
-#hostPanel { min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #0d0603 0%, #1A1008 50%, #2C1A0E 100%); padding:24px; }
+#hostPanel { min-height:100vh; display:none; align-items:center; justify-content:center; background:linear-gradient(135deg, #0d0603 0%, #1A1008 50%, #2C1A0E 100%); padding:24px; }
 .host-card { background:#fff; border-radius:var(--radius); width:100%; max-width:680px; overflow:hidden; box-shadow:var(--shadow-lg); }
 .host-card-header { background:linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%); padding:32px 36px 24px; border-bottom:3px solid var(--crimson-mid); }
 .host-card-header h1 { color:#fff; font-family:'Playfair Display', Georgia, serif; font-size:1.5rem; letter-spacing:0.04em; font-weight:600; }
@@ -1695,7 +398,12 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <div class="food-section-wrap">
         <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 3 — Kabab Chk/Beef (4 pcs)</div>
         <div class="food-items-grid food-section-body" style="display:none;">
-          <div class="food-cb-row"><input type="checkbox" class="h_food_kabab"/><label>Seekh Kabab</label></div>
+          <div class="food-cb-row"><input type="checkbox" class="h_food_kabab" id="toggle_seekh_kabab" onclick="toggleProtein('seekh_kabab_protein',this)"/><label>Seekh Kabab</label>
+          <select id="seekh_kabab_protein" disabled style="opacity:0.4;font-size:0.75rem;margin-left:8px;border:1px solid var(--border);border-radius:4px;padding:2px 4px;font-family:'Inter',sans-serif;">
+            <option value="Chicken">Chicken</option>
+            <option value="Beef">Beef</option>
+            <option value="Mutton">Mutton</option>
+          </select></div>
           <div class="food-cb-row"><input type="checkbox" class="h_food_kabab"/><label>Turkish Kabab</label></div>
           <div class="food-cb-row"><input type="checkbox" class="h_food_kabab"/><label>Cheese Kabab</label></div>
           <div class="food-cb-row"><input type="checkbox" class="h_food_kabab"/><label>Beef Bihari Kabab</label></div>
@@ -1823,6 +531,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <div class="food-section-title collapsed" onclick="toggleFoodSection(this)">Sec 11 — Desserts &amp; Drinks</div>
         <div class="food-items-grid food-section-body" style="display:none;">
           <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Jalebi</label></div>
+          <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Gola Ganda</label></div>
           <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Funnel Cake</label></div>
           <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Falooda</label></div>
           <div class="food-cb-row"><input type="checkbox" class="h_food_dessert"/><label>Sooji ka Halwa</label></div>
@@ -1864,6 +573,10 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <div class="hf">
           <label>Estimated Guest Count</label>
           <input type="text" id="h_guest_count" placeholder="e.g. 150" inputmode="numeric" oninput="updateLivePreview()"/>
+        </div>
+        <div class="hf">
+          <label>Food Service Start Time</label>
+          <input type="time" id="h_service_time" placeholder="--:-- --" style="border:none;border-bottom:2px solid var(--border);background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;"/>
         </div>
         <div class="hf">
           <label>Service Style</label>
@@ -2062,10 +775,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
           <p style="font-size:0.88rem;color:var(--body);font-family:'Inter',sans-serif;" id="d_food_notes"></p>
         </div>
 
-        <div class="checkbox-row" style="margin-top:14px;background:#fff3f0;border:1px solid #fac8c1;border-radius:4px;padding:10px 14px;">
-          <input type="checkbox" id="menu_confirm"/>
-          <label for="menu_confirm"><strong>I confirm I have reviewed my menu selections above and they are correct.</strong> (Required)</label>
-        </div>
+        
       </div>
     </div>
 
@@ -2105,8 +815,8 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 
     <!-- Grace Time -->
     <div class="section">
-      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>&#9203; Grace Time &amp; Service Timeline</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body">
+      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>&#9203; Grace Time &amp; Service Timeline</span><span class="toggle-icon">&#9660;</span></div>
+      <div class="section-body collapsed">
         <div class="clause-highlight"><strong>Please allow a grace time of 30&#8211;45 minutes in your service time as the food we prepare is LIVE.</strong> Our team works hard to serve fresh, high-quality halal food and timing may vary slightly to ensure the best experience for your guests.</div>
         <p class="clause">We ask that you treat our staff with dignity and respect. Any concerns should be directed calmly to our team lead on site. The BBQ Guys Chicago reserves the right to cancel services if this clause is violated through unreasonable pressure or disrespectful conduct.</p>
         <ul class="clause-list">
@@ -2114,10 +824,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
           <li>Client must provide a full event timeline at least 2 days before the event</li>
           <li>Overtime beyond 2 hours of food service is billed at <strong>$200/hr</strong></li>
         </ul>
-        <div class="checkbox-row" style="margin-top:12px;background:#fff3f0;border:1px solid #fac8c1;border-radius:4px;padding:10px 14px;">
-          <input type="checkbox" id="overtime_confirm"/>
-          <label for="overtime_confirm"><strong>I understand our team requires 2 hours setup time before food service, and overtime beyond 2 hours of food service is billed at $200/hr.</strong> (Required)</label>
-        </div>
+        
       </div>
     </div>
     <!-- 4. Scope of Services -->
@@ -2151,8 +858,8 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 
     <!-- 6. Cancellation Policy -->
     <div class="section">
-      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>❌ 6. Cancellation &amp; Rescheduling Policy</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body">
+      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>❌ 6. Cancellation &amp; Rescheduling Policy</span><span class="toggle-icon">&#9660;</span></div>
+      <div class="section-body collapsed">
         <div class="sub-heading">Cancellation by Client:</div>
         <ul class="clause-list">
           <li><strong>More than 60 days before event:</strong> Non-refundable retainer is forfeited; no additional fee.</li>
@@ -2163,10 +870,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <p class="clause">One (1) complimentary rescheduling is permitted if the new date is available and written notice is given at least 30 days in advance. Any subsequent reschedule is subject to a $150 rescheduling fee. Rescheduling within 14 days of the event is treated as a cancellation under the applicable cancellation tier.</p>
         <div class="sub-heading">Cancellation by Caterer:</div>
         <p class="clause">In the unlikely event The BBQ Guys Chicago must cancel, a full refund of all payments received will be issued and the Caterer will make reasonable efforts to provide a qualified referral or alternative catering arrangement.</p>
-        <div class="checkbox-row" style="margin-top:12px;background:#fff3f0;border:1px solid #fac8c1;border-radius:4px;padding:10px 14px;">
-          <input type="checkbox" id="cancellation_confirm"/>
-          <label for="cancellation_confirm"><strong>I have read and understand the Cancellation &amp; Rescheduling Policy above, including all applicable fees.</strong> (Required)</label>
-        </div>
+        
       </div>
     </div>
 
@@ -2240,8 +944,8 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
     </div>
     <!-- 11. Payment Terms & Late Fees -->
     <div class="section">
-      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>💳 11. Payment Terms &amp; Late Fees</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body">
+      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>💳 11. Payment Terms &amp; Late Fees</span><span class="toggle-icon">&#9660;</span></div>
+      <div class="section-body collapsed">
         <div class="sub-heading">Non-Refundable Retainer:</div>
         <p class="clause">A non-refundable $200 retainer is due at the time of booking to secure your event date.</p>
         <div class="sub-heading">Final Payment:</div>
@@ -2250,10 +954,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <p class="clause">Cash &middot; Zelle &middot; Check (payable to The BBQ Guys Chicago). All prices are based on cash/check purchase.</p>
         <div class="sub-heading">Chargeback Protection:</div>
         <p class="clause">The Client agrees not to initiate a chargeback or payment dispute without first contacting The BBQ Guys Chicago directly. Any fraudulent chargeback will result in pursuit of the full contract value plus applicable legal fees.</p>
-        <div class="checkbox-row" style="margin-top:12px;background:#fff3f0;border:1px solid #fac8c1;border-radius:4px;padding:10px 14px;">
-          <input type="checkbox" id="chargeback_confirm"/>
-          <label for="chargeback_confirm"><strong>I agree not to initiate a chargeback or payment dispute without first contacting The BBQ Guys Chicago directly.</strong> (Required)</label>
-        </div>
+        
         <div class="sub-heading">Late Payment:</div>
         <ul class="clause-list">
           <li>Remaining balance not received by the end of the event date will incur a one-time late fee of <strong>5% of the outstanding balance</strong> (minimum $50). An additional <strong>2% per week</strong> will accrue for each week the balance remains unpaid.</li>
@@ -2356,8 +1057,8 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 
     <!-- 19. Media -->
     <div class="section">
-      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>📸 19. Media &amp; Content Release</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body">
+      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>📸 19. Media &amp; Content Release</span><span class="toggle-icon">&#9660;</span></div>
+      <div class="section-body collapsed">
         <p class="clause">The BBQ Guys Chicago reserves the right to photograph, film, and record food presentation, live cooking, and behind-the-scenes content at any event serviced under this agreement for use in promotional materials, social media (<strong>@thebbqguyschicago</strong> on Instagram and Facebook), and marketing purposes. No prior approval from the Client is required for such content.</p>
         <p class="clause">Content will focus on The BBQ Guys Chicago's food and service. Guests and hosts will not be identified by name without their consent. If the Client has specific restrictions regarding filming or photography at their event, these must be communicated in writing to The BBQ Guys Chicago at least <strong>7 days before the event</strong> and documented as an addendum to this agreement.</p>
         <div class="checkbox-row"><input type="checkbox" id="permit_vendor_tags"/><label for="permit_vendor_tags">Client also permits tagging of venue and other vendors in shared content. <span style="font-size:0.65rem;background:#e8f4e8;color:#2d7a2d;border-radius:3px;padding:1px 5px;font-weight:700;font-family:'Inter',sans-serif;">OPTIONAL</span></label></div></div>
@@ -2405,12 +1106,11 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 
     <!-- 20. Review & Referral -->
     <div class="section">
-      <div class="section-title" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>⭐ 20. Review &amp; Referral Request</span><span class="toggle-icon">&#9660;</span></div>
-      <div class="section-body">
+      <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot required"></span>⭐ 20. Review &amp; Referral Request</span><span class="toggle-icon">&#9660;</span></div>
+      <div class="section-body collapsed">
         <p class="clause">The BBQ Guys Chicago kindly requests that satisfied Clients share an honest review via Instagram DM or Google to be featured on <strong>@thebbqguyschicago</strong>. Reviews help support a small, family-run Halal catering business and are deeply appreciated. There is no obligation to do so, and this request has no bearing on the services provided under this agreement.</p>
         <p class="clause">If the Client refers another client who books and completes a catering event with The BBQ Guys Chicago, the referring Client will receive a <strong>$50 credit</strong> toward any future booking as a thank-you.</p>
-        <div class="checkbox-row"><input type="checkbox" id="review_acknowledge"/><label for="review_acknowledge"><strong>                Section 19 — Review &amp; Referral.</strong> (Required to proceed)</label>
-        </div>
+        
       </div>
     </div>
 
@@ -2424,10 +1124,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <div style="width:60px;height:2px;background:linear-gradient(to right,var(--crimson),var(--gold));margin:16px auto 0;border-radius:99px;"></div>
       </div>
       <p style="font-size:0.88rem;color:rgba(255,255,255,0.55);font-style:italic;margin-bottom:24px;line-height:1.8;font-family:'Inter',sans-serif;text-align:center;padding:0 10px;">By typing your full legal name below, you confirm you have read, understood, and agreed to all terms of this Catering Services Agreement.</p>
-      <div style="background:rgba(139,0,0,0.35);border:1px solid rgba(192,57,43,0.6);border-radius:10px;padding:16px 18px;margin-bottom:28px;display:flex;align-items:flex-start;gap:14px;">
-        <input type="checkbox" id="retainer_confirm" style="margin-top:3px;accent-color:var(--gold);width:18px;height:18px;flex-shrink:0;cursor:pointer;"/>
-        <label for="retainer_confirm" style="font-size:0.88rem;color:rgba(255,255,255,0.9);font-family:'Inter',sans-serif;line-height:1.65;cursor:pointer;"><strong style="color:#fff;display:block;margin-bottom:4px;">I understand the non-refundable $200 retainer is due immediately upon signing</strong> to secure my event date. Failure to submit payment does not cancel this agreement or release me from its terms.</label>
-      </div>
+      
       <div class="sig-grid">
         <div class="sig-block">
           <h4>The BBQ Guys Chicago</h4>
@@ -2520,7 +1217,10 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
   </div>
 
   <div class="footer-bar">Thank you for choosing The BBQ Guys Chicago. We look forward to making your event unforgettable! 🔥 &nbsp;|&nbsp; thebbqguyschicago.com &nbsp;|&nbsp; 224-400-2402</div>
-  <div id="stickySubmit"><button class="btn-submit" onclick="submitContract()">Submit &amp; Agree to Contract</button></div>
+  <div id="nextBtn" style="position:fixed;bottom:80px;right:16px;z-index:999;display:none;">
+  <button onclick="goToNextField()" style="background:#C9950A;color:#fff;border:none;padding:12px 20px;border-radius:50px;font-size:0.85rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.2);letter-spacing:0.04em;">Next →</button>
+</div>
+<div id="stickySubmit"><button class="btn-submit" onclick="submitContract()">Submit &amp; Agree to Contract</button></div>
 </div>
 
 <!-- PRINT MENU CARD -->
@@ -2529,21 +1229,21 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
     <!-- Header -->
     <div class="pm-header">
       <div class="pm-header-left">
-        <div class="pm-event-type" id="pm_event_type">Dinner</div>
-        <div id="pm_submitted_at" style="display:none;"></div>
-        <div id="pm_svc" style="display:none;"></div>
+        <div class="pm-event-type" id="pm_event_type">BBQ Guys Chicago</div>
         <div id="pm_date" style="display:none;"></div>
         <div id="pm_venue" style="display:none;"></div>
         <div id="pm_client" style="display:none;"></div>
         <div id="pm_guests" style="display:none;"></div>
+        <div id="pm_submitted_at" style="display:none;"></div>
+        <div id="pm_svc" style="display:none;"></div>
       </div>
       <div class="pm-logo-text">THE BBQ GUYS<span>CHICAGO</span></div>
     </div>
 
     <div class="pm-divider"></div>
 
-    <!-- Food items - no section headers, just clean item names -->
-    <div id="pm_food_sections"></div>
+    <!-- Food items — centered -->
+    <div id="pm_food_sections" style="text-align:center;"></div>
 
     <!-- Notes -->
     <div class="pm-section-block" id="pm_notes_wrap" style="display:none;">
@@ -2878,6 +1578,35 @@ function showContractSummary(){
   btn.textContent = '✕ Hide Summary';
 }
 
+function goToNextField(){
+  // Find first empty required field and scroll to it
+  const requiredFields = [];
+  document.querySelectorAll('.client-event-block').forEach(block => {
+    const id = block.id.replace('cev_','');
+    ['c_etype_','c_edate_','c_venue_','c_addr_'].forEach(prefix => {
+      const el = document.getElementById(prefix+id);
+      if(el && el.style.display !== 'none' && !el.value?.trim()) requiredFields.push(el);
+    });
+  });
+  // Also check name, phone fields
+  ['client_names','client_phone'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el && !el.value?.trim()) requiredFields.push(el);
+  });
+  // Signature
+  const sig = document.getElementById('client_sig_name');
+  if(sig && !sig.value?.trim()) requiredFields.push(sig);
+
+  if(requiredFields.length > 0){
+    requiredFields[0].scrollIntoView({behavior:'smooth',block:'center'});
+    setTimeout(()=>requiredFields[0].focus(), 400);
+  } else {
+    // All filled — scroll to submit
+    document.querySelector('.btn-submit')?.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+
+// Show next button on client view
 function cleanNum(id){const v=document.getElementById(id)?.value||'0';return parseFloat(v.replace(/[$,\s]/g,''))||0;}
 
 function setContractStatus(status){
@@ -2955,6 +1684,8 @@ function previewContract(){
   p.set('events',JSON.stringify(events));
   const guests=document.getElementById('h_guest_count')?.value||'';
   const svc=document.getElementById('h_service_type')?.value||'';
+  const svcTime=document.getElementById('h_service_time')?.value||'';
+  if(svcTime) p.set('service_time',svcTime);
   if(guests) p.set('guest_count',guests);
   if(svc) p.set('service_type',svc);
   const rate=cleanNum('h_fee_single');
@@ -3004,6 +1735,8 @@ function generateLink(){
   p.set('events',JSON.stringify(events));
   const gc=document.getElementById('h_guest_count')?.value||'';
   const svc=document.getElementById('h_service_type')?.value||'';
+  const svcTime=document.getElementById('h_service_time')?.value||'';
+  if(svcTime) p.set('service_time',svcTime);
   const rpp=document.getElementById('h_fee_single')?.value||'';
   // Read from host panel fee fields (the ones the host actually fills in)
   // Clean currency input and calculate fees
@@ -3101,19 +1834,13 @@ function addClientEvent(prefill={}){
         <input type="text" id="c_addr_${idx}" placeholder="Full street address" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;"/>
       </div>
       <div class="field-group">
-        <label>⑤ Food Service Start Time <span class="req-badge">REQUIRED</span></label>
-        <input type="time" id="c_start_${idx}" placeholder="--:-- --" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;"/>
-      </div>
-      <div class="field-group">
-        <label>⑥ Confirmed Guest Count <span class="req-badge">REQUIRED</span></label>
-        <input type="text" inputmode="numeric" pattern="[0-9]*" id="c_guests_${idx}" placeholder="e.g. 150" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;"/>
-      </div>
-      <div class="field-group">
-        <label>⑦ Setup / Load-In Notes <span class="opt-badge">OPTIONAL</span></label>
+        <label>⑤ Setup / Load-In Notes <span class="opt-badge">OPTIONAL</span></label>
+        <input type="time" id="c_start_${idx}" style="display:none;"/>
+        <input type="text" id="c_guests_${idx}" style="display:none;"/>
         <input type="text" id="c_setup_${idx}" placeholder="e.g. back entrance, elevator code" style="border:none;border-bottom:2px solid #C8BFB0;background:transparent;padding:10px 2px;font-size:1rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;font-weight:500;"/>
       </div>
       <div class="field-group">
-        <label>⑧ Event Timeline <span class="opt-badge">OPTIONAL</span></label>
+        <label>⑥ Event Timeline <span class="opt-badge">OPTIONAL</span></label>
         <textarea id="c_timeline_${idx}" placeholder="e.g. 6pm guests arrive, 7pm food service, 8pm speeches…" style="border:1.5px solid #C8BFB0;border-radius:6px;padding:10px 12px;resize:vertical;min-height:64px;background:transparent;font-size:0.92rem;font-family:'Inter',sans-serif;color:var(--dark);outline:none;width:100%;margin-top:4px;"></textarea>
       </div>
     </div>`;
@@ -3264,18 +1991,15 @@ if(isClientMode){
 }
 
 function renderPrintCard(){
-  // Hide everything else with !important
   document.getElementById('hostPanel').style.display='none';
   document.getElementById('contractView').style.display='none';
-  // Show print card
-  const pmv = document.getElementById('printMenuView');
-  pmv.style.display='block';
-
+  document.getElementById('printMenuView').style.display='block';
   const raw = getRaw();
 
   // Set celebration title
-  const title = raw['celebration'] || raw['client_names'] || 'Our Menu';
-  document.getElementById('pm_event_type').textContent = title;
+  const title = raw['celebration'] || raw['client_names'] || 'The BBQ Guys Chicago';
+  const titleEl = document.getElementById('pm_event_type');
+  if(titleEl) titleEl.textContent = title;
 
   // Decode food
   let foodRaw = '{}';
@@ -3289,11 +2013,9 @@ function renderPrintCard(){
   let food = {};
   try{ food = JSON.parse(foodRaw); }catch(e){}
 
-  // Build food HTML
-  const ORDER = ['apps','tikka','boti','kabab','goat','seafood','veg','gravy','rice','american','custom','bread','dessert'];
-  const LABELS = {apps:'Appetizers',tikka:'Chicken Tikka',boti:'Chicken Boti',kabab:'Kabab',goat:'Goat',seafood:'Seafood',veg:'Vegetarian',gravy:'Gravy',rice:'Rice',american:'American',custom:'Special Items',bread:'Bread',dessert:'Dessert'};
-
+  // Build food sections — centered
   const appItems=[], mainItems=[], breadItems=[], dessertItems=[];
+  const ORDER = ['apps','tikka','boti','kabab','goat','seafood','veg','gravy','rice','american','custom','bread','dessert'];
   ORDER.forEach(k => {
     const items = food[k]; if(!items||!items.length) return;
     if(k==='apps') appItems.push(...items);
@@ -3302,38 +2024,47 @@ function renderPrintCard(){
     else mainItems.push(...items);
   });
 
-  let html = '';
   const section = (label, items) => {
     if(!items.length) return '';
-    return '<div style="margin-bottom:20px;">'
-      + '<div style="font-size:0.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:#8B0000;margin-bottom:10px;">' + label + '</div>'
-      + items.map(i => '<div style="font-size:1rem;color:#1a1a1a;padding:5px 0;border-bottom:1px solid #f0ebe3;font-family:Georgia,serif;">' + i + '</div>').join('')
+    return '<div class="pm-section-block">'
+      + '<div class="pm-section-name">' + label + '</div>'
+      + '<ul class="pm-item-list">' + items.map(i=>'<li>'+i+'</li>').join('') + '</ul>'
       + '</div>';
   };
 
-  html += section('Appetizers', appItems);
-  html += section('Main Course', mainItems);
-  html += section('Bread', breadItems);
-  html += section('Dessert', dessertItems);
+  let foodHtml = section('Appetizer', appItems)
+    + section('Main Course', mainItems)
+    + section('Bread', breadItems)
+    + section('Dessert', dessertItems);
 
-  if(!html) html = '<p style="color:#aaa;font-size:0.85rem;">No menu items found.</p>';
+  if(!foodHtml) foodHtml = '<p style="color:#9ca3af;font-size:0.85rem;padding:10px 0;">No menu items recorded.</p>';
 
-  document.getElementById('pm_food_sections').innerHTML = html;
+  const wrap = document.getElementById('pm_food_sections');
+  if(wrap) wrap.innerHTML = foodHtml;
 
   // Notes
   const notes = raw['food_notes']||'';
-  if(notes && notes !== 'None' && notes !== 'none'){
-    document.getElementById('pm_notes_wrap').style.display='block';
-    document.getElementById('pm_notes').textContent = notes;
+  if(notes && notes !== 'None'){
+    const nw = document.getElementById('pm_notes_wrap');
+    if(nw) nw.style.display='block';
+    const ne = document.getElementById('pm_notes');
+    if(ne) ne.textContent = notes;
   }
 }
 
-if(isPrintMode){
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded', renderPrintCard);
-  } else {
-    renderPrintCard();
-  }
+if(isPrintMode) renderPrintCard();
+
+// Show Next button if in client mode
+if(isClientMode){
+  window.addEventListener('load', function(){
+    const btn = document.getElementById('nextBtn');
+    if(btn) btn.style.display = 'block';
+  });
+}
+
+// Show host panel only when no URL params
+if(!isClientMode && !isPrintMode){
+  document.getElementById('hostPanel').style.display='flex';
 }
 
 (function(){
@@ -3433,14 +2164,7 @@ window.submitContract=async function(){
     
     if(!gu?.value){fieldErr(gu,`Please enter the confirmed guest count for Event ${n}.`);return;}
   }
-  if(!document.getElementById('overtime_confirm')?.checked){const el=document.getElementById('overtime_confirm');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you understand the grace time & overtime policy.');return;}
-  if(!document.getElementById('cancellation_confirm')?.checked){const el=document.getElementById('cancellation_confirm');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you have read the Cancellation Policy.');return;}
-  if(!document.getElementById('chargeback_confirm')?.checked){const el=document.getElementById('chargeback_confirm');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm the Chargeback Protection clause.');return;}
-  if(!document.getElementById('menu_confirm')?.checked){const el=document.getElementById('menu_confirm');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm your menu selections in Section 2.');return;}
-
-  if(!document.getElementById('review_acknowledge')?.checked){const el=document.getElementById('review_acknowledge');el?.closest('.section')?.querySelector('.section-title.collapsed')?.click();el?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm Section 19 — Review & Referral.');return;}
-  if(!document.getElementById('retainer_confirm')?.checked){document.getElementById('retainer_confirm')?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you understand the $200 non-refundable retainer is due immediately upon signing.');return;}
-  if(!document.getElementById('read_all_sections')?.checked){document.getElementById('read_all_sections')?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you have read and understood all sections of this contract.');return;}
+  if(!document.getElementById('read_all_sections')?.checked){document.getElementById('read_all_sections')?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you have read and agreed to all sections.');return;}
   const sigEl=document.getElementById('client_sig_name');if(!sigEl?.value?.trim()){fieldErr(sigEl,'Please type your full legal name to sign the contract.');return;}
   const cdEl=document.getElementById('client_date');if(!cdEl?.value){fieldErr(cdEl,'Please enter your signing date.');return;}
 
@@ -3516,8 +2240,8 @@ window.submitContract=async function(){
     document.querySelectorAll('[id^="c_edate_"]').forEach(el => { if(el.value) evDate = el.value; });
     document.querySelectorAll('[id^="c_etype_"]').forEach(el => { if(el.value) etype  = el.value; });
 
-    let startTime = '18:00';
-    document.querySelectorAll('[id^="c_start_"]').forEach(el => { if(el.value) startTime = el.value; });
+    let startTime = raw['service_time'] || '18:00';
+    document.querySelectorAll('[id^="c_start_"]').forEach(el => { if(el.value && el.style.display !== 'none') startTime = el.value; });
 
     let venue = venueFirst[0] || '';
     let addr  = '';
@@ -3538,7 +2262,7 @@ window.submitContract=async function(){
     // Build title
     const clientName  = raw['client_names'] || cnEl.value || 'Client';
     const evDateShort = new Date(evDate+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
-    const autoTitle   = 'BBQ Guys Chicago | ' + clientName + ' | ' + evDateShort + ' | ' + (etype||'Event');
+    const autoTitle   = 'BBQ Guys | ' + clientName + ' | ' + guests + ' ppl | ' + (etype||'Event');
 
     // Build description
     const total = raw['total_remaining']|| '—';
