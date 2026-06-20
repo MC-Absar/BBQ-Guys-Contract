@@ -665,7 +665,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
 <!-- ══════════════════════════════════════════
      CLIENT CONTRACT VIEW
 ══════════════════════════════════════════ -->
-<div id="contractView">
+<div id="contractView" style="display:none;">
   <div class="header" style="position:relative;overflow:hidden;">
     <canvas id="headerCanvas" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;opacity:0.5;"></canvas>
     <!-- BBQ Guys Logo -->
@@ -2160,9 +2160,9 @@ window.submitContract=async function(){
     if(!ve?.value?.trim()){fieldErr(ve,`Please enter the venue name for Event ${n}.`);return;}
     if(!ad?.value?.trim()){fieldErr(ad,`Please enter the venue address for Event ${n}.`);return;}
     
-    if(!st?.value){fieldErr(st,`Please enter the food service start time for Event ${n}.`);return;}
-    
-    if(!gu?.value){fieldErr(gu,`Please enter the confirmed guest count for Event ${n}.`);return;}
+    if(!gu?.value || gu?.style?.display === 'none'){
+    // guest count hidden — skip
+    } else if(!gu?.value){fieldErr(gu,`Please enter the confirmed guest count for Event ${n}.`);return;}
   }
   if(!document.getElementById('read_all_sections')?.checked){document.getElementById('read_all_sections')?.scrollIntoView({behavior:'smooth',block:'center'});alert('Please confirm you have read and agreed to all sections.');return;}
   const sigEl=document.getElementById('client_sig_name');if(!sigEl?.value?.trim()){fieldErr(sigEl,'Please type your full legal name to sign the contract.');return;}
