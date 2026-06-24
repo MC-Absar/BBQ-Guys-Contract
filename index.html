@@ -880,7 +880,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <div class="section-body collapsed">
         <p class="clause">To ensure a smooth and successful catering experience, the Client agrees to the following:</p>
         <ul class="clause-list">
-          <li>Provide a final confirmed guest count no later than <strong>2 days</strong> before the event. Guest count <strong>increases</strong> are accepted up to 2 days before, subject to availability. Guest count <strong>decreases</strong> must be requested at least <strong>14 days</strong> before the event; decreases of more than 15% within 14 days will not result in a reduction of contract fees.</li>
+          <li>Provide a final confirmed guest count per the Guest Count policy outlined in Section 8.</li>
           <li>Ensure the Caterer has access to the venue, including kitchen or prep area, electricity, and running water access. <strong>A water hose with outdoor access is required for live BBQ setups</strong> — please confirm availability with your venue in advance.</li>
           <li>Provide accurate venue contact information and any applicable vendor load-in requirements, elevator access codes, or parking details at least 7 days prior.</li>
           <li>Communicate all confirmed dietary restrictions, allergies, and Halal requirements clearly in the pre-event call.</li>
@@ -911,7 +911,6 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <div class="section-body collapsed">
         <p class="clause">For events held fully or partially outdoors, the Client is responsible for providing adequate shelter, shade, and weather protection for the catering team and equipment. This includes a covered tent or canopy structure sufficient to protect grills, food stations, and staff from precipitation and direct sun.</p>
         <p class="clause">The Caterer reserves the right to pause or restructure service if outdoor conditions become unsafe or unworkable, including but not limited to extreme heat (above 95°F), heavy rain, lightning, or high winds. No refund will be issued for weather-related service interruptions beyond the Caterer's control.</p>
-        <p class="clause"><strong>Day-of Weather Force Majeure:</strong> If severe weather (tornado warning, flash flood emergency, or equivalent government-issued alert) forces a venue change or cancellation within 24 hours of the event, The BBQ Guys Chicago will make best efforts to reschedule at no additional rescheduling fee. If rescheduling is not possible, a credit of 50% of payments made (excluding the non-refundable retainer) will be applied toward a future booking within 12 months.</p>
         <p class="clause">If the venue requires open-flame permits for live BBQ cooking, those permits are the Client's sole responsibility to obtain and provide to the Caterer at least 7 days before the event.</p>
       </div>
     </div>
@@ -2251,7 +2250,7 @@ window.submitContract=async function(){
     // Build title
     const clientName  = raw['client_names'] || cnEl.value || 'Client';
     const evDateShort = new Date(evDate+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
-    const autoTitle   = 'BBQ Guys | ' + clientName + ' | ' + guests + ' ppl | ' + (etype||'Event');
+    const autoTitle = 'BBQ Guys | ' + clientName + ' | ' + guests + ' ppl | ' + (etype||'Event');
 
     // Build description
     const total = raw['total_remaining']|| '—';
