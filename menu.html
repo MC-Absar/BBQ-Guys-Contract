@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BBQ Guys Menu Card</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background:#FDFAF6;
+      font-family:'Georgia', serif;
+      min-height:100vh;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:40px 20px;
+    }
+    .card {
+      max-width:480px;
+      width:100%;
+      text-align:center;
+    }
+    .logo-main {
+      font-size:1.6rem;
+      font-weight:900;
+      color:#1a1a1a;
+      letter-spacing:0.1em;
+      font-family:'Georgia', serif;
+      text-transform:uppercase;
+    }
+    .logo-sub {
+      font-size:0.6rem;
+      font-weight:700;
+      color:#8B0000;
+      letter-spacing:0.3em;
+      text-transform:uppercase;
+      margin-top:3px;
+    }
+    .divider-gold {
+      border:none;
+      border-top:1px solid #C9950A;
+      width:60px;
+      margin:16px auto;
+    }
+    .divider-light {
+      border:none;
+      border-top:1px solid #e8e0d5;
+      width:80%;
+      margin:20px auto;
+    }
+    .celebration {
+      font-size:2rem;
+      font-weight:900;
+      color:#1a1a1a;
+      letter-spacing:0.04em;
+      line-height:1.15;
+      text-transform:uppercase;
+      margin-bottom:4px;
+      font-family:'Georgia', serif;
+    }
+    .section-label {
+      font-size:0.58rem;
+      font-weight:700;
+      letter-spacing:0.22em;
+      color:#8B0000;
+      text-transform:uppercase;
+      margin-bottom:12px;
+      margin-top:20px;
+    }
+    .menu-item {
+      font-size:1rem;
+      color:#1a1a1a;
+      padding:7px 0;
+      border-bottom:1px solid #f0ebe3;
+      font-family:'Georgia', serif;
+    }
+    .menu-item:last-child { border-bottom:none; }
+    .footer {
+      margin-top:28px;
+      font-size:0.7rem;
+      color:#999;
+      letter-spacing:0.08em;
+      line-height:1.8;
+    }
+    .no-items {
+      color:#aaa;
+      font-size:0.85rem;
+      padding:20px 0;
+      font-style:italic;
+    }
+    .print-btn {
+      margin-top:32px;
+      background:#8B0000;
+      color:#fff;
+      border:none;
+      padding:12px 28px;
+      border-radius:8px;
+      font-size:0.85rem;
+      font-weight:700;
+      font-family:'Georgia', serif;
+      cursor:pointer;
+      letter-spacing:0.04em;
+    }
+    @media print {
+      .print-btn { display:none; }
+      body { padding:20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <!-- Logo -->
+    <div class="logo-main">The BBQ Guys</div>
+    <div class="logo-sub">Chicago</div>
+
+    <hr class="divider-gold"/>
+
+    <!-- Celebration title -->
+    <div class="celebration" id="celebration">BBQ Guys Chicago</div>
+
+    <hr class="divider-light"/>
+
+    <!-- Food sections -->
+    <div id="food_sections"><p class="no-items">Loading menu...</p></div>
+
+    <hr class="divider-light"/>
+
+    <!-- Footer -->
+    <div class="footer">
+      @thebbqguyschicago<br/>
+      thebbqguyschicago.com &nbsp;·&nbsp; 224-400-2402
+    </div>
+
+    <div><button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button></div>
+
+  </div>
+
+  <script>
+    function getRaw(){
+      const raw = {};
+      const q = window.location.search.slice(1);
+      q.split('&').forEach(pair => {
+        const eq = pair.indexOf('=');
+        if(eq > 0){
+          const k = decodeURIComponent(pair.slice(0, eq));
+          const v = decodeURIComponent(pair.slice(eq+1).replace(/\+/g,' '));
+          raw[k] = v;
+        }
+      });
+      return raw;
+    }
+
+    function render(){
+      const raw = getRaw();
+
+      // Title
+      const title = raw['celebration'] || raw['client_names'] || 'The BBQ Guys Chicago';
+      document.getElementById('celebration').textContent = title;
+      document.title = title + ' — BBQ Guys Menu';
+
+      // Decode food
+      let foodRaw = '{}';
+      if(raw['foodb64']){
+        try{ foodRaw = atob(raw['foodb64']); }catch(e){}
+      }
+      if(foodRaw === '{}' && raw['food']){
+        try{ JSON.parse(raw['food']); foodRaw = raw['food']; }catch(e){}
+      }
+
+      let food = {};
+      try{ food = JSON.parse(foodRaw); }catch(e){}
+
+      // Sort into sections
+      const ORDER = ['apps','tikka','boti','kabab','goat','seafood','veg','gravy','rice','american','custom','bread','dessert'];
+      const LABELS = {
+        apps:'Appetizer', tikka:'Tikka', boti:'Boti',
+        kabab:'Kabab', goat:'Goat', seafood:'Seafood',
+        veg:'Vegetarian', gravy:'Gravy', rice:'Rice',
+        american:'American Grill', custom:'Special Items',
+        bread:'Bread', dessert:'Dessert'
+      };
+
+      const appItems=[], mainItems=[], breadItems=[], dessertItems=[];
+      const mainLabels=[];
+
+      ORDER.forEach(k => {
+        const items = food[k];
+        if(!items || !items.length) return;
+        if(k==='apps') appItems.push(...items);
+        else if(k==='bread') breadItems.push(...items);
+        else if(k==='dessert') dessertItems.push(...items);
+        else mainItems.push(...items);
+      });
+
+      const buildSection = (label, items) => {
+        if(!items.length) return '';
+        return '<div class="section-label">' + label + '</div>'
+          + items.map(i => '<div class="menu-item">' + i + '</div>').join('');
+      };
+
+      let html = buildSection('Appetizer', appItems)
+               + buildSection('Main Course', mainItems)
+               + buildSection('Bread', breadItems)
+               + buildSection('Dessert', dessertItems);
+
+      if(!html) html = '<p class="no-items">No menu items found.</p>';
+
+      document.getElementById('food_sections').innerHTML = html;
+
+      // Notes
+      const notes = raw['food_notes']||'';
+      if(notes && notes !== 'None' && notes.trim()){
+        document.getElementById('food_sections').innerHTML +=
+          '<div class="section-label" style="margin-top:20px;">Notes</div>'
+          + '<div class="menu-item" style="font-style:italic;color:#666;">' + notes + '</div>';
+      }
+    }
+
+    render();
+  </script>
+</body>
+</html>
