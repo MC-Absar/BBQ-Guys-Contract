@@ -895,7 +895,7 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <div class="section-title collapsed" onclick="toggleSection(this)"><span style="display:flex;align-items:center;flex:1;"><span class="section-dot optional"></span>👥 8. Guest Count &amp; Event Scale</span><span class="toggle-icon">&#9660;</span></div>
       <div class="section-body collapsed">
         <div class="clause-highlight">Final confirmed guest count is due <strong>2 days prior</strong> to your event date. <strong>Increases</strong> are accepted up to 2 days before, subject to availability. <strong>Decreases</strong> must be requested at least <strong>14 days</strong> before the event — decreases within 14 days do not reduce the contract fee.</div>
-        <p class="clause">The Client agrees to disclose a reasonable and accurate estimate of expected guest attendance at the time of booking. If the actual guest count exceeds the confirmed estimate by more than <strong>20%</strong> on the day of the event, the Caterer reserves the right to:</p>
+        <p class="clause">The Client agrees to disclose a reasonable and accurate estimate of expected guest attendance at the time of booking. If the actual guest count exceeds the confirmed estimate by more than <strong>10%</strong> on the day of the event, the Caterer reserves the right to:</p>
         <ul class="clause-list">
           <li>Adjust the total fee proportionally based on the actual guest count at the contracted per-person rate</li>
           <li>Limit portions or modify the menu to accommodate the available food supply if advance notice was not provided</li>
@@ -1508,16 +1508,9 @@ function setChafingFee(val){
 
 function openPrintCard(){
   const currentUrl = window.location.href;
-  // If we're on the client contract page (?d=1), swap to print=1
-  if(currentUrl.includes('?d=1') || currentUrl.includes('&d=1')){
-    const printUrl = currentUrl.replace('?d=1','?print=1').replace('&d=1','&print=1');
-    window.open(printUrl, '_blank');
-    return;
-  }
-  // Otherwise we're on the host panel — build print URL from form fields
   const base = currentUrl.split('?')[0];
+  const menuBase = base.replace(/index\.html$/, '').replace(/\/$/, '') + '/menu.html';
   const p = new URLSearchParams();
-  p.set('print','1');
   const celebration = document.getElementById('h_celebration')?.value||'';
   if(celebration) p.set('celebration', celebration);
   const cn = document.getElementById('h_client_names')?.value||'';
@@ -1537,7 +1530,7 @@ function openPrintCard(){
   try{ p.set('foodb64', btoa(unescape(encodeURIComponent(JSON.stringify(food))))); }catch(e){}
   const notes = document.getElementById('h_food_notes')?.value||'';
   if(notes) p.set('food_notes', notes);
-  window.open(base+'?'+p.toString(), '_blank');
+  window.open(menuBase+'?'+p.toString(), '_blank');
 }
 
 function showContractSummary(){
@@ -2222,13 +2215,9 @@ window.submitContract=async function(){
   if(raw['celebration']) pp.set('celebration',raw['celebration']);
   // Build full print link — stored as-is for use in contract
   const printLink=baseUrl+'?'+pp.toString();
-  // Print link — swap d=1 for print=1 in current URL (simplest, most reliable)
   const currentPageUrl = window.location.href;
-  let printLinkEmail = currentPageUrl.includes('?d=1')
-    ? currentPageUrl.replace('?d=1','?print=1')
-    : currentPageUrl.replace('&d=1','&print=1');
-  // Ensure print=1 is present
-  if(!printLinkEmail.includes('print=1')) printLinkEmail = baseUrl+'?print=1&'+new URLSearchParams(raw).toString();
+  const menuBaseUrl = baseUrl.replace(/index\.html$/, '').replace(/\/$/, '') + '/menu.html';
+  let printLinkEmail = menuBaseUrl + '?' + new URLSearchParams(raw).toString();
 
   // ── Build .ics calendar link for team ──
   let calLink = '';
@@ -2289,6 +2278,7 @@ window.submitContract=async function(){
       'Event serving time: ' + fmtTime(startTime) + '\n' +
       '# of guests: ' + guests + '\n' +
       'Event address: ' + venue + (addr ? ', ' + addr : '') + '\n' +
+      'Service Style: ' + (raw['service_type']||'—') + '\n' +
       (menuLines ? '\nMenu selection:\n' + menuLines + '\n' : '') +
       '\nQuote:\n' +
       'Pre-Tax: ' + preTax + '\n' +
