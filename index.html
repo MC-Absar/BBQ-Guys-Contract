@@ -2278,6 +2278,7 @@ window.submitContract=async function(){
       '# of guests: ' + guests + '\n' +
       'Event address: ' + venue + (addr ? ', ' + addr : '') + '\n' +
       'Service Style: ' + (raw['service_type']||'—') + '\n' +
+      (raw['chafing_tier'] && raw['chafing_tier']!=='Not booked' ? 'Chafing Setup: ' + raw['chafing_tier'].replace(/ — \$\d+/,'') + '\n' : '') +
       (menuLines ? '\nMenu selection:\n' + menuLines + '\n' : '') +
       '\nQuote:\n' +
       'Pre-Tax: ' + preTax + '\n' +
