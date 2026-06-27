@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>BBQ Guys Chicago — Load-Out</title>
+<style>
+:root {
+  --coal:#1A1A1A;--ash:#2A2A2A;--ash2:#333;--ember:#C84B1A;--ember2:#E05520;
+  --smoke:#6B6B6B;--paper:#F2EDE6;--white:#FFF;--green:#2A7A4B;--green2:#35A060;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{background:var(--coal);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--paper);min-height:100vh;}
+.screen{display:none;min-height:100vh;flex-direction:column;}
+.screen.active{display:flex;}
+.top-bar{background:var(--ember);padding:16px 18px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.top-bar-title{font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:white;}
+.top-bar-sub{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.06em;text-transform:uppercase;margin-top:1px;}
+.back-btn{margin-left:auto;background:rgba(0,0,0,.2);border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:white;cursor:pointer;flex-shrink:0;}
+/* SETUP */
+.setup-body{padding:22px 18px;flex:1;overflow-y:auto;}
+.setup-title{font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:2px;}
+.setup-sub{font-size:13px;color:var(--smoke);margin-bottom:24px;}
+.field-label{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--smoke);margin-bottom:7px;}
+.text-input{width:100%;background:var(--ash);border:none;border-radius:10px;padding:13px 14px;font-size:15px;color:var(--paper);outline:none;-webkit-appearance:none;margin-bottom:8px;}
+.text-input::placeholder{color:#555;}
+.guest-row{display:flex;align-items:center;gap:10px;margin-bottom:24px;}
+.g-btn{width:44px;height:44px;border-radius:10px;border:none;background:var(--ash);color:var(--paper);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.g-btn:active{background:var(--ember);}
+.g-input{flex:1;height:44px;background:var(--ash);border:none;border-radius:10px;color:var(--ember);font-size:22px;font-weight:800;text-align:center;outline:none;-webkit-appearance:none;}
+.menu-section{margin-bottom:24px;}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.cat-label{grid-column:1/-1;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--smoke);margin-top:12px;margin-bottom:2px;}
+.menu-item{background:var(--ash);border-radius:10px;padding:11px 12px;cursor:pointer;border:2px solid transparent;transition:all .12s;display:flex;align-items:flex-start;gap:9px;user-select:none;}
+.menu-item.selected{background:rgba(200,75,26,.15);border-color:var(--ember);}
+.menu-check{width:17px;height:17px;border-radius:4px;border:2px solid #555;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .12s;}
+.menu-item.selected .menu-check{background:var(--ember);border-color:var(--ember);color:white;}
+.menu-item-name{font-size:12px;font-weight:600;line-height:1.3;}
+.prot-row{display:flex;gap:3px;margin-top:5px;flex-wrap:wrap;}
+.prot-btn{font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;border:1.5px solid #555;background:transparent;color:var(--smoke);cursor:pointer;transition:all .1s;}
+.prot-btn.active{background:var(--ember);border-color:var(--ember);color:white;}
+.chef-note{background:var(--ash);border-left:3px solid var(--ember);border-radius:6px;padding:10px 13px;font-size:12px;color:var(--smoke);margin-bottom:24px;line-height:1.5;}
+.cta-btn{width:100%;background:var(--ember);border:none;border-radius:12px;padding:16px;font-size:15px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:white;cursor:pointer;margin-bottom:10px;}
+.cta-btn:active{background:var(--ember2);}
+.cta-btn.sec{background:var(--ash);color:var(--paper);font-size:13px;padding:13px;}
+/* ASSIGN */
+.assign-body{padding:18px;flex:1;overflow-y:auto;}
+.assign-intro{font-size:13px;color:var(--smoke);margin-bottom:20px;line-height:1.5;}
+.team-size-row{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;}
+.size-btn{flex:1;min-width:40px;padding:11px 4px;background:var(--ash);border:2px solid transparent;border-radius:10px;color:var(--paper);font-size:16px;font-weight:800;cursor:pointer;text-align:center;transition:all .12s;}
+.size-btn.active{background:rgba(200,75,26,.15);border-color:var(--ember);color:var(--ember);}
+.person-card{background:var(--ash);border-radius:12px;margin-bottom:12px;overflow:hidden;}
+.person-header{display:flex;align-items:center;gap:10px;padding:13px 14px;border-bottom:1px solid #333;}
+.person-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:white;flex-shrink:0;}
+.person-name-input{flex:1;background:transparent;border:none;border-bottom:2px solid #444;color:var(--paper);font-size:15px;font-weight:700;padding:2px 0;outline:none;}
+.person-name-input::placeholder{color:#555;font-weight:400;font-size:14px;}
+.person-name-input:focus{border-bottom-color:var(--ember);}
+.person-sections{padding:12px 14px;display:flex;flex-wrap:wrap;gap:6px;}
+.sec-tag{font-size:11px;font-weight:700;padding:5px 10px;border-radius:20px;border:1.5px solid #444;color:var(--smoke);cursor:pointer;letter-spacing:.03em;transition:all .12s;user-select:none;}
+.sec-tag.assigned{border-color:var(--ember);color:var(--ember);background:rgba(200,75,26,.1);}
+.sec-tag.taken{border-color:#2A2A2A;color:#333;cursor:default;}
+/* WORKER CHECKLIST */
+.cl-header{background:var(--coal);border-bottom:1px solid var(--ash);padding:14px 18px;flex-shrink:0;}
+.cl-event{font-size:16px;font-weight:800;letter-spacing:-.01em;margin-bottom:2px;}
+.cl-meta{font-size:11px;color:var(--smoke);margin-bottom:10px;}
+.cl-wbar{display:flex;align-items:center;gap:8px;background:var(--ash);border-radius:8px;padding:8px 12px;}
+.cl-wdot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.cl-wname{font-size:13px;font-weight:800;}
+.cl-wrole{font-size:11px;color:var(--smoke);margin-left:auto;text-align:right;}
+.prog-wrap{background:var(--ash2);border-radius:4px;height:4px;margin-top:10px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--ember);border-radius:4px;transition:width .3s;}
+.prog-label{font-size:10px;color:var(--smoke);margin-top:4px;text-align:right;}
+.sec-header{display:flex;align-items:center;gap:8px;padding:14px 18px 8px;background:var(--coal);position:sticky;top:0;z-index:10;}
+.sec-icon{font-size:15px;flex-shrink:0;}
+.sec-title{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ember);}
+.sec-badge{margin-left:auto;font-size:10px;font-weight:700;background:var(--ash);border-radius:20px;padding:2px 8px;color:var(--smoke);}
+.sec-mine{background:rgba(200,75,26,.2)!important;color:var(--ember)!important;}
+.check-row{display:flex;align-items:flex-start;gap:14px;padding:13px 18px;border-bottom:1px solid var(--ash);cursor:pointer;transition:background .08s;}
+.check-row:active{background:var(--ash);}
+.check-row.done{opacity:.4;}
+.chk-box{width:26px;height:26px;border-radius:7px;border:2px solid #444;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .12s;background:transparent;font-size:14px;color:white;}
+.check-row.done .chk-box{background:var(--green);border-color:var(--green);}
+.chk-content{flex:1;min-width:0;}
+.chk-name{font-size:15px;font-weight:600;line-height:1.3;}
+.check-row.done .chk-name{text-decoration:line-through;color:var(--smoke);}
+.chk-qty{font-size:12px;color:var(--ember);font-weight:700;margin-top:2px;}
+.check-row.done .chk-qty{color:var(--smoke);}
+.chk-note{font-size:11px;color:var(--smoke);margin-top:2px;line-height:1.4;}
+.chk-stamp{display:none;font-size:10px;font-weight:700;color:var(--green2);margin-top:3px;}
+.check-row.done .chk-stamp{display:block;}
+.locked-box{background:var(--ash);border-radius:8px;margin:8px 18px;padding:12px;text-align:center;color:var(--smoke);font-size:12px;font-weight:600;}
+.done-banner{display:none;margin:18px;background:var(--green);border-radius:14px;padding:20px;text-align:center;}
+.done-banner.show{display:block;}
+.done-icon{font-size:34px;margin-bottom:8px;}
+.done-title{font-size:18px;font-weight:800;color:white;margin-bottom:4px;}
+.done-sub{font-size:13px;color:rgba(255,255,255,.8);}
+/* MASTER */
+.master-body{flex:1;overflow-y:auto;}
+.master-event-card{margin:14px 18px;background:var(--ash);border-radius:12px;padding:14px;}
+.master-event-name{font-size:17px;font-weight:800;margin-bottom:4px;}
+.master-event-meta{font-size:12px;color:var(--smoke);}
+.team-ov{padding:0 18px 8px;}
+.team-ov-title{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--smoke);margin-bottom:10px;margin-top:14px;}
+.person-pill{display:flex;align-items:center;gap:10px;background:var(--ash);border-radius:10px;padding:10px 13px;margin-bottom:8px;cursor:pointer;}
+.person-pill:active{background:var(--ash2);}
+.pp-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.pp-name{font-size:13px;font-weight:700;}
+.pp-secs{font-size:11px;color:var(--smoke);}
+.pp-prog{font-size:13px;font-weight:800;margin-left:auto;flex-shrink:0;}
+.pp-wa{font-size:11px;color:#25D366;margin-left:6px;flex-shrink:0;}
+.master-div{height:6px;background:var(--ash);margin:8px 0;}
+.action-bar{padding:14px 18px;display:flex;gap:8px;flex-shrink:0;}
+.wa-btn{flex:1;background:#25D366;border:none;border-radius:11px;padding:14px;font-size:13px;font-weight:800;letter-spacing:.04em;color:white;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;}
+.wa-btn:active{background:#1da851;}
+.copy-btn{background:var(--ash);border:none;border-radius:11px;padding:14px;font-size:13px;font-weight:700;color:var(--paper);cursor:pointer;}
+.share-note{font-size:10px;color:var(--smoke);text-align:center;padding:0 18px 8px;font-style:italic;}
+.reset-btn{display:block;margin:8px 18px 0;background:transparent;border:1.5px solid var(--ash2);border-radius:10px;padding:12px;font-size:12px;font-weight:700;color:var(--smoke);cursor:pointer;width:calc(100% - 36px);letter-spacing:.05em;text-transform:uppercase;}
+.pad{height:36px;}
+</style>
+</head>
+<body>
+
+<!-- SCREEN 1: EVENT SETUP -->
+<div id="s1" class="screen active">
+  <div class="top-bar">
+    <div style="font-size:22px">🔥</div>
+    <div><div class="top-bar-title">BBQ Guys Chicago</div><div class="top-bar-sub">Load-Out Checklist</div></div>
+  </div>
+  <div class="setup-body">
+    <div class="setup-title">New Event</div>
+    <div class="setup-sub">Fill details, then assign your team</div>
+    <div class="field-label">Event / Client</div>
+    <input class="text-input" id="s1-name" placeholder="e.g. Khan Wedding — Rosemont" type="text">
+    <input class="text-input" id="s1-phone" placeholder="Client phone" type="tel">
+    <input class="text-input" id="s1-date" placeholder="Date & time" type="text">
+    <input class="text-input" id="s1-venue" placeholder="Venue / address" type="text">
+    <div class="field-label" style="margin-top:16px">Guest Count</div>
+    <div class="guest-row">
+      <button class="g-btn" onclick="adj(-10)">−</button>
+      <input class="g-input" id="s1-guests" type="number" value="50" min="10" max="2000">
+      <button class="g-btn" onclick="adj(10)">+</button>
+    </div>
+    <div class="menu-section">
+      <div class="field-label">Menu Items</div>
+      <div class="menu-grid" id="menu-grid"></div>
+    </div>
+    <div class="chef-note">🧑‍🍳 <strong>Chef:</strong> Proteins are pre-tagged & racked in the walk-in. Grab by label only — do not swap racks.</div>
+    <button class="cta-btn" onclick="goAssign()">Next — Assign Team →</button>
+  </div>
+</div>
+
+<!-- SCREEN 2: TEAM ASSIGNMENT -->
+<div id="s2" class="screen">
+  <div class="top-bar">
+    <div style="font-size:20px">👥</div>
+    <div><div class="top-bar-title">Assign Team</div><div class="top-bar-sub">Who's working this event</div></div>
+    <button class="back-btn" onclick="show('s1')">← Back</button>
+  </div>
+  <div class="assign-body">
+    <div class="assign-intro">Select team size, enter each person's name, then tap the sections they're responsible for. Each section has one owner.</div>
+    <div class="field-label">Team Size</div>
+    <div class="team-size-row" id="size-row"></div>
+    <div id="person-cards"></div>
+    <button class="cta-btn" onclick="goMaster()">Generate Checklist →</button>
+    <button class="cta-btn sec" onclick="show('s1')">← Edit Event</button>
+  </div>
+</div>
+
+<!-- SCREEN 3: WORKER VIEW -->
+<div id="s3" class="screen">
+  <div class="cl-header">
+    <div class="cl-event" id="s3-event">—</div>
+    <div class="cl-meta" id="s3-meta">—</div>
+    <div class="cl-wbar">
+      <div class="cl-wdot" id="s3-dot"></div>
+      <div class="cl-wname" id="s3-wname">—</div>
+      <div class="cl-wrole" id="s3-wrole">—</div>
+    </div>
+    <div class="prog-wrap"><div class="prog-fill" id="s3-prog" style="width:0%"></div></div>
+    <div class="prog-label" id="s3-prog-label">0 / 0 checked</div>
+  </div>
+  <div id="s3-body"></div>
+  <div class="done-banner" id="s3-done">
+    <div class="done-icon">✅</div>
+    <div class="done-title" id="s3-done-title">Sections complete.</div>
+    <div class="done-sub">All your items loaded. Let leadership know.</div>
+  </div>
+  <button class="reset-btn" onclick="resetWorker()">↺ Reset My Checks</button>
+  <div class="pad"></div>
+</div>
+
+<!-- SCREEN 4: MASTER VIEW -->
+<div id="s4" class="screen">
+  <div class="top-bar">
+    <div style="font-size:20px">📋</div>
+    <div><div class="top-bar-title">Master View</div><div class="top-bar-sub">Leadership overview</div></div>
+    <button class="back-btn" onclick="show('s2')">← Edit</button>
+  </div>
+  <div class="master-body">
+    <div class="master-event-card">
+      <div class="master-event-name" id="s4-event">—</div>
+      <div class="master-event-meta" id="s4-meta">—</div>
+    </div>
+    <div class="team-ov">
+      <div class="team-ov-title">Team — tap a name to send their WhatsApp link</div>
+      <div id="s4-team"></div>
+    </div>
+    <div class="master-div"></div>
+    <div id="s4-checklist"></div>
+  </div>
+  <div class="action-bar">
+    <button class="wa-btn" onclick="shareAll()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Send All Links
+    </button>
+    <button class="copy-btn" onclick="copyMaster()">📋 My Link</button>
+  </div>
+  <div class="share-note" id="s4-note">Each person gets their own pre-assigned link</div>
+  <div class="pad"></div>
+</div>
+
+<script>
+const PROTEINS=['Chicken','Beef','Mutton'];
+const COLORS=['#C84B1A','#2A7A4B','#7B3FA0','#1A6FA0','#A07B1A','#A01A4B','#1AA07B','#6B6B6B','#4B6BA0','#A04B6B'];
+const MENU=[
+  {id:'red-tikka',name:'Red Tikka',cat:'SEC 1 · Chicken Tikka',e:'🍗'},
+  {id:'malai-tikka',name:'Malai Tikka',cat:'SEC 1 · Chicken Tikka',e:'🍗'},
+  {id:'green-tikka',name:'Green Tikka',cat:'SEC 1 · Chicken Tikka',e:'🍗'},
+  {id:'afghani-tikka',name:'Afghani Tikka',cat:'SEC 1 · Chicken Tikka',e:'🍗'},
+  {id:'bihari-tikka',name:'Bihari Tikka',cat:'SEC 1 · Chicken Tikka',e:'🍗'},
+  {id:'red-boti',name:'Red Boti',cat:'SEC 2 · Chicken Boti',e:'🔥'},
+  {id:'malai-boti',name:'Malai Boti',cat:'SEC 2 · Chicken Boti',e:'🔥'},
+  {id:'cheese-boti',name:'Cheese Boti',cat:'SEC 2 · Chicken Boti',e:'🔥'},
+  {id:'green-boti',name:'Green Boti',cat:'SEC 2 · Chicken Boti',e:'🔥'},
+  {id:'garlic-boti',name:'Garlic Boti',cat:'SEC 2 · Chicken Boti',e:'🔥'},
+  {id:'afghani-boti',name:'Afghani Boti',cat:'SEC 2 · Chicken Boti',e:'🔥'},
+  {id:'seekh-kabab',name:'Seekh Kabab',cat:'SEC 3 · Kabab Chk/Beef',e:'🥩',p:1},
+  {id:'turkish-kabab',name:'Turkish Kabab',cat:'SEC 3 · Kabab Chk/Beef',e:'🥩'},
+  {id:'cheese-kabab',name:'Cheese Kabab',cat:'SEC 3 · Kabab Chk/Beef',e:'🥩'},
+  {id:'beef-bihari-kab',name:'Beef Bihari Kabab',cat:'SEC 3 · Kabab Chk/Beef',e:'🥩'},
+  {id:'beef-bihari-boti',name:'Beef Bihari Boti',cat:'SEC 3 · Kabab Chk/Beef',e:'🥩'},
+  {id:'chapli-kabab',name:'Chapli Kabab',cat:'SEC 3 · Kabab Chk/Beef',e:'🥩'},
+  {id:'namkeen-chops',name:'Namkeen Chops',cat:'SEC 4 · Goat Delicacies',e:'🍖'},
+  {id:'masala-chops',name:'Masala Chops',cat:'SEC 4 · Goat Delicacies',e:'🍖'},
+  {id:'mutton-seekh',name:'Mutton Seekh Kabab',cat:'SEC 4 · Goat Delicacies',e:'🍖'},
+  {id:'dynamite-shrimp',name:'Dynamite Shrimp',cat:'SEC 5 · Seafood',e:'🦐'},
+  {id:'masala-shrimp',name:'Masala Shrimp',cat:'SEC 5 · Seafood',e:'🦐'},
+  {id:'fish-tikka',name:'Fish Tikka',cat:'SEC 5 · Seafood',e:'🐟'},
+  {id:'lahori-fish',name:'Lahori Fried Fish',cat:'SEC 5 · Seafood',e:'🐟'},
+  {id:'paneer-tikka',name:'Paneer / Tofu Tikka',cat:'SEC 6 · Vegetarian',e:'🧀'},
+  {id:'street-corn',name:'Street Corn',cat:'SEC 6 · Vegetarian',e:'🌽'},
+  {id:'daal-fry',name:'Daal Fry',cat:'SEC 6 · Vegetarian',e:'🫕'},
+  {id:'vegi-skewers',name:'Vegi Skewers',cat:'SEC 6 · Vegetarian',e:'🥦'},
+  {id:'aloo-masala',name:'Aloo Masala',cat:'SEC 6 · Vegetarian',e:'🥔'},
+  {id:'chana-masala',name:'Chana Masala',cat:'SEC 6 · Vegetarian',e:'🫘'},
+  {id:'karahi',name:'Karahi',cat:'SEC 7 · Gravy Entrees',e:'🍛',p:1},
+  {id:'kashmiri-handi',name:'Chk Kashmiri Handi',cat:'SEC 7 · Gravy Entrees',e:'🍛'},
+  {id:'butter-chicken',name:'Butter Chicken',cat:'SEC 7 · Gravy Entrees',e:'🍛'},
+  {id:'reshmi-handi',name:'Chk Reshmi Handi',cat:'SEC 7 · Gravy Entrees',e:'🍛'},
+  {id:'beef-nihari',name:'Beef Nihari',cat:'SEC 7 · Gravy Entrees',e:'🍲'},
+  {id:'qorma',name:'Qorma',cat:'SEC 7 · Gravy Entrees',e:'🍛',p:1},
+  {id:'zeera-rice',name:'Zeera Rice',cat:'SEC 8 · Rice Entrees',e:'🍚'},
+  {id:'chickpea-rice',name:'Chickpea Rice',cat:'SEC 8 · Rice Entrees',e:'🍚'},
+  {id:'frontier-rice',name:'Frontier Rice',cat:'SEC 8 · Rice Entrees',e:'🍚'},
+  {id:'fried-rice',name:'Fried Rice',cat:'SEC 8 · Rice Entrees',e:'🍚'},
+  {id:'pulao',name:'Pulao',cat:'SEC 8 · Rice Entrees',e:'🍚',p:1},
+  {id:'biryani',name:'Biryani',cat:'SEC 8 · Rice Entrees',e:'🍚',p:1},
+  {id:'naan',name:'Naan',cat:'SEC 9 · Bread',e:'🫓'},
+  {id:'puri-paratha',name:'Puri Paratha',cat:'SEC 9 · Bread',e:'🫓'},
+  {id:'pakora',name:'Pakora',cat:'Appetizers',e:'🧆'},
+  {id:'samosa',name:'Samosa',cat:'Appetizers',e:'🥟'},
+  {id:'fries',name:'Fries',cat:'Appetizers',e:'🍟'},
+  {id:'chk-wings',name:'Chk Wings',cat:'Appetizers',e:'🍗'},
+  {id:'salad',name:'Salad',cat:'Appetizers',e:'🥗'},
+  {id:'smash-burger',name:'Smash Beef Burgers',cat:'SEC 10 · American Grill',e:'🍔'},
+  {id:'hot-dogs',name:'Hot Dogs',cat:'SEC 10 · American Grill',e:'🌭'},
+  {id:'chicken-pasta',name:'Wicked Chicken Pasta',cat:'SEC 10 · American Grill',e:'🍝'},
+  {id:'jalebi',name:'Jalebi',cat:'SEC 11 · Desserts & Drinks',e:'🍯'},
+  {id:'gola-ganda',name:'Gola Ganda',cat:'SEC 11 · Desserts & Drinks',e:'🧊'},
+  {id:'funnel-cake',name:'Funnel Cake',cat:'SEC 11 · Desserts & Drinks',e:'🍩'},
+  {id:'falooda',name:'Falooda',cat:'SEC 11 · Desserts & Drinks',e:'🥛'},
+  {id:'sooji-halwa',name:'Sooji ka Halwa',cat:'SEC 11 · Desserts & Drinks',e:'🍮'},
+  {id:'kulfi',name:'Kulfi',cat:'SEC 11 · Desserts & Drinks',e:'🍦'},
+  {id:'chai',name:'Chai',cat:'SEC 11 · Desserts & Drinks',e:'☕'},
+  {id:'kashmiri-chai',name:'Kashmiri Chai',cat:'SEC 11 · Desserts & Drinks',e:'🌸'},
+  {id:'lassi',name:'Lassi',cat:'SEC 11 · Desserts & Drinks',e:'🥛'},
+  {id:'dessert-cart',name:'Dessert Cart',cat:'SEC 11 · Desserts & Drinks',e:'🛒'},
+  {id:'fruit-bar',name:'Fruit Bar',cat:'SEC 11 · Desserts & Drinks',e:'🍓'},
+];
+
+const SECTIONS=[
+  {id:'proteins',icon:'🍖',title:'Marinated Proteins'},
+  {id:'grilling',icon:'🔥',title:'Grilling Equipment'},
+  {id:'serving',icon:'🍽️',title:'Serving Supplies'},
+  {id:'setup',icon:'🪑',title:'Setup Gear'},
+  {id:'condiments',icon:'🌿',title:'Condiments'},
+  {id:'gola',icon:'🧊',title:'Gola Ganda / Falooda',cond:true},
+  {id:'packaging',icon:'📦',title:'Packaging & Cleanup'},
+  {id:'admin',icon:'📋',title:'Admin & Essentials'},
+  {id:'storerun',icon:'🛒',title:'Store Run',cond:true,srOnly:true},
+];
+
+let sel=new Set(), prots={}, evt={}, storeRunItems=[], team=[], teamSize=4, checks={}, curWorker=null, sectItems={};
+
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function adj(d){const e=document.getElementById('s1-guests');e.value=Math.max(10,Math.min(2000,(parseInt(e.value)||50)+d));}
+
+function buildMenuGrid(){
+  const g=document.getElementById('menu-grid');g.innerHTML='';
+  const cats=[...new Set(MENU.map(m=>m.cat))];
+  cats.forEach(cat=>{
+    const l=document.createElement('div');l.className='cat-label';l.textContent=cat;g.appendChild(l);
+    MENU.filter(m=>m.cat===cat).forEach(item=>{
+      const el=document.createElement('div');
+      el.className='menu-item'+(sel.has(item.id)?' selected':'');el.id='mi-'+item.id;
+      let ph='';
+      if(item.p){const cur=prots[item.id]||'Chicken';ph='<div class="prot-row">'+PROTEINS.map(p=>'<button class="prot-btn'+(p===cur?' active':'')+'" onclick="setProt(event,''+item.id+'',''+p+'')">'+p+'</button>').join('')+'</div>';}
+      el.innerHTML='<div class="menu-check">'+(sel.has(item.id)?'✓':'')+'</div><div style="flex:1"><div class="menu-item-name">'+item.e+' '+item.name+'</div>'+ph+'</div>';
+      el.addEventListener('click',e=>{if(e.target.classList.contains('prot-btn'))return;toggleItem(item.id,el);});
+      g.appendChild(el);
+    });
+  });
+}
+
+function toggleItem(id,el){
+  if(sel.has(id)){sel.delete(id);el.classList.remove('selected');el.querySelector('.menu-check').textContent='';}
+  else{sel.add(id);el.classList.add('selected');el.querySelector('.menu-check').textContent='✓';}
+}
+
+function setProt(e,id,p){
+  e.stopPropagation();prots[id]=p;
+  const el=document.getElementById('mi-'+id);
+  el.querySelectorAll('.prot-btn').forEach(b=>b.classList.toggle('active',b.textContent===p));
+  if(!sel.has(id)){sel.add(id);el.classList.add('selected');el.querySelector('.menu-check').textContent='✓';}
+}
+
+function goAssign(){
+  evt={name:document.getElementById('s1-name').value.trim()||'Event',phone:document.getElementById('s1-phone').value.trim(),date:document.getElementById('s1-date').value.trim(),venue:document.getElementById('s1-venue').value.trim(),guests:parseInt(document.getElementById('s1-guests').value)||50};
+  const srRaw=document.getElementById('s1-storerun').value.trim();
+  storeRunItems=srRaw?srRaw.split('\n').map(l=>l.trim()).filter(Boolean):[];
+  if(sel.size===0){alert('Please select at least one menu item.');return;}
+  buildAssignScreen();show('s2');
+}
+
+function buildAssignScreen(){
+  const row=document.getElementById('size-row');row.innerHTML='';
+  for(let i=2;i<=10;i++){const b=document.createElement('button');b.className='size-btn'+(i===teamSize?' active':'');b.textContent=i;b.onclick=()=>setSize(i);row.appendChild(b);}
+  renderCards();
+}
+
+function setSize(n){
+  teamSize=n;
+  document.querySelectorAll('.size-btn').forEach((b,i)=>b.classList.toggle('active',i+2===n));
+  while(team.length<n)team.push({name:'',color:COLORS[team.length%COLORS.length],sections:[]});
+  team=team.slice(0,n);renderCards();
+}
+
+function renderCards(){
+  while(team.length<teamSize)team.push({name:'',color:COLORS[team.length%COLORS.length],sections:[]});
+  team=team.slice(0,teamSize);
+  const avail=SECTIONS.filter(s=>!s.cond||(sel.has('gola-ganda')||sel.has('falooda')));
+  const c=document.getElementById('person-cards');c.innerHTML='';
+  team.forEach((p,pi)=>{
+    const card=document.createElement('div');card.className='person-card';
+    const init=p.name?p.name.charAt(0).toUpperCase():(pi+1).toString();
+    const tags=avail.map(sec=>{
+      const mine=p.sections.includes(sec.id);
+      const takenIdx=mine?-1:team.findIndex((t,i)=>i!==pi&&t.sections.includes(sec.id));
+      const taken=takenIdx>=0;
+      return '<span class="sec-tag'+(mine?' assigned':taken?' taken':'')+'" onclick="'+(taken?'':'toggleSec('+pi+',''+sec.id+'')')+'">'+(mine?'✓ ':'')+sec.icon+' '+sec.title+'</span>';
+    }).join('');
+    card.innerHTML='<div class="person-header"><div class="person-avatar" id="av-'+pi+'" style="background:'+p.color+'">'+init+'</div><input type="text" class="person-name-input" placeholder="Person '+(pi+1)+' name" value="'+p.name+'" oninput="updateName('+pi+',this.value)" autocorrect="off"></div><div class="person-sections" id="psecs-'+pi+'">'+tags+'</div>';
+    c.appendChild(card);
+  });
+}
+
+function updateName(pi,v){team[pi].name=v;const a=document.getElementById('av-'+pi);if(a)a.textContent=v?v.charAt(0).toUpperCase():(pi+1).toString();}
+
+function toggleSec(pi,sid){
+  const p=team[pi];
+  if(p.sections.includes(sid))p.sections=p.sections.filter(s=>s!==sid);
+  else{team.forEach((t,i)=>{if(i!==pi)t.sections=t.sections.filter(s=>s!==sid);});p.sections.push(sid);}
+  renderCards();
+}
+
+function buildChecklist(guests,menuIds){
+  const has=id=>menuIds.has(id);
+  const hasGola=has('gola-ganda'),hasFalooda=has('falooda');
+  const hasNaan=has('naan')||has('puri-paratha');
+  const hasRice=has('biryani')||has('pulao')||has('zeera-rice')||has('chickpea-rice')||has('frontier-rice')||has('fried-rice');
+  const grills=guests<=50?1:guests<=150?2:3;
+  const coal=grills*2+1;
+  const skewers=Math.ceil(guests*2.5/50)*50;
+  const PCATS=['SEC 1 · Chicken Tikka','SEC 2 · Chicken Boti','SEC 3 · Kabab Chk/Beef','SEC 4 · Goat Delicacies','SEC 5 · Seafood'];
+  const protItems=MENU.filter(m=>PCATS.includes(m.cat)&&menuIds.has(m.id)).map(m=>{
+    const portions=Math.ceil(guests*1.2),racks=Math.ceil(portions/20);
+    const pr=m.p&&prots[m.id]?' — '+prots[m.id]:'';
+    return{name:m.e+' '+m.name+pr,qty:racks+' rack'+(racks>1?'s':''),note:'~'+portions+' portions · Chef-tagged · DO NOT swap'};
+  });
+  const chafing=Math.max(2,menuIds.size);
+  const tables=Math.ceil(guests/30)+2;
+  return{
+    proteins:protItems,
+    grilling:[
+      {name:'Charcoal grills',qty:grills+' grill'+(grills>1?'s':''),note:'Check vents + grates'},
+      {name:'Coal bags',qty:coal+' bags',note:'2 per grill + 1 backup'},
+      {name:'Metal skewers (long)',qty:skewers+' skewers',note:'Buffer for breakage'},
+      {name:'Grill tongs',qty:Math.max(2,grills*2)+' pairs'},
+      {name:'Chimney starters',qty:grills+'',note:'1 per grill'},
+      {name:'Grill brush / scraper',qty:grills+''},
+      {name:'Lighters',qty:'3 units'},
+      {name:'Heat-resistant gloves',qty:'2 pairs'},
+    ],
+    serving:[
+      {name:'Chafing dishes (full)',qty:chafing+' dishes',note:'With water pans + lids'},
+      {name:'Sternos / fuel',qty:(chafing*2)+' cans',note:'2 per dish'},
+      {name:'Serving spoons / ladles',qty:(chafing+2)+' pcs'},
+      {name:'Serving tongs',qty:Math.max(3,protItems.length+1)+' pairs'},
+      {name:'Serving platters',qty:Math.max(2,Math.ceil(guests/30))+' platters'},
+      {name:'Aluminum serving pans',qty:Math.max(2,Math.ceil(guests/25))+' pans'},
+      ...(hasRice?[{name:'Rice serving bowl + ladle',qty:'2 sets'}]:[]),
+    ],
+    setup:[
+      {name:'Folding tables (6ft)',qty:tables+' tables',note:'Food + grill + admin'},
+      {name:'Tablecloths (black)',qty:tables+' cloths'},
+      {name:'Table skirts (buffet)',qty:Math.max(1,Math.ceil(guests/50))+''},
+      {name:'Event banner / sign',qty:'1'},
+      {name:'Printed menu cards',qty:Math.max(2,Math.ceil(guests/50))+' cards (laminated)'},
+      {name:'Extension cord + power strip',qty:'1 set'},
+      {name:'Trash cans (large)',qty:Math.max(2,Math.ceil(guests/75))+''},
+    ],
+    condiments:[
+      {name:'Green chutney (mint)',qty:Math.max(0.2,+(guests*0.04).toFixed(1))+' kg'},
+      {name:'Tamarind chutney',qty:Math.max(0.15,+(guests*0.03).toFixed(1))+' kg'},
+      {name:'Raita',qty:Math.max(0.3,+(guests*0.06).toFixed(1))+' kg'},
+      {name:'Lemons (halved)',qty:Math.max(5,Math.ceil(guests*0.15))+' lemons'},
+      {name:'Sliced onions',qty:Math.max(0.25,+(guests*0.05).toFixed(1))+' kg'},
+      {name:'Sliced tomatoes',qty:Math.max(0.2,+(guests*0.04).toFixed(1))+' kg'},
+      {name:'Chaat masala shakers',qty:'2 shakers'},
+      {name:'Salt + pepper shakers',qty:'2 sets'},
+      ...(hasNaan?[{name:'Ghee / butter for bread',qty:Math.max(0.1,+(guests*0.01).toFixed(2))+' kg'}]:[]),
+      ...(has('salad')?[{name:'Salad dressing',qty:'1 bottle'}]:[]),
+    ],
+    gola:[
+      {name:'Ice blocks / crushed ice',qty:Math.max(1,Math.ceil(guests*0.35))+' kg',note:'Shared Gola + Falooda'},
+      {name:'Ice cooler',qty:'1 cooler'},
+      ...(hasGola?[
+        {name:'Gola Ganda shaver (electric)',qty:'1 unit',note:'Plug test before loading'},
+        {name:'Syrup bottles (assorted)',qty:Math.max(3,Math.ceil(guests/40)*3)+' bottles',note:'Rose, Mango, Kala Khatta min.'},
+        {name:'Condensed milk bottles',qty:'2 bottles'},
+        {name:'Cups / cones — Gola Ganda',qty:Math.max(1,Math.ceil(guests*0.8))+' cups'},
+        {name:'Spoons — Gola Ganda',qty:Math.max(1,Math.ceil(guests*0.8))+' spoons'},
+      ]:[]),
+      ...(hasFalooda?[
+        {name:'Cups — Falooda',qty:Math.max(1,Math.ceil(guests*0.8))+' cups'},
+        {name:'Long spoons — Falooda',qty:Math.max(1,Math.ceil(guests*0.8))+' spoons'},
+        {name:'Vermicelli (falooda sev)',qty:Math.max(0.5,+(guests*0.02).toFixed(1))+' kg',note:'Pre-cook or bring dry'},
+        {name:'Basil seeds (tukhmalanga)',qty:Math.max(0.1,+(guests*0.005).toFixed(2))+' kg',note:'Soak before event'},
+        {name:'Rose syrup bottles',qty:Math.max(2,Math.ceil(guests/40)*2)+' bottles'},
+        {name:'Ice cream (kulfi/vanilla)',qty:Math.max(1,Math.ceil(guests*0.08))+' kg',note:'Load LAST — keep frozen'},
+      ]:[]),
+    ],
+    packaging:[
+      {name:'Aluminum foil (heavy)',qty:'2 rolls'},
+      {name:'Foil pans (half-size)',qty:Math.max(4,Math.ceil(guests/20))+' pans',note:'Leftovers + transport'},
+      {name:'Takeout containers',qty:Math.max(10,Math.ceil(guests*0.3))+' containers'},
+      {name:'Ziplock bags (large)',qty:'20 bags'},
+      {name:'Trash bags (large)',qty:'6 bags'},
+      {name:'Disposable gloves',qty:'2 boxes (100-count each)'},
+      {name:'Paper towels',qty:'4 rolls'},
+      {name:'Dish soap + sponge',qty:'1 set'},
+    ],
+    storerun:storeRunItems.map(item=>({name:item,qty:'',note:'Store run — confirm before leaving'})),
+    admin:[
+      {name:'Printed contract / event sheet',qty:'1 copy',note:'Guest count, menu, client contact'},
+      {name:'Printed menu cards',qty:Math.max(2,Math.ceil(guests/50))+' cards'},
+      {name:'Business cards',qty:'20 cards'},
+      {name:'Van keys + fuel check',qty:'1 check',note:'Fill tank night before'},
+      {name:'Phone charger / power bank',qty:'1 unit'},
+      {name:'Cash float',qty:'1 envelope',note:'Last-minute supply runs'},
+    ],
+  };
+}
+
+function goMaster(){
+  if(team.filter(p=>!p.name.trim()).length>0){alert('Please enter a name for every team member.');return;}
+  sectItems=buildChecklist(evt.guests,sel);checks={};
+  const srField=document.getElementById('s1-storerun');if(srField&&storeRunItems.length)srField.value=storeRunItems.join('\n');renderMaster();show('s4');
+}
+
+function availSections(){return SECTIONS.filter(s=>!s.cond||(sel.has('gola-ganda')||sel.has('falooda')));}
+
+function renderMaster(){
+  document.getElementById('s4-event').textContent=evt.name;
+  document.getElementById('s4-meta').textContent=evt.guests+' guests'+(evt.date?' · '+evt.date:'')+(evt.venue?' · '+evt.venue:'');
+  const td=document.getElementById('s4-team');td.innerHTML='';
+  team.forEach((p,pi)=>{
+    const pill=document.createElement('div');pill.className='person-pill';
+    const snames=p.sections.map(s=>SECTIONS.find(x=>x.id===s)).filter(Boolean).map(s=>s.icon+' '+s.title).join(' · ')||'No sections assigned';
+    pill.innerHTML='<div class="pp-dot" style="background:'+p.color+'"></div><div><div class="pp-name">'+p.name+'</div><div class="pp-secs">'+snames+'</div></div><div class="pp-prog" id="pp-'+pi+'" style="color:'+p.color+'">—</div><div class="pp-wa">📤</div>';
+    pill.onclick=()=>shareWorker(pi);td.appendChild(pill);
+  });
+  renderMasterChecklist();updateMasterProgress();
+}
+
+function renderMasterChecklist(){
+  const body=document.getElementById('s4-checklist');body.innerHTML='';
+  availSections().forEach(sec=>{
+    const items=sectItems[sec.id]||[];if(!items.length)return;
+    const assignee=team.find(p=>p.sections.includes(sec.id));
+    const sh=document.createElement('div');sh.className='sec-header';
+    sh.innerHTML='<span class="sec-icon">'+sec.icon+'</span><span class="sec-title">'+sec.title+'</span>'+(assignee?'<span class="sec-badge" style="color:'+assignee.color+';background:transparent">● '+assignee.name+'</span>':'<span class="sec-badge" style="color:#C84B1A">Unassigned</span>');
+    body.appendChild(sh);
+    items.forEach((item,ii)=>{
+      const key=sec.id+'-'+ii,chk=checks[key]||{};
+      const row=document.createElement('div');row.className='check-row'+(chk.done?' done':'');
+      row.innerHTML='<div class="chk-box">'+(chk.done?'✓':'')+'</div><div class="chk-content"><div class="chk-name">'+item.name+'</div>'+(item.qty?'<div class="chk-qty">'+item.qty+'</div>':'')+(item.note?'<div class="chk-note">'+item.note+'</div>':'')+'<div class="chk-stamp">'+(chk.done?'✓ '+(chk.by||'?')+' · '+(chk.time||''):'')+'</div></div>';
+      body.appendChild(row);
+    });
+    const d=document.createElement('div');d.style.cssText='height:6px;background:var(--ash)';body.appendChild(d);
+  });
+}
+
+function updateMasterProgress(){
+  team.forEach((p,pi)=>{
+    const el=document.getElementById('pp-'+pi);if(!el)return;
+    let tot=0,done=0;
+    p.sections.forEach(sid=>{(sectItems[sid]||[]).forEach((_,ii)=>{tot++;if((checks[sid+'-'+ii]||{}).done)done++;});});
+    el.textContent=tot>0?done+'/'+tot:'—';
+    el.style.color=done===tot&&tot>0?'var(--green2)':p.color;
+  });
+}
+
+function openWorker(pi){
+  curWorker=pi;const p=team[pi];
+  document.getElementById('s3-event').textContent=evt.name;
+  document.getElementById('s3-meta').textContent=evt.guests+' guests'+(evt.date?' · '+evt.date:'');
+  document.getElementById('s3-dot').style.background=p.color;
+  document.getElementById('s3-wname').textContent=p.name;
+  document.getElementById('s3-wrole').textContent=p.sections.map(s=>SECTIONS.find(x=>x.id===s)).filter(Boolean).map(s=>s.title).join(' · ')||'No sections';
+  renderWorkerChecklist();show('s3');
+}
+
+function renderWorkerChecklist(){
+  const p=team[curWorker],body=document.getElementById('s3-body');body.innerHTML='';
+  let myTot=0,myDone=0;
+  availSections().forEach(sec=>{
+    const items=sectItems[sec.id]||[];if(!items.length)return;
+    const mine=p.sections.includes(sec.id);
+    const assignee=team.find(t=>t.sections.includes(sec.id));
+    const sh=document.createElement('div');sh.className='sec-header';
+    sh.innerHTML='<span class="sec-icon">'+sec.icon+'</span><span class="sec-title">'+sec.title+'</span>'+(mine?'<span class="sec-badge sec-mine">YOURS</span>':'<span class="sec-badge">'+(assignee?assignee.name:'Unassigned')+'</span>');
+    body.appendChild(sh);
+    if(!mine){const lb=document.createElement('div');lb.className='locked-box';lb.textContent=(assignee?assignee.name+''s section':'Unassigned')+' — not yours to check';body.appendChild(lb);return;}
+    items.forEach((item,ii)=>{
+      const key=sec.id+'-'+ii,chk=checks[key]||{};
+      if(chk.done)myDone++;myTot++;
+      const row=document.createElement('div');row.className='check-row'+(chk.done?' done':'');
+      row.innerHTML='<div class="chk-box">'+(chk.done?'✓':'')+'</div><div class="chk-content"><div class="chk-name">'+item.name+'</div>'+(item.qty?'<div class="chk-qty">'+item.qty+'</div>':'')+(item.note?'<div class="chk-note">'+item.note+'</div>':'')+'<div class="chk-stamp">'+(chk.done?'✓ '+chk.by+' · '+chk.time:'')+'</div></div>';
+      row.addEventListener('click',()=>doCheck(key,sec.id,p.name,row,ii));
+      body.appendChild(row);
+    });
+    const d=document.createElement('div');d.style.cssText='height:6px;background:var(--ash)';body.appendChild(d);
+  });
+  updWorkerProg(myDone,myTot);
+}
+
+function doCheck(key,secId,wname,row,ii){
+  if(!checks[key])checks[key]={};
+  checks[key].done=!checks[key].done;
+  if(checks[key].done){const n=new Date();checks[key].by=wname;checks[key].time=n.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});}
+  row.classList.toggle('done',checks[key].done);
+  row.querySelector('.chk-box').textContent=checks[key].done?'✓':'';
+  row.querySelector('.chk-stamp').textContent=checks[key].done?'✓ '+checks[key].by+' · '+checks[key].time:'';
+  const p=team[curWorker];let tot=0,done=0;
+  p.sections.forEach(sid=>{(sectItems[sid]||[]).forEach((_,i)=>{tot++;if((checks[sid+'-'+i]||{}).done)done++;});});
+  updWorkerProg(done,tot);updateMasterProgress();renderMasterChecklist();
+}
+
+function updWorkerProg(done,tot){
+  const pct=tot>0?(done/tot*100):0;
+  document.getElementById('s3-prog').style.width=pct+'%';
+  document.getElementById('s3-prog-label').textContent=done+' / '+tot+' checked';
+  const b=document.getElementById('s3-done');
+  if(done===tot&&tot>0){b.classList.add('show');document.getElementById('s3-done-title').textContent=team[curWorker].name+' — sections complete ✓';}
+  else b.classList.remove('show');
+}
+
+function resetWorker(){
+  if(!confirm('Reset your checks?'))return;
+  team[curWorker].sections.forEach(sid=>{(sectItems[sid]||[]).forEach((_,ii)=>{delete checks[sid+'-'+ii];});});
+  renderWorkerChecklist();updateMasterProgress();
+}
+
+function buildURL(who){
+  const base=window.location.href.split('?')[0];
+  const p=new URLSearchParams();
+  p.set('n',evt.name);p.set('g',evt.guests);p.set('d',evt.date||'');p.set('v',evt.venue||'');p.set('ph',evt.phone||'');
+  p.set('m',[...sel].join(','));
+  if(storeRunItems.length)p.set('sr',encodeURIComponent(storeRunItems.join('||')));
+  const pr=Object.entries(prots).filter(([id])=>sel.has(id)).map(([id,v])=>id+':'+v).join(',');if(pr)p.set('pr',pr);
+  p.set('team',JSON.stringify(team.map(t=>({name:t.name,color:t.color,sections:t.sections}))));
+  p.set('who',who==='master'?'master':who);
+  return base+'?'+p.toString();
+}
+
+function shareWorker(pi){
+  const p=team[pi],url=buildURL(pi);
+  const secs=p.sections.map(s=>SECTIONS.find(x=>x.id===s)).filter(Boolean).map(s=>s.icon+' '+s.title).join(', ');
+  const msg='🔥 *BBQ Guys Chicago — Your Load-Out*\n\n*Event:* '+evt.name+'\n*'+evt.guests+' guests'+(evt.date?' · '+evt.date:'')+'*\n\n*'+p.name+', your sections:*\n'+(secs||'Check with leadership')+'\n\nOpen your checklist 👇\n'+url;
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+
+function shareAll(){
+  let msg='🔥 *BBQ Guys Chicago — Load-Out Assignments*\n\n*Event:* '+evt.name+'\n*'+evt.guests+' guests'+(evt.date?' · '+evt.date:'')+'*\n\n';
+  team.forEach((p,pi)=>{
+    const secs=p.sections.map(s=>SECTIONS.find(x=>x.id===s)).filter(Boolean).map(s=>s.title).join(', ')||'No sections';
+    msg+='*'+p.name+'* — '+secs+'\n'+buildURL(pi)+'\n\n';
+  });
+  msg+='📋 *Leadership master view:*\n'+buildURL('master');
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+}
+
+function copyMaster(){
+  navigator.clipboard.writeText(buildURL('master')).then(()=>{
+    const n=document.getElementById('s4-note');n.textContent='✅ Master link copied!';
+    setTimeout(()=>{n.textContent='Each person gets their own pre-assigned link';},2500);
+  });
+}
+
+function loadFromURL(){
+  const p=new URLSearchParams(window.location.search);
+  if(!p.has('n')||!p.has('m'))return;
+  evt={name:p.get('n')||'',guests:parseInt(p.get('g'))||50,date:p.get('d')||'',venue:p.get('v')||'',phone:p.get('ph')||''};
+  (p.get('m')||'').split(',').filter(Boolean).forEach(id=>sel.add(id));
+  if(p.get('sr'))storeRunItems=decodeURIComponent(p.get('sr')).split('||').filter(Boolean);
+  (p.get('pr')||'').split(',').filter(Boolean).forEach(pair=>{const[id,pr]=pair.split(':');if(id&&pr)prots[id]=pr;});
+  try{const t=JSON.parse(p.get('team')||'[]');team=t.map(x=>({name:x.name,color:x.color,sections:x.sections||[]}));teamSize=team.length;}catch(e){return;}
+  sectItems=buildChecklist(evt.guests,sel);checks={};
+  const srField=document.getElementById('s1-storerun');if(srField&&storeRunItems.length)srField.value=storeRunItems.join('\n');
+  const who=p.get('who');
+  if(who==='master'){renderMaster();show('s4');}
+  else{const pi=parseInt(who);if(!isNaN(pi)&&team[pi])openWorker(pi);}
+}
+
+buildMenuGrid();
+loadFromURL();
+</script>
+</body>
+</html>
