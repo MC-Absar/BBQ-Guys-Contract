@@ -570,7 +570,7 @@ function toggleSec(pi,sid){
 // LIVE SYNC — writes every check/flag to Google Sheet
 // Set SYNC_URL to your deployed Apps Script Web App URL
 // ══════════════════════════════════════════════════════
-let SYNC_URL = ''; // Set after deploying Apps Script as Web App
+let SYNC_URL = 'https://script.google.com/macros/s/AKfycbzFN63x-AEg0BwQ7IpTExGH00BGaq4WzVZ5pv31xmbeSDDRame0v_OBLQo7OFiJ4ue3/exec'; // Live sync endpoint
 
 function syncToSheet(params) {
   if (!SYNC_URL) return; // No URL set yet
