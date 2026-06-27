@@ -451,9 +451,8 @@ function buildChecklist(guests,menuIds){
   const skewers=Math.ceil(guests*2.5/50)*50;
   const PCATS=['SEC 1 · Chicken Tikka','SEC 2 · Chicken Boti','SEC 3 · Kabab Chk/Beef','SEC 4 · Goat Delicacies','SEC 5 · Seafood'];
   const protItems=MENU.filter(m=>PCATS.includes(m.cat)&&menuIds.has(m.id)).map(m=>{
-    const portions=Math.ceil(guests*1.2),racks=Math.ceil(portions/20);
     const pr=m.p&&prots[m.id]?' — '+prots[m.id]:'';
-    return{name:m.e+' '+m.name+pr,qty:racks+' rack'+(racks>1?'s':''),note:'~'+portions+' portions · Chef-tagged · DO NOT swap'};
+    return{name:m.e+' '+m.name+pr,qty:'',note:'Grab labeled rack only'};
   });
   const chafing=Math.max(2,menuIds.size);
   const tables=Math.ceil(guests/30)+2;
@@ -465,7 +464,7 @@ function buildChecklist(guests,menuIds){
       {name:'Metal skewers (long)',qty:skewers+' skewers',note:'Buffer for breakage'},
       {name:'Grill tongs',qty:Math.max(2,grills*2)+' pairs'},
       {name:'Chimney starters',qty:grills+'',note:'1 per grill'},
-      {name:'Grill brush / scraper',qty:grills+''},
+      
       {name:'Lighters',qty:'3 units'},
       {name:'Heat-resistant gloves',qty:'2 pairs'},
     ],
@@ -474,9 +473,9 @@ function buildChecklist(guests,menuIds){
       {name:'Sternos / fuel',qty:(chafing*2)+' cans',note:'2 per dish'},
       {name:'Serving spoons / ladles',qty:(chafing+2)+' pcs'},
       {name:'Serving tongs',qty:Math.max(3,protItems.length+1)+' pairs'},
-      {name:'Serving platters',qty:Math.max(2,Math.ceil(guests/30))+' platters'},
+      
       {name:'Aluminum serving pans',qty:Math.max(2,Math.ceil(guests/25))+' pans'},
-      ...(hasRice?[{name:'Rice serving bowl + ladle',qty:'2 sets'}]:[]),
+      ...(hasRice?[]:[]),
     ],
     setup:[
       {name:'Folding tables (6ft)',qty:tables+' tables',note:'Food + grill + admin'},
@@ -485,7 +484,7 @@ function buildChecklist(guests,menuIds){
       {name:'Event banner / sign',qty:'1'},
       {name:'Printed menu cards',qty:Math.max(2,Math.ceil(guests/50))+' cards (laminated)'},
       {name:'Extension cord + power strip',qty:'1 set'},
-      {name:'Trash cans (large)',qty:Math.max(2,Math.ceil(guests/75))+''},
+      
     ],
     condiments:[
       {name:'Green chutney (mint)',qty:Math.max(0.2,+(guests*0.04).toFixed(1))+' kg'},
@@ -494,9 +493,9 @@ function buildChecklist(guests,menuIds){
       {name:'Lemons (halved)',qty:Math.max(5,Math.ceil(guests*0.15))+' lemons'},
       {name:'Sliced onions',qty:Math.max(0.25,+(guests*0.05).toFixed(1))+' kg'},
       {name:'Sliced tomatoes',qty:Math.max(0.2,+(guests*0.04).toFixed(1))+' kg'},
-      {name:'Chaat masala shakers',qty:'2 shakers'},
-      {name:'Salt + pepper shakers',qty:'2 sets'},
-      ...(hasNaan?[{name:'Ghee / butter for bread',qty:Math.max(0.1,+(guests*0.01).toFixed(2))+' kg'}]:[]),
+      
+      {name:'Salt shakers',qty:'2'},
+
       ...(has('salad')?[{name:'Salad dressing',qty:'1 bottle'}]:[]),
     ],
     gola:[
@@ -521,8 +520,8 @@ function buildChecklist(guests,menuIds){
     packaging:[
       {name:'Aluminum foil (heavy)',qty:'2 rolls'},
       {name:'Foil pans (half-size)',qty:Math.max(4,Math.ceil(guests/20))+' pans',note:'Leftovers + transport'},
-      {name:'Takeout containers',qty:Math.max(10,Math.ceil(guests*0.3))+' containers'},
-      {name:'Ziplock bags (large)',qty:'20 bags'},
+      
+      
       {name:'Trash bags (large)',qty:'6 bags'},
       {name:'Disposable gloves',qty:'2 boxes (100-count each)'},
       {name:'Paper towels',qty:'4 rolls'},
@@ -532,10 +531,10 @@ function buildChecklist(guests,menuIds){
     admin:[
       {name:'Printed contract / event sheet',qty:'1 copy',note:'Guest count, menu, client contact'},
       {name:'Printed menu cards',qty:Math.max(2,Math.ceil(guests/50))+' cards'},
-      {name:'Business cards',qty:'20 cards'},
+      
       {name:'Van keys + fuel check',qty:'1 check',note:'Fill tank night before'},
-      {name:'Phone charger / power bank',qty:'1 unit'},
-      {name:'Cash float',qty:'1 envelope',note:'Last-minute supply runs'},
+      
+      
     ],
   };
 }
