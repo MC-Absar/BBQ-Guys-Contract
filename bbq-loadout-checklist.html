@@ -39,7 +39,6 @@ body{background:var(--coal);font-family:-apple-system,BlinkMacSystemFont,'Segoe 
 .prot-row{display:flex;gap:3px;margin-top:5px;flex-wrap:wrap;}
 .prot-btn{font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;border:1.5px solid #555;background:transparent;color:var(--smoke);cursor:pointer;transition:all .1s;}
 .prot-btn.active{background:var(--ember);border-color:var(--ember);color:white;}
-.chef-note{background:var(--ash);border-left:3px solid var(--ember);border-radius:6px;padding:10px 13px;font-size:12px;color:var(--smoke);margin-bottom:24px;line-height:1.5;}
 .cta-btn{width:100%;background:var(--ember);border:none;border-radius:12px;padding:16px;font-size:15px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:white;cursor:pointer;margin-bottom:10px;}
 .cta-btn:active{background:var(--ember2);}
 .cta-btn.sec{background:var(--ash);color:var(--paper);font-size:13px;padding:13px;}
@@ -85,7 +84,6 @@ body{background:var(--coal);font-family:-apple-system,BlinkMacSystemFont,'Segoe 
 .check-row.done .chk-name{text-decoration:line-through;color:var(--smoke);}
 .chk-qty{font-size:12px;color:var(--ember);font-weight:700;margin-top:2px;}
 .check-row.done .chk-qty{color:var(--smoke);}
-.chk-note{font-size:11px;color:var(--smoke);margin-top:2px;line-height:1.4;}
 .chk-stamp{display:none;font-size:10px;font-weight:700;color:var(--green2);margin-top:3px;}
 .check-row.done .chk-stamp{display:block;}
 .locked-box{background:var(--ash);border-radius:8px;margin:8px 18px;padding:12px;text-align:center;color:var(--smoke);font-size:12px;font-weight:600;}
@@ -116,6 +114,110 @@ body{background:var(--coal);font-family:-apple-system,BlinkMacSystemFont,'Segoe 
 .share-note{font-size:10px;color:var(--smoke);text-align:center;padding:0 18px 8px;font-style:italic;}
 .reset-btn{display:block;margin:8px 18px 0;background:transparent;border:1.5px solid var(--ash2);border-radius:10px;padding:12px;font-size:12px;font-weight:700;color:var(--smoke);cursor:pointer;width:calc(100% - 36px);letter-spacing:.05em;text-transform:uppercase;}
 .pad{height:36px;}
+
+  /* ── STORE RUN ── */
+  .store-run-wrap {
+    margin: 16px 18px;
+    background: var(--ash);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .store-run-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    background: #2A1A0A;
+    border-bottom: 1px solid #3A2A1A;
+  }
+  .store-run-title {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #F5A623;
+  }
+  .store-run-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--ash2);
+  }
+  .store-run-item-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--paper);
+    flex: 1;
+  }
+  .store-run-item-by {
+    font-size: 10px;
+    color: #F5A623;
+    font-weight: 700;
+  }
+  .store-run-add-row {
+    display: flex;
+    gap: 8px;
+    padding: 10px 14px;
+  }
+  .store-run-input {
+    flex: 1;
+    background: var(--coal);
+    border: 1.5px solid #444;
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 14px;
+    color: var(--paper);
+    outline: none;
+  }
+  .store-run-input:focus { border-color: #F5A623; }
+  .store-run-input::placeholder { color: #555; }
+  .store-run-btn {
+    background: #F5A623;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--coal);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .store-run-btn:active { background: #D4901F; }
+  .store-run-empty {
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--smoke);
+    font-style: italic;
+  }
+  /* Master view store run flag */
+  .master-store-run {
+    margin: 0 18px 12px;
+    background: #2A1A0A;
+    border: 1.5px solid #F5A623;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .master-store-run-hdr {
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #F5A623;
+    border-bottom: 1px solid #3A2A1A;
+  }
+  .master-store-run-item {
+    padding: 10px 14px;
+    border-bottom: 1px solid #3A2A1A;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .master-store-run-item:last-child { border-bottom: none; }
+  .master-store-run-name { font-size: 14px; font-weight: 600; color: var(--paper); }
+  .master-store-run-by { font-size: 11px; color: #F5A623; font-weight: 700; }
+
 </style>
 </head>
 <body>
@@ -144,10 +246,6 @@ body{background:var(--coal);font-family:-apple-system,BlinkMacSystemFont,'Segoe 
       <div class="field-label">Menu Items</div>
       <div class="menu-grid" id="menu-grid"></div>
     </div>
-    <div class="chef-note">🧑‍🍳 <strong>Chef:</strong> Proteins are pre-tagged & racked in the walk-in. Grab by label only — do not swap racks.</div>
-    <div class="field-label" style="margin-top:4px">🛒 Store Run Items <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#555">(optional)</span></div>
-    <div style="font-size:11px;color:var(--smoke);margin-bottom:8px">One item per line — milk, half and half, ice, etc.</div>
-    <textarea class="text-input" id="s1-storerun" placeholder="e.g. Whole milk — 2 gallons" rows="3" style="resize:none;line-height:1.6;font-size:14px"></textarea>
     <button class="cta-btn" onclick="goAssign()">Next — Assign Team →</button>
   </div>
 </div>
@@ -187,6 +285,17 @@ body{background:var(--coal);font-family:-apple-system,BlinkMacSystemFont,'Segoe 
     <div class="done-icon">✅</div>
     <div class="done-title" id="s3-done-title">Sections complete.</div>
     <div class="done-sub">All your items loaded. Let leadership know.</div>
+  </div>
+  <div class="store-run-wrap" id="worker-store-run">
+    <div class="store-run-header">
+      <span style="font-size:15px">🛒</span>
+      <span class="store-run-title">Store Run — Add Missing Items</span>
+    </div>
+    <div id="worker-sr-list"><div class="store-run-empty">Nothing added yet</div></div>
+    <div class="store-run-add-row">
+      <input class="store-run-input" id="sr-input" placeholder="e.g. Whole milk — 2 gallons" autocorrect="off">
+      <button class="store-run-btn" onclick="addStoreRunItem()">+ Add</button>
+    </div>
   </div>
   <button class="reset-btn" onclick="resetWorker()">↺ Reset My Checks</button>
   <div class="pad"></div>
@@ -303,7 +412,7 @@ const SECTIONS=[
   {id:'storerun',icon:'🛒',title:'Store Run',cond:true,srOnly:true},
 ];
 
-let sel=new Set(), prots={}, evt={}, storeRunItems=[], team=[], teamSize=4, checks={}, curWorker=null, sectItems={};
+let sel=new Set(), prots={}, evt={}, storeRunItems=[], team=[], teamSize=4, checks={}, curWorker=null, sectItems={}, storeRunList=[];
 
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 function adj(d){const e=document.getElementById('s1-guests');e.value=Math.max(10,Math.min(2000,(parseInt(e.value)||50)+d));}
@@ -373,8 +482,8 @@ function setProt(e,id,p){
 
 function goAssign(){
   evt={name:document.getElementById('s1-name').value.trim()||'Event',phone:document.getElementById('s1-phone').value.trim(),date:(()=>{const v=document.getElementById('s1-date').value;if(!v)return '';const[y,m,d]=v.split('-');return m+'/'+d+'/'+y;})(),venue:document.getElementById('s1-venue').value.trim(),guests:parseInt(document.getElementById('s1-guests').value)||50};
-  const srEl=document.getElementById('s1-storerun');const srRaw=srEl?srEl.value.trim():'';
-  storeRunItems=srRaw?srRaw.split('\n').map(l=>l.trim()).filter(Boolean):[];
+  storeRunList=[];
+  
   if(sel.size===0){alert('Please select at least one menu item.');return;}
   buildAssignScreen();show('s2');
 }
@@ -452,25 +561,25 @@ function buildChecklist(guests,menuIds){
   const PCATS=['SEC 1 · Chicken Tikka','SEC 2 · Chicken Boti','SEC 3 · Kabab Chk/Beef','SEC 4 · Goat Delicacies','SEC 5 · Seafood'];
   const protItems=MENU.filter(m=>PCATS.includes(m.cat)&&menuIds.has(m.id)).map(m=>{
     const pr=m.p&&prots[m.id]?' — '+prots[m.id]:'';
-    return{name:m.e+' '+m.name+pr,qty:'',note:'Grab labeled rack only'};
+    return{name:m.e+' '+m.name+pr,qty:''};
   });
   const chafing=Math.max(2,menuIds.size);
   const tables=Math.ceil(guests/30)+2;
   return{
     proteins:protItems,
     grilling:[
-      {name:'Charcoal grills',qty:grills+' grill'+(grills>1?'s':''),note:'Check vents + grates'},
-      {name:'Coal bags',qty:coal+' bags',note:'2 per grill + 1 backup'},
-      {name:'Metal skewers (long)',qty:skewers+' skewers',note:'Buffer for breakage'},
+      {name:'Charcoal grills',qty:grills+' grill'+(grills>1?'s':'')},
+      {name:'Coal bags',qty:coal+' bags'},
+      {name:'Metal skewers (long)',qty:skewers+' skewers'},
       {name:'Grill tongs',qty:Math.max(2,grills*2)+' pairs'},
-      {name:'Chimney starters',qty:grills+'',note:'1 per grill'},
+      {name:'Chimney starters',qty:grills+''},
       
       {name:'Lighters',qty:'3 units'},
       {name:'Heat-resistant gloves',qty:'2 pairs'},
     ],
     serving:[
-      {name:'Chafing dishes (full)',qty:chafing+' dishes',note:'With water pans + lids'},
-      {name:'Sternos / fuel',qty:(chafing*2)+' cans',note:'2 per dish'},
+      {name:'Chafing dishes (full)',qty:chafing+' dishes'},
+      {name:'Sternos / fuel',qty:(chafing*2)+' cans'},
       {name:'Serving spoons / ladles',qty:(chafing+2)+' pcs'},
       {name:'Serving tongs',qty:Math.max(3,protItems.length+1)+' pairs'},
       
@@ -478,7 +587,7 @@ function buildChecklist(guests,menuIds){
       ...(hasRice?[]:[]),
     ],
     setup:[
-      {name:'Folding tables (6ft)',qty:tables+' tables',note:'Food + grill + admin'},
+      {name:'Folding tables (6ft)',qty:tables+' tables'},
       {name:'Tablecloths (black)',qty:tables+' cloths'},
       {name:'Table skirts (buffet)',qty:Math.max(1,Math.ceil(guests/50))+''},
       {name:'Event banner / sign',qty:'1'},
@@ -490,6 +599,9 @@ function buildChecklist(guests,menuIds){
       {name:'Green chutney (mint)',qty:Math.max(0.2,+(guests*0.04).toFixed(1))+' kg'},
       {name:'Tamarind chutney',qty:Math.max(0.15,+(guests*0.03).toFixed(1))+' kg'},
       {name:'Raita',qty:Math.max(0.3,+(guests*0.06).toFixed(1))+' kg'},
+      {name:'Raita bowl + spoon',qty:''},
+      {name:'Green chutney bowl + spoon',qty:''},
+      {name:'Tamarind chutney bowl + spoon',qty:''},
       {name:'Lemons (halved)',qty:Math.max(5,Math.ceil(guests*0.15))+' lemons'},
       {name:'Sliced onions',qty:Math.max(0.25,+(guests*0.05).toFixed(1))+' kg'},
       {name:'Sliced tomatoes',qty:Math.max(0.2,+(guests*0.04).toFixed(1))+' kg'},
@@ -499,11 +611,11 @@ function buildChecklist(guests,menuIds){
       ...(has('salad')?[{name:'Salad dressing',qty:'1 bottle'}]:[]),
     ],
     gola:[
-      {name:'Ice blocks / crushed ice',qty:Math.max(1,Math.ceil(guests*0.35))+' kg',note:'Shared Gola + Falooda'},
+      {name:'Ice blocks / crushed ice',qty:Math.max(1,Math.ceil(guests*0.35))+' kg'},
       {name:'Ice cooler',qty:'1 cooler'},
       ...(hasGola?[
-        {name:'Gola Ganda shaver (electric)',qty:'1 unit',note:'Plug test before loading'},
-        {name:'Syrup bottles (assorted)',qty:Math.max(3,Math.ceil(guests/40)*3)+' bottles',note:'Rose, Mango, Kala Khatta min.'},
+        {name:'Gola Ganda shaver (electric)',qty:'1 unit'},
+        {name:'Syrup bottles (assorted)',qty:Math.max(3,Math.ceil(guests/40)*3)+' bottles'},
         {name:'Condensed milk bottles',qty:'2 bottles'},
         {name:'Cups / cones — Gola Ganda',qty:Math.max(1,Math.ceil(guests*0.8))+' cups'},
         {name:'Spoons — Gola Ganda',qty:Math.max(1,Math.ceil(guests*0.8))+' spoons'},
@@ -511,15 +623,15 @@ function buildChecklist(guests,menuIds){
       ...(hasFalooda?[
         {name:'Cups — Falooda',qty:Math.max(1,Math.ceil(guests*0.8))+' cups'},
         {name:'Long spoons — Falooda',qty:Math.max(1,Math.ceil(guests*0.8))+' spoons'},
-        {name:'Vermicelli (falooda sev)',qty:Math.max(0.5,+(guests*0.02).toFixed(1))+' kg',note:'Pre-cook or bring dry'},
-        {name:'Basil seeds (tukhmalanga)',qty:Math.max(0.1,+(guests*0.005).toFixed(2))+' kg',note:'Soak before event'},
+        {name:'Vermicelli (falooda sev)',qty:Math.max(0.5,+(guests*0.02).toFixed(1))+' kg'},
+        {name:'Basil seeds (tukhmalanga)',qty:Math.max(0.1,+(guests*0.005).toFixed(2))+' kg'},
         {name:'Rose syrup bottles',qty:Math.max(2,Math.ceil(guests/40)*2)+' bottles'},
-        {name:'Ice cream (kulfi/vanilla)',qty:Math.max(1,Math.ceil(guests*0.08))+' kg',note:'Load LAST — keep frozen'},
+        {name:'Ice cream (kulfi/vanilla)',qty:Math.max(1,Math.ceil(guests*0.08))+' kg'},
       ]:[]),
     ],
     packaging:[
       {name:'Aluminum foil (heavy)',qty:'2 rolls'},
-      {name:'Foil pans (half-size)',qty:Math.max(4,Math.ceil(guests/20))+' pans',note:'Leftovers + transport'},
+      {name:'Foil pans (half-size)',qty:Math.max(4,Math.ceil(guests/20))+' pans'},
       
       
       {name:'Trash bags (large)',qty:'6 bags'},
@@ -527,12 +639,12 @@ function buildChecklist(guests,menuIds){
       {name:'Paper towels',qty:'4 rolls'},
       {name:'Dish soap + sponge',qty:'1 set'},
     ],
-    storerun:storeRunItems.map(item=>({name:item,qty:'',note:'Store run — confirm before leaving'})),
+    storerun:storeRunItems.map(item=>({name:item,qty:''})),
     admin:[
-      {name:'Printed contract / event sheet',qty:'1 copy',note:'Guest count, menu, client contact'},
+      {name:'Printed contract / event sheet',qty:'1 copy'},
       {name:'Printed menu cards',qty:Math.max(2,Math.ceil(guests/50))+' cards'},
       
-      {name:'Van keys + fuel check',qty:'1 check',note:'Fill tank night before'},
+      {name:'Van keys + fuel check',qty:'1 check'},
       
       
     ],
@@ -572,7 +684,7 @@ function renderMasterChecklist(){
       const key=sec.id+'-'+ii,chk=checks[key]||{};
       const row=document.createElement('div');row.className='check-row'+(chk.done?' done':'');
       const showQtyM=sec.id==='serving'||sec.id==='setup';
-      row.innerHTML='<div class="chk-box">'+(chk.done?'✓':'')+'</div><div class="chk-content"><div class="chk-name">'+item.name+'</div>'+(showQtyM&&item.qty?'<div class="chk-qty">'+item.qty+'</div>':'')+(item.note?'<div class="chk-note">'+item.note+'</div>':'')+'<div class="chk-stamp">'+(chk.done?'✓ '+(chk.by||'?')+' · '+(chk.time||''):'')+'</div></div>';
+      row.innerHTML='<div class="chk-box">'+(chk.done?'✓':'')+'</div><div class="chk-content"><div class="chk-name">'+item.name+'</div>'+(showQtyM&&item.qty?'<div class="chk-qty">'+item.qty+'</div>':'')+'<div class="chk-stamp">'+(chk.done?'✓ '+(chk.by||'?')+' · '+(chk.time||''):'')+'</div></div>';
       body.appendChild(row);
     });
     const d=document.createElement('div');d.style.cssText='height:6px;background:var(--ash)';body.appendChild(d);
@@ -615,7 +727,7 @@ function renderWorkerChecklist(){
       if(chk.done)myDone++;myTot++;
       const row=document.createElement('div');row.className='check-row'+(chk.done?' done':'');
       const showQty=sec.id==='serving'||sec.id==='setup';
-      row.innerHTML='<div class="chk-box">'+(chk.done?'✓':'')+'</div><div class="chk-content"><div class="chk-name">'+item.name+'</div>'+(showQty&&item.qty?'<div class="chk-qty">'+item.qty+'</div>':'')+(item.note?'<div class="chk-note">'+item.note+'</div>':'')+'<div class="chk-stamp">'+(chk.done?'✓ '+chk.by+' · '+chk.time:'')+'</div></div>';
+      row.innerHTML='<div class="chk-box">'+(chk.done?'✓':'')+'</div><div class="chk-content"><div class="chk-name">'+item.name+'</div>'+(showQty&&item.qty?'<div class="chk-qty">'+item.qty+'</div>':'')+'<div class="chk-stamp">'+(chk.done?'✓ '+chk.by+' · '+chk.time:'')+'</div></div>';
       row.addEventListener('click',()=>doCheck(key,sec.id,p.name,row,ii));
       body.appendChild(row);
     });
@@ -685,6 +797,49 @@ function copyMaster(){
     const n=document.getElementById('s4-note');n.textContent='✅ Master link copied!';
     setTimeout(()=>{n.textContent='Each person gets their own pre-assigned link';},2500);
   });
+}
+
+
+// ══════════════════════════════════════════════════
+// STORE RUN
+// ══════════════════════════════════════════════════
+function addStoreRunItem() {
+  const input = document.getElementById('sr-input');
+  const val = input.value.trim();
+  if (!val) return;
+  const p = team[curWorker];
+  storeRunList.push({ item: val, by: p.name, time: new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}) });
+  input.value = '';
+  renderStoreRunWorker();
+  renderMasterStoreRun();
+}
+
+function renderStoreRunWorker() {
+  const list = document.getElementById('worker-sr-list');
+  if (!list) return;
+  if (!storeRunList.length) {
+    list.innerHTML = '<div class="store-run-empty">Nothing added yet</div>';
+    return;
+  }
+  list.innerHTML = storeRunList.map(function(sr) {
+    return '<div class="store-run-item"><span class="store-run-item-name">' + sr.item + '</span><span class="store-run-item-by">' + sr.by + ' · ' + sr.time + '</span></div>';
+  }).join('');
+}
+
+function renderMasterStoreRun() {
+  const existing = document.getElementById('master-sr-wrap');
+  if (existing) existing.remove();
+  if (!storeRunList.length) return;
+  const wrap = document.createElement('div');
+  wrap.id = 'master-sr-wrap';
+  wrap.className = 'master-store-run';
+  wrap.innerHTML = '<div class="master-store-run-hdr">🛒 Store Run — ' + storeRunList.length + ' item' + (storeRunList.length > 1 ? 's' : '') + ' needed</div>' +
+    storeRunList.map(function(sr) {
+      return '<div class="master-store-run-item"><span class="master-store-run-name">' + sr.item + '</span><span class="master-store-run-by">Added by ' + sr.by + ' · ' + sr.time + '</span></div>';
+    }).join('');
+  // Insert after team overview
+  const teamDiv = document.getElementById('s4-team');
+  if (teamDiv) teamDiv.parentNode.insertBefore(wrap, teamDiv.nextSibling);
 }
 
 function loadFromURL(){
