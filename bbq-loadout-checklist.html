@@ -573,7 +573,12 @@ function toggleSec(pi,sid){
 let SYNC_URL = 'https://script.google.com/macros/s/AKfycbzFN63x-AEg0BwQ7IpTExGH00BGaq4WzVZ5pv31xmbeSDDRame0v_OBLQo7OFiJ4ue3/exec'; // Live sync endpoint
 
 function syncToSheet(params) {
-  if (!SYNC_URL) return; // No URL set yet
+  if (!SYNC_URL) return;
+  // Try to get tabName from session if not in state
+  if (!liveTabName) {
+    try{liveTabName=sessionStorage.getItem('bbq_live_tab')||'';}catch(e){}
+  }
+  if (liveTabName) params.tabName = liveTabName;
   const url = SYNC_URL + '?' + Object.entries(params).map(([k,v])=>k+'='+encodeURIComponent(v)).join('&');
   fetch(url, {method:'GET', mode:'no-cors'}).catch(function(){});
 }
@@ -591,7 +596,17 @@ function syncAddStoreRun(itemName, workerName) {
 }
 
 function syncInitEvent(eventName, guests, date) {
-  syncToSheet({action:'initEvent', eventName:eventName, guests:guests, date:date});
+  if (!SYNC_URL) return;
+  const url = SYNC_URL + '?action=initEvent&eventName='+encodeURIComponent(eventName)+'&guests='+encodeURIComponent(guests)+'&date='+encodeURIComponent(date);
+  fetch(url, {method:'GET'})
+    .then(function(r){return r.json();})
+    .then(function(data){
+      if(data && data.tabName) {
+        liveTabName = data.tabName;
+        // Store in sessionStorage so workers share it
+        try{sessionStorage.setItem('bbq_live_tab', liveTabName);}catch(e){}
+      }
+    }).catch(function(){});
 }
 
 function setSyncURL(url) {
@@ -600,10 +615,12 @@ function setSyncURL(url) {
   try { sessionStorage.setItem('bbq_sync_url', url); } catch(e){}
 }
 
-// Load sync URL from session if available
+// Load sync URL and live tab name from session if available
 try {
   const saved = sessionStorage.getItem('bbq_sync_url');
   if (saved) SYNC_URL = saved;
+  const savedTab = sessionStorage.getItem('bbq_live_tab');
+  if (savedTab) liveTabName = savedTab;
 } catch(e){}
 
 const MENU_SPECIFIC = {
