@@ -723,7 +723,16 @@ function renderMasterChecklist(){
       const key=sec.id+'-'+ii,chk=checks[key]||{};
       const row=document.createElement('div');row.className='check-row'+(chk.done?' done':'');
       const showQtyM=sec.id==='serving'||sec.id==='setup';
-      row.innerHTML='<div class="chk-box">'+(chk.done?'✓':'')+'</div><div class="chk-content"><div class="chk-name">'+item.name+'</div>'+(showQtyM&&item.qty?'<div class="chk-qty">'+item.qty+'</div>':'')+'<div class="chk-stamp">'+(chk.done?'✓ '+(chk.by||'?')+' · '+(chk.time||''):'')+'</div></div>';
+      const flaggedM=srFlags[key]||false;
+      row.className='check-row'+(chk.done?' done':'')+(flaggedM?' flagged-row':'');
+      const mBox=document.createElement('div');mBox.className='chk-box';mBox.textContent=chk.done?'✓':'';
+      const mCnt=document.createElement('div');mCnt.className='chk-content';
+      const mNm=document.createElement('div');mNm.className='chk-name';mNm.textContent=item.name;mCnt.appendChild(mNm);
+      if(showQtyM&&item.qty){const mQ=document.createElement('div');mQ.className='chk-qty';mQ.textContent=item.qty;mCnt.appendChild(mQ);}
+      const mSt=document.createElement('div');mSt.className='chk-stamp';mSt.textContent=chk.done?'✓ '+(chk.by||'?')+' · '+(chk.time||''):'';mCnt.appendChild(mSt);
+      if(flaggedM){const mFl=document.createElement('div');mFl.className='sr-flag-label';mFl.style.display='block';mFl.textContent='🛒 Needs store run';mCnt.appendChild(mFl);}
+      row.appendChild(mBox);row.appendChild(mCnt);
+      if(sec.id!=='proteins'){const mFb=document.createElement('div');mFb.className='sr-flag'+(flaggedM?' flagged':'');mFb.textContent='🛒';mFb.style.pointerEvents='none';row.appendChild(mFb);}
       body.appendChild(row);
     });
     const d=document.createElement('div');d.style.cssText='height:6px;background:var(--ash)';body.appendChild(d);
@@ -796,8 +805,22 @@ function renderWorkerChecklist(){
       if(chk.done)myDone++;myTot++;
       const row=document.createElement('div');row.className='check-row'+(chk.done?' done':'');
       const showQty=sec.id==='serving'||sec.id==='setup';
-      row.innerHTML='<div class="chk-box">'+(chk.done?'✓':'')+'</div><div class="chk-content"><div class="chk-name">'+item.name+'</div>'+(showQty&&item.qty?'<div class="chk-qty">'+item.qty+'</div>':'')+'<div class="chk-stamp">'+(chk.done?'✓ '+chk.by+' · '+chk.time:'')+'</div></div>';
-      row.addEventListener('click',()=>doCheck(key,sec.id,p.name,row,ii));
+      row.className='check-row'+(chk.done?' done':'')+(srFlags[key]?' flagged-row':'');
+      // Build row with DOM elements to avoid quote issues
+      const chkBox=document.createElement('div');chkBox.className='chk-box';chkBox.textContent=chk.done?'✓':'';
+      const cnt=document.createElement('div');cnt.className='chk-content';
+      const nm=document.createElement('div');nm.className='chk-name';nm.textContent=item.name;cnt.appendChild(nm);
+      if(showQty&&item.qty){const q=document.createElement('div');q.className='chk-qty';q.textContent=item.qty;cnt.appendChild(q);}
+      const stamp=document.createElement('div');stamp.className='chk-stamp';stamp.textContent=chk.done?'✓ '+chk.by+' · '+chk.time:'';cnt.appendChild(stamp);
+      if(srFlags[key]){const fl=document.createElement('div');fl.className='sr-flag-label';fl.textContent='🛒 Needs store run';cnt.appendChild(fl);}
+      row.appendChild(chkBox);row.appendChild(cnt);
+      // Flag button — not on proteins section
+      if(sec.id!=='proteins'){
+        const fb=document.createElement('button');fb.className='sr-flag'+(srFlags[key]?' flagged':'');fb.textContent='🛒';
+        (function(k,sId,idx,fbtn,r){fbtn.addEventListener('click',function(e){e.stopPropagation();doFlag(k,sId,idx,fbtn,r);});})(key,sec.id,ii,fb,row);
+        row.appendChild(fb);
+      }
+      row.addEventListener('click',function(){doCheck(key,sec.id,p.name,row,ii);});
       body.appendChild(row);
     });
     // Store run — show add input at bottom for everyone
@@ -818,6 +841,26 @@ function renderWorkerChecklist(){
     const d=document.createElement('div');d.style.cssText='height:6px;background:var(--ash)';body.appendChild(d);
   });
   updWorkerProg(myDone,myTot);
+}
+
+function doFlag(key,secId,ii,flagBtn,row){
+  if(!srFlags[key])srFlags[key]=false;
+  srFlags[key]=!srFlags[key];
+  if(srFlags[key]){
+    flagBtn.classList.add('flagged');
+    flagBtn.textContent='🛒';
+    row.classList.add('flagged-row');
+    const lbl=row.querySelector('.sr-flag-label');
+    if(lbl)lbl.textContent='Needs store run';
+  } else {
+    flagBtn.classList.remove('flagged');
+    flagBtn.textContent='🛒';
+    row.classList.remove('flagged-row');
+    const lbl=row.querySelector('.sr-flag-label');
+    if(lbl)lbl.textContent='';
+  }
+  updateMasterProgress();
+  renderMasterChecklist();
 }
 
 function doCheck(key,secId,wname,row,ii){
