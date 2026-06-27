@@ -720,15 +720,22 @@ function buildChecklist(guests,menuIds){
       {name:'Paper towels',qty:'4 rolls'},
       {name:'Dish soap + sponge',qty:'1 set'},
     ],
-    storerun:storeRunItems.map(item=>({name:item,qty:''})),
-    admin:[
-      {name:'Printed contract / event sheet',qty:'1 copy'},
-      {name:'Printed menu cards',qty:Math.max(2,Math.ceil(guests/50))+' cards'},
-      
-      {name:'Van keys + fuel check',qty:'1 check'},
-      
-      
-    ],
+    menuspecific:(function(){
+      const items=[];
+      MENU.forEach(function(m){
+        if(!sel.has(m.id))return;
+        const spec=MENU_SPECIFIC[m.id];
+        if(!spec)return;
+        if(spec.equipment.length||spec.ingredients.length||spec.note){
+          items.push({name:'-- '+m.name+' --',qty:''});
+          if(spec.note)items.push({name:spec.note,qty:''});
+        }
+        spec.equipment.forEach(function(e){items.push({name:e,qty:'Equipment'});});
+        spec.ingredients.forEach(function(i){items.push({name:i,qty:'Ingredient'});});
+      });
+      return items;
+    })(),
+    storerun:storeRunItems.map(function(item){return{name:item,qty:''};})
   };
 }
 
