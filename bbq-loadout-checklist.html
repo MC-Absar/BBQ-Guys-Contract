@@ -132,7 +132,7 @@ body{background:var(--coal);font-family:-apple-system,BlinkMacSystemFont,'Segoe 
     <div class="field-label">Event / Client</div>
     <input class="text-input" id="s1-name" placeholder="e.g. Khan Wedding — Rosemont" type="text">
     <input class="text-input" id="s1-phone" placeholder="Client phone" type="tel">
-    <input class="text-input" id="s1-date" type="datetime-local" style="color-scheme:dark">
+    <input class="text-input" id="s1-date" type="date" style="color-scheme:dark">
     <input class="text-input" id="s1-venue" placeholder="Venue / address" type="text">
     <div class="field-label" style="margin-top:16px">Guest Count</div>
     <div class="guest-row">
@@ -372,7 +372,7 @@ function setProt(e,id,p){
 }
 
 function goAssign(){
-  evt={name:document.getElementById('s1-name').value.trim()||'Event',phone:document.getElementById('s1-phone').value.trim(),date:(()=>{const v=document.getElementById('s1-date').value;if(!v)return '';const d=new Date(v);return d.toLocaleDateString('en-US',{month:'numeric',day:'numeric',year:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});})(),venue:document.getElementById('s1-venue').value.trim(),guests:parseInt(document.getElementById('s1-guests').value)||50};
+  evt={name:document.getElementById('s1-name').value.trim()||'Event',phone:document.getElementById('s1-phone').value.trim(),date:(()=>{const v=document.getElementById('s1-date').value;if(!v)return '';const[y,m,d]=v.split('-');return m+'/'+d+'/'+y;})(),venue:document.getElementById('s1-venue').value.trim(),guests:parseInt(document.getElementById('s1-guests').value)||50};
   const srEl=document.getElementById('s1-storerun');const srRaw=srEl?srEl.value.trim():'';
   storeRunItems=srRaw?srRaw.split('\n').map(l=>l.trim()).filter(Boolean):[];
   if(sel.size===0){alert('Please select at least one menu item.');return;}
