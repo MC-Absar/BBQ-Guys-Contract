@@ -409,6 +409,7 @@ const SECTIONS=[
   {id:'gola',icon:'🧊',title:'Gola Ganda / Falooda',cond:true},
   {id:'packaging',icon:'📦',title:'Packaging & Cleanup'},
   {id:'admin',icon:'📋',title:'Admin & Essentials'},
+  {id:'menuspecific',icon:'🔧',title:'Menu-Specific Equipment & Ingredients',srOnly:true},
   {id:'storerun',icon:'🛒',title:'Store Run',cond:true,srOnly:true},
 ];
 
@@ -550,6 +551,36 @@ function toggleSec(pi,sid){
   renderCards();
 }
 
+
+// ══════════════════════════════════════════════════════
+// MENU-SPECIFIC EQUIPMENT & INGREDIENTS
+// Only appears on checklist if that item is ordered
+// ══════════════════════════════════════════════════════
+const MENU_SPECIFIC = {
+  'seekh-kabab':    { equipment:['Wooden skewer stands'], ingredients:[], note:'' },
+  'mutton-seekh':   { equipment:['Wooden skewer stands'], ingredients:[], note:'' },
+  'malai-boti':     { equipment:[], ingredients:['Half and half'], note:'' },
+  'afghani-boti':   { equipment:[], ingredients:['Half and half'], note:'' },
+  'puri-paratha':   { equipment:['Paratha cutter','Metal dough tray (for dough balls)','Jhara / oil strainer spoon'], ingredients:[], note:'' },
+  'smash-burger':   { equipment:[], ingredients:['Ketchup','Mustard','Burger sauce','Cheese slices','Relish','Mayo','Diced onions','Shredded lettuce'], note:'Burger seasoning by chef' },
+  'hot-dogs':       { equipment:[], ingredients:['Ketchup','Mustard','Relish','Diced onions','Shredded lettuce'], note:'' },
+  'karahi':         { equipment:['Karahi pot','Large mixing spoon'], ingredients:['Tomatoes','Ginger','Garlic','Cilantro','Serrano / Thai chilies','Cooking oil','Salt'], note:'Karahi seasoning by chef' },
+  'butter-chicken': { equipment:['Large pot','Mixing spoon'], ingredients:['Tomatoes','Heavy cream','Butter','Ginger','Garlic','Kasuri methi','Cooking oil'], note:'Masala by chef' },
+  'kashmiri-handi': { equipment:['Handi pot','Mixing spoon'], ingredients:['Heavy cream','Cashews','Yogurt','Kashmiri chili','Cardamom','Saffron'], note:'' },
+  'reshmi-handi':   { equipment:['Handi pot','Mixing spoon'], ingredients:['Heavy cream','Yogurt','Green chilies','Coriander'], note:'' },
+  'beef-nihari':    { equipment:['Large nihari pot','Mixing spoon'], ingredients:['Ginger (julienned)','Fried onions','Lemon','Cilantro','Green chilies'], note:'Nihari masala by chef' },
+  'qorma':          { equipment:['Large pot','Mixing spoon'], ingredients:['Yogurt','Fried onions','Whole spices','Cooking oil'], note:'Qorma masala by chef' },
+  'biryani':        { equipment:['Large pot (from chef)'], ingredients:[], note:'Made ahead by chef — grab the pot' },
+  'pulao':          { equipment:['Large pot (from chef)'], ingredients:[], note:'Made ahead by chef — grab the pot' },
+  'zeera-rice':     { equipment:['Large pot','Strainer'], ingredients:['Basmati rice','Cumin seeds','Cooking oil','Salt'], note:'' },
+  'chickpea-rice':  { equipment:['Large pot'], ingredients:['Basmati rice','Chickpeas','Whole spices'], note:'' },
+  'frontier-rice':  { equipment:['Large pot'], ingredients:['Basmati rice','Whole spices','Ghee'], note:'' },
+  'fried-rice':     { equipment:['Large wok or pan'], ingredients:['Basmati rice','Soy sauce','Mixed vegetables','Eggs','Cooking oil'], note:'' },
+  'street-corn':    { equipment:['Large boiling pot','Strainer / tongs'], ingredients:['Salted butter','Tajin seasoning'], note:'' },
+  'chai':           { equipment:['Pateela / chai pot','Strainer','Chai dispenser'], ingredients:['Chai patti / grounds','Milk','Sugar'], note:'' },
+  'kashmiri-chai':  { equipment:['Pateela / chai pot','Strainer','Chai dispenser'], ingredients:['Kashmiri chai patti','Milk','Sugar','Cardamom','Pistachios / almonds (garnish)'], note:'' },
+};
+
 function buildChecklist(guests,menuIds){
   const has=id=>menuIds.has(id);
   const hasGola=has('gola-ganda'),hasFalooda=has('falooda');
@@ -657,7 +688,14 @@ function goMaster(){
   const srField=document.getElementById('s1-storerun');if(srField&&storeRunItems.length)srField.value=storeRunItems.join('\n');renderMaster();show('s4');
 }
 
-function availSections(){return SECTIONS.filter(s=>!s.cond||(sel.has('gola-ganda')||sel.has('falooda')));}
+function availSections(){
+  return SECTIONS.filter(function(s){
+    if(s.id==='menuspecific') return Object.keys(MENU_SPECIFIC).some(function(id){return sel.has(id);});
+    if(s.srOnly)return true;
+    if(s.cond)return sel.has('gola-ganda')||sel.has('falooda');
+    return true;
+  });
+}
 
 function renderMaster(){
   document.getElementById('s4-event').textContent=evt.name;
@@ -675,7 +713,8 @@ function renderMaster(){
 function renderMasterChecklist(){
   const body=document.getElementById('s4-checklist');body.innerHTML='';
   availSections().forEach(sec=>{
-    const items=sectItems[sec.id]||[];if(!items.length)return;
+    const items=sectItems[sec.id]||[];
+    if(!items.length&&sec.id!=='storerun')return;
     const assignee=team.find(p=>p.sections.includes(sec.id));
     const sh=document.createElement('div');sh.className='sec-header';
     sh.innerHTML='<span class="sec-icon">'+sec.icon+'</span><span class="sec-title">'+sec.title+'</span>'+(assignee?'<span class="sec-badge" style="color:'+assignee.color+';background:transparent">● '+assignee.name+'</span>':'<span class="sec-badge" style="color:#C84B1A">Unassigned</span>');
@@ -715,13 +754,43 @@ function renderWorkerChecklist(){
   const p=team[curWorker],body=document.getElementById('s3-body');body.innerHTML='';
   let myTot=0,myDone=0;
   availSections().forEach(sec=>{
-    const items=sectItems[sec.id]||[];if(!items.length)return;
+    const items=sectItems[sec.id]||[];
+    // Always show store run section so team can add items
+    if(!items.length&&sec.id!=='storerun')return;
     const mine=p.sections.includes(sec.id);
     const assignee=team.find(t=>t.sections.includes(sec.id));
     const sh=document.createElement('div');sh.className='sec-header';
     sh.innerHTML='<span class="sec-icon">'+sec.icon+'</span><span class="sec-title">'+sec.title+'</span>'+(mine?'<span class="sec-badge sec-mine">YOURS</span>':'<span class="sec-badge">'+(assignee?assignee.name:'Unassigned')+'</span>');
     body.appendChild(sh);
-    if(!mine){const lb=document.createElement('div');lb.className='locked-box';lb.textContent=(assignee?assignee.name+"'s section":"Unassigned")+" — not yours to check";body.appendChild(lb);return;}
+    if(!mine){
+      // Store run is editable by everyone regardless of assignment
+      if(sec.id==='storerun'){
+        const addDiv=document.createElement('div');
+        addDiv.style.cssText='padding:12px 18px;';
+        const addInp=document.createElement('input');
+        addInp.type='text';addInp.className='text-input';
+        addInp.placeholder='Type item + tap Add';
+        addInp.style.cssText='margin-bottom:8px;font-size:14px;';
+        addInp.id='sr-add-inp';
+        const addBtn=document.createElement('button');
+        addBtn.className='cta-btn';addBtn.textContent='+ Add Store Run Item';
+        addBtn.style.cssText='padding:12px;font-size:13px;margin-bottom:0;';
+        addBtn.addEventListener('click',function(){
+          const val=addInp.value.trim();
+          if(!val)return;
+          storeRunItems.push(val);
+          sectItems.storerun=storeRunItems.map(function(i){return{name:i,qty:'',note:''};});
+          addInp.value='';
+          renderWorkerChecklist();
+          renderMasterChecklist();
+        });
+        addDiv.appendChild(addInp);addDiv.appendChild(addBtn);
+        body.appendChild(addDiv);
+        // Still show the items as checkable even if not assigned
+      } else {
+        const lb=document.createElement('div');lb.className='locked-box';lb.textContent=(assignee?assignee.name+"'s section":"Unassigned")+" — not yours to check";body.appendChild(lb);return;
+      }
+    }
     items.forEach((item,ii)=>{
       const key=sec.id+'-'+ii,chk=checks[key]||{};
       if(chk.done)myDone++;myTot++;
@@ -731,6 +800,21 @@ function renderWorkerChecklist(){
       row.addEventListener('click',()=>doCheck(key,sec.id,p.name,row,ii));
       body.appendChild(row);
     });
+    // Store run — show add input at bottom for everyone
+    if(sec.id==='storerun'){
+      const aDiv=document.createElement('div');aDiv.style.cssText='padding:10px 18px 4px';
+      const aInp=document.createElement('input');aInp.type='text';aInp.className='text-input';
+      aInp.placeholder='Add store run item...';aInp.style.cssText='margin-bottom:8px;font-size:14px;';
+      const aBtn=document.createElement('button');aBtn.className='cta-btn';
+      aBtn.textContent='+ Add Item';aBtn.style.cssText='padding:12px;font-size:13px;margin-bottom:0;';
+      aBtn.addEventListener('click',function(){
+        const val=aInp.value.trim();if(!val)return;
+        storeRunItems.push(val);
+        sectItems.storerun=storeRunItems.map(function(i){return{name:i,qty:'',note:''};});
+        aInp.value='';renderWorkerChecklist();renderMasterChecklist();
+      });
+      aDiv.appendChild(aInp);aDiv.appendChild(aBtn);body.appendChild(aDiv);
+    }
     const d=document.createElement('div');d.style.cssText='height:6px;background:var(--ash)';body.appendChild(d);
   });
   updWorkerProg(myDone,myTot);
