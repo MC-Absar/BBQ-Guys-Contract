@@ -328,6 +328,15 @@ body{background:var(--coal);font-family:-apple-system,BlinkMacSystemFont,'Segoe 
     <button class="copy-btn" onclick="copyMaster()">📋 My Link</button>
   </div>
   <div class="share-note" id="s4-note">Each person gets their own pre-assigned link</div>
+  <div style="padding:0 18px 4px;margin-top:4px">
+    <div style="font-size:10px;color:var(--smoke);margin-bottom:5px;letter-spacing:.05em;text-transform:uppercase;font-weight:700">Live Sync URL (paste once)</div>
+    <div style="display:flex;gap:8px">
+      <input type="text" id="sync-url-input" placeholder="Paste Apps Script Web App URL here"
+        style="flex:1;background:var(--ash);border:none;border-radius:8px;padding:10px 12px;font-size:12px;color:var(--paper);outline:none"
+        oninput="setSyncURL(this.value)">
+    </div>
+    <div style="font-size:10px;color:var(--smoke);margin-top:4px;font-style:italic">Once set, all team check-offs sync live to your Google Sheet</div>
+  </div>
   <div class="pad"></div>
 </div>
 
@@ -556,6 +565,47 @@ function toggleSec(pi,sid){
 // MENU-SPECIFIC EQUIPMENT & INGREDIENTS
 // Only appears on checklist if that item is ordered
 // ══════════════════════════════════════════════════════
+
+// ══════════════════════════════════════════════════════
+// LIVE SYNC — writes every check/flag to Google Sheet
+// Set SYNC_URL to your deployed Apps Script Web App URL
+// ══════════════════════════════════════════════════════
+let SYNC_URL = ''; // Set after deploying Apps Script as Web App
+
+function syncToSheet(params) {
+  if (!SYNC_URL) return; // No URL set yet
+  const url = SYNC_URL + '?' + Object.entries(params).map(([k,v])=>k+'='+encodeURIComponent(v)).join('&');
+  fetch(url, {method:'GET', mode:'no-cors'}).catch(function(){});
+}
+
+function syncCheck(key, secId, itemName, done, workerName) {
+  syncToSheet({action:'check', key:key, section:secId, item:itemName, done:done, worker:workerName});
+}
+
+function syncFlag(key, flagged, workerName) {
+  syncToSheet({action:'flag', key:key, flagged:flagged, worker:workerName});
+}
+
+function syncAddStoreRun(itemName, workerName) {
+  syncToSheet({action:'addStoreRun', item:itemName, worker:workerName});
+}
+
+function syncInitEvent(eventName, guests, date) {
+  syncToSheet({action:'initEvent', eventName:eventName, guests:guests, date:date});
+}
+
+function setSyncURL(url) {
+  SYNC_URL = url;
+  // Store in sessionStorage so it persists during session
+  try { sessionStorage.setItem('bbq_sync_url', url); } catch(e){}
+}
+
+// Load sync URL from session if available
+try {
+  const saved = sessionStorage.getItem('bbq_sync_url');
+  if (saved) SYNC_URL = saved;
+} catch(e){}
+
 const MENU_SPECIFIC = {
   'seekh-kabab':    { equipment:['Wooden skewer stands'], ingredients:[], note:'' },
   'mutton-seekh':   { equipment:['Wooden skewer stands'], ingredients:[], note:'' },
@@ -698,6 +748,8 @@ function availSections(){
 }
 
 function renderMaster(){
+  // Sync event init to Sheet
+  syncInitEvent(evt.name, evt.guests, evt.date);
   document.getElementById('s4-event').textContent=evt.name;
   document.getElementById('s4-meta').textContent=evt.guests+' guests'+(evt.date?' · '+evt.date:'')+(evt.venue?' · '+evt.venue:'');
   const td=document.getElementById('s4-team');td.innerHTML='';
@@ -834,6 +886,7 @@ function renderWorkerChecklist(){
         const val=aInp.value.trim();if(!val)return;
         storeRunItems.push(val);
         sectItems.storerun=storeRunItems.map(function(i){return{name:i,qty:'',note:''};});
+        syncAddStoreRun(val, team[curWorker]?team[curWorker].name:'');
         aInp.value='';renderWorkerChecklist();renderMasterChecklist();
       });
       aDiv.appendChild(aInp);aDiv.appendChild(aBtn);body.appendChild(aDiv);
@@ -846,6 +899,7 @@ function renderWorkerChecklist(){
 function doFlag(key,secId,ii,flagBtn,row){
   if(!srFlags[key])srFlags[key]=false;
   srFlags[key]=!srFlags[key];
+  syncFlag(key, srFlags[key], team[curWorker]?team[curWorker].name:'');
   if(srFlags[key]){
     flagBtn.classList.add('flagged');
     flagBtn.textContent='🛒';
@@ -867,6 +921,9 @@ function doCheck(key,secId,wname,row,ii){
   if(!checks[key])checks[key]={};
   checks[key].done=!checks[key].done;
   if(checks[key].done){const n=new Date();checks[key].by=wname;checks[key].time=n.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});}
+  // Sync to Google Sheet
+  const chkItem=Object.values(sectItems).flat().find ? null : null;
+  syncCheck(key, secId, key, checks[key].done, wname);
   row.classList.toggle('done',checks[key].done);
   row.querySelector('.chk-box').textContent=checks[key].done?'✓':'';
   row.querySelector('.chk-stamp').textContent=checks[key].done?'✓ '+checks[key].by+' · '+checks[key].time:'';
@@ -970,6 +1027,11 @@ function renderMasterStoreRun() {
 }
 
 function loadFromURL(){
+  // Restore sync URL input if saved
+  setTimeout(function(){
+    const inp=document.getElementById('sync-url-input');
+    if(inp&&SYNC_URL)inp.value=SYNC_URL;
+  },100);
   const p=new URLSearchParams(window.location.search);
   if(!p.has('n')||!p.has('m'))return;
   evt={name:p.get('n')||'',guests:parseInt(p.get('g'))||50,date:p.get('d')||'',venue:p.get('v')||'',phone:p.get('ph')||''};
