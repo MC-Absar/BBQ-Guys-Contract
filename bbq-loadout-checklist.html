@@ -132,7 +132,7 @@ body{background:var(--coal);font-family:-apple-system,BlinkMacSystemFont,'Segoe 
     <div class="field-label">Event / Client</div>
     <input class="text-input" id="s1-name" placeholder="e.g. Khan Wedding — Rosemont" type="text">
     <input class="text-input" id="s1-phone" placeholder="Client phone" type="tel">
-    <input class="text-input" id="s1-date" placeholder="Date & time" type="text">
+    <input class="text-input" id="s1-date" type="datetime-local" style="color-scheme:dark">
     <input class="text-input" id="s1-venue" placeholder="Venue / address" type="text">
     <div class="field-label" style="margin-top:16px">Guest Count</div>
     <div class="guest-row">
@@ -306,17 +306,51 @@ function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.re
 function adj(d){const e=document.getElementById('s1-guests');e.value=Math.max(10,Math.min(2000,(parseInt(e.value)||50)+d));}
 
 function buildMenuGrid(){
-  const g=document.getElementById('menu-grid');g.innerHTML='';
+  const g=document.getElementById('menu-grid');
+  if(!g)return;
+  g.innerHTML='';
   const cats=[...new Set(MENU.map(m=>m.cat))];
-  cats.forEach(cat=>{
+  cats.forEach(function(cat){
     const l=document.createElement('div');l.className='cat-label';l.textContent=cat;g.appendChild(l);
-    MENU.filter(m=>m.cat===cat).forEach(item=>{
+    MENU.filter(function(m){return m.cat===cat;}).forEach(function(item){
       const el=document.createElement('div');
-      el.className='menu-item'+(sel.has(item.id)?' selected':'');el.id='mi-'+item.id;
-      let ph='';
-      if(item.p){const cur=prots[item.id]||'Chicken';ph='<div class="prot-row">'+PROTEINS.map(p=>'<button class="prot-btn'+(p===cur?' active':'')+'" onclick="setProt(event,''+item.id+'',''+p+'')">'+p+'</button>').join('')+'</div>';}
-      el.innerHTML='<div class="menu-check">'+(sel.has(item.id)?'✓':'')+'</div><div style="flex:1"><div class="menu-item-name">'+item.e+' '+item.name+'</div>'+ph+'</div>';
-      el.addEventListener('click',e=>{if(e.target.classList.contains('prot-btn'))return;toggleItem(item.id,el);});
+      el.className='menu-item'+(sel.has(item.id)?' selected':'');
+      el.id='mi-'+item.id;
+      // Checkmark
+      const chk=document.createElement('div');
+      chk.className='menu-check';
+      chk.textContent=sel.has(item.id)?'✓':'';
+      // Name wrapper
+      const wrap=document.createElement('div');
+      wrap.style.flex='1';
+      const nameEl=document.createElement('div');
+      nameEl.className='menu-item-name';
+      nameEl.textContent=item.e+' '+item.name;
+      wrap.appendChild(nameEl);
+      // Protein pills — built with createElement, no inline onclick
+      if(item.p){
+        const cur=prots[item.id]||'Chicken';
+        const pr=document.createElement('div');
+        pr.className='prot-row';
+        PROTEINS.forEach(function(p){
+          const btn=document.createElement('button');
+          btn.className='prot-btn'+(p===cur?' active':'');
+          btn.textContent=p;
+          (function(itemId,prot){
+            btn.addEventListener('click',function(e){setProt(e,itemId,prot);});
+          })(item.id,p);
+          pr.appendChild(btn);
+        });
+        wrap.appendChild(pr);
+      }
+      el.appendChild(chk);
+      el.appendChild(wrap);
+      (function(itemId){
+        el.addEventListener('click',function(e){
+          if(e.target.classList.contains('prot-btn'))return;
+          toggleItem(itemId,el);
+        });
+      })(item.id);
       g.appendChild(el);
     });
   });
@@ -335,7 +369,7 @@ function setProt(e,id,p){
 }
 
 function goAssign(){
-  evt={name:document.getElementById('s1-name').value.trim()||'Event',phone:document.getElementById('s1-phone').value.trim(),date:document.getElementById('s1-date').value.trim(),venue:document.getElementById('s1-venue').value.trim(),guests:parseInt(document.getElementById('s1-guests').value)||50};
+  evt={name:document.getElementById('s1-name').value.trim()||'Event',phone:document.getElementById('s1-phone').value.trim(),date:(()=>{const v=document.getElementById('s1-date').value;if(!v)return '';const d=new Date(v);return d.toLocaleDateString('en-US',{month:'numeric',day:'numeric',year:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});})(),venue:document.getElementById('s1-venue').value.trim(),guests:parseInt(document.getElementById('s1-guests').value)||50};
   const srRaw=document.getElementById('s1-storerun').value.trim();
   storeRunItems=srRaw?srRaw.split('\n').map(l=>l.trim()).filter(Boolean):[];
   if(sel.size===0){alert('Please select at least one menu item.');return;}
@@ -358,18 +392,39 @@ function setSize(n){
 function renderCards(){
   while(team.length<teamSize)team.push({name:'',color:COLORS[team.length%COLORS.length],sections:[]});
   team=team.slice(0,teamSize);
-  const avail=SECTIONS.filter(s=>!s.cond||(sel.has('gola-ganda')||sel.has('falooda')));
+  const avail=SECTIONS.filter(function(s){return !s.cond||(sel.has('gola-ganda')||sel.has('falooda'));});
   const c=document.getElementById('person-cards');c.innerHTML='';
-  team.forEach((p,pi)=>{
+  team.forEach(function(p,pi){
+    // Card wrapper
     const card=document.createElement('div');card.className='person-card';
-    const init=p.name?p.name.charAt(0).toUpperCase():(pi+1).toString();
-    const tags=avail.map(sec=>{
+    // Header
+    const hdr=document.createElement('div');hdr.className='person-header';
+    const init=p.name?p.name.charAt(0).toUpperCase():String(pi+1);
+    const av=document.createElement('div');
+    av.className='person-avatar';av.id='av-'+pi;
+    av.style.background=p.color;av.textContent=init;
+    const inp=document.createElement('input');
+    inp.type='text';inp.className='person-name-input';
+    inp.placeholder='Person '+(pi+1)+' name';inp.value=p.name;
+    inp.setAttribute('autocorrect','off');
+    (function(idx){inp.addEventListener('input',function(){updateName(idx,this.value);});})(pi);
+    hdr.appendChild(av);hdr.appendChild(inp);
+    card.appendChild(hdr);
+    // Sections
+    const secsDiv=document.createElement('div');secsDiv.className='person-sections';secsDiv.id='psecs-'+pi;
+    avail.forEach(function(sec){
       const mine=p.sections.includes(sec.id);
-      const takenIdx=mine?-1:team.findIndex((t,i)=>i!==pi&&t.sections.includes(sec.id));
+      const takenIdx=mine?-1:team.findIndex(function(t,i){return i!==pi&&t.sections.includes(sec.id);});
       const taken=takenIdx>=0;
-      return '<span class="sec-tag'+(mine?' assigned':taken?' taken':'')+'" onclick="'+(taken?'':'toggleSec('+pi+',''+sec.id+'')')+'">'+(mine?'✓ ':'')+sec.icon+' '+sec.title+'</span>';
-    }).join('');
-    card.innerHTML='<div class="person-header"><div class="person-avatar" id="av-'+pi+'" style="background:'+p.color+'">'+init+'</div><input type="text" class="person-name-input" placeholder="Person '+(pi+1)+' name" value="'+p.name+'" oninput="updateName('+pi+',this.value)" autocorrect="off"></div><div class="person-sections" id="psecs-'+pi+'">'+tags+'</div>';
+      const tag=document.createElement('span');
+      tag.className='sec-tag'+(mine?' assigned':taken?' taken':'');
+      tag.textContent=(mine?'✓ ':'')+sec.icon+' '+sec.title;
+      if(!taken){
+        (function(pIdx,sId){tag.addEventListener('click',function(){toggleSec(pIdx,sId);});})(pi,sec.id);
+      }
+      secsDiv.appendChild(tag);
+    });
+    card.appendChild(secsDiv);
     c.appendChild(card);
   });
 }
@@ -551,7 +606,7 @@ function renderWorkerChecklist(){
     const sh=document.createElement('div');sh.className='sec-header';
     sh.innerHTML='<span class="sec-icon">'+sec.icon+'</span><span class="sec-title">'+sec.title+'</span>'+(mine?'<span class="sec-badge sec-mine">YOURS</span>':'<span class="sec-badge">'+(assignee?assignee.name:'Unassigned')+'</span>');
     body.appendChild(sh);
-    if(!mine){const lb=document.createElement('div');lb.className='locked-box';lb.textContent=(assignee?assignee.name+''s section':'Unassigned')+' — not yours to check';body.appendChild(lb);return;}
+    if(!mine){const lb=document.createElement('div');lb.className='locked-box';lb.textContent=(assignee?assignee.name+"'s section":"Unassigned")+" — not yours to check";body.appendChild(lb);return;}
     items.forEach((item,ii)=>{
       const key=sec.id+'-'+ii,chk=checks[key]||{};
       if(chk.done)myDone++;myTot++;
