@@ -145,6 +145,9 @@ body{background:var(--coal);font-family:-apple-system,BlinkMacSystemFont,'Segoe 
       <div class="menu-grid" id="menu-grid"></div>
     </div>
     <div class="chef-note">🧑‍🍳 <strong>Chef:</strong> Proteins are pre-tagged & racked in the walk-in. Grab by label only — do not swap racks.</div>
+    <div class="field-label" style="margin-top:4px">🛒 Store Run Items <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#555">(optional)</span></div>
+    <div style="font-size:11px;color:var(--smoke);margin-bottom:8px">One item per line — milk, half and half, ice, etc.</div>
+    <textarea class="text-input" id="s1-storerun" placeholder="e.g. Whole milk — 2 gallons" rows="3" style="resize:none;line-height:1.6;font-size:14px"></textarea>
     <button class="cta-btn" onclick="goAssign()">Next — Assign Team →</button>
   </div>
 </div>
@@ -370,7 +373,7 @@ function setProt(e,id,p){
 
 function goAssign(){
   evt={name:document.getElementById('s1-name').value.trim()||'Event',phone:document.getElementById('s1-phone').value.trim(),date:(()=>{const v=document.getElementById('s1-date').value;if(!v)return '';const d=new Date(v);return d.toLocaleDateString('en-US',{month:'numeric',day:'numeric',year:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});})(),venue:document.getElementById('s1-venue').value.trim(),guests:parseInt(document.getElementById('s1-guests').value)||50};
-  const srRaw=document.getElementById('s1-storerun').value.trim();
+  const srEl=document.getElementById('s1-storerun');const srRaw=srEl?srEl.value.trim():'';
   storeRunItems=srRaw?srRaw.split('\n').map(l=>l.trim()).filter(Boolean):[];
   if(sel.size===0){alert('Please select at least one menu item.');return;}
   buildAssignScreen();show('s2');
