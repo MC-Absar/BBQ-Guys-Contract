@@ -571,7 +571,8 @@ function renderMasterChecklist(){
     items.forEach((item,ii)=>{
       const key=sec.id+'-'+ii,chk=checks[key]||{};
       const row=document.createElement('div');row.className='check-row'+(chk.done?' done':'');
-      row.innerHTML='<div class="chk-box">'+(chk.done?'✓':'')+'</div><div class="chk-content"><div class="chk-name">'+item.name+'</div>'+(item.qty?'<div class="chk-qty">'+item.qty+'</div>':'')+(item.note?'<div class="chk-note">'+item.note+'</div>':'')+'<div class="chk-stamp">'+(chk.done?'✓ '+(chk.by||'?')+' · '+(chk.time||''):'')+'</div></div>';
+      const showQtyM=sec.id==='serving'||sec.id==='setup';
+      row.innerHTML='<div class="chk-box">'+(chk.done?'✓':'')+'</div><div class="chk-content"><div class="chk-name">'+item.name+'</div>'+(showQtyM&&item.qty?'<div class="chk-qty">'+item.qty+'</div>':'')+(item.note?'<div class="chk-note">'+item.note+'</div>':'')+'<div class="chk-stamp">'+(chk.done?'✓ '+(chk.by||'?')+' · '+(chk.time||''):'')+'</div></div>';
       body.appendChild(row);
     });
     const d=document.createElement('div');d.style.cssText='height:6px;background:var(--ash)';body.appendChild(d);
@@ -613,7 +614,8 @@ function renderWorkerChecklist(){
       const key=sec.id+'-'+ii,chk=checks[key]||{};
       if(chk.done)myDone++;myTot++;
       const row=document.createElement('div');row.className='check-row'+(chk.done?' done':'');
-      row.innerHTML='<div class="chk-box">'+(chk.done?'✓':'')+'</div><div class="chk-content"><div class="chk-name">'+item.name+'</div>'+(item.qty?'<div class="chk-qty">'+item.qty+'</div>':'')+(item.note?'<div class="chk-note">'+item.note+'</div>':'')+'<div class="chk-stamp">'+(chk.done?'✓ '+chk.by+' · '+chk.time:'')+'</div></div>';
+      const showQty=sec.id==='serving'||sec.id==='setup';
+      row.innerHTML='<div class="chk-box">'+(chk.done?'✓':'')+'</div><div class="chk-content"><div class="chk-name">'+item.name+'</div>'+(showQty&&item.qty?'<div class="chk-qty">'+item.qty+'</div>':'')+(item.note?'<div class="chk-note">'+item.note+'</div>':'')+'<div class="chk-stamp">'+(chk.done?'✓ '+chk.by+' · '+chk.time:'')+'</div></div>';
       row.addEventListener('click',()=>doCheck(key,sec.id,p.name,row,ii));
       body.appendChild(row);
     });
