@@ -607,6 +607,8 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
           <input type="hidden" id="h_fee_chafing" value="0"/>
         </div>
         <div class="hf"><label>Retainer (due on signing — $200 minimum)</label><input type="text" id="h_fee_retainer" value="$200.00" oninput="updateLivePreview()"/></div>
+        <div class="hf"><label>Misc Charges <span style="font-size:0.6rem;color:var(--muted);">optional — servers, dinnerware, decor, etc.</span></label><input type="text" id="h_fee_misc" placeholder="$0.00" oninput="updateLivePreview()"/></div>
+        <div class="hf"><label>Misc Label <span style="font-size:0.6rem;color:var(--muted);">optional — describe what it's for</span></label><input type="text" id="h_fee_misc_label" placeholder="e.g. Servers, Dinnerware" oninput="updateLivePreview()"/></div>
         <div class="hf"><label>Discount <span style="font-size:0.6rem;color:var(--muted);">optional — dollar amount</span></label><input type="text" id="h_fee_discount" placeholder="$0.00" oninput="updateLivePreview()"/></div>
       </div>
       <!-- Live Fee Preview -->
@@ -614,13 +616,14 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <div class="live-preview-title">⚡ Live Fee Preview</div>
         <div class="live-preview-row"><span class="live-preview-label">Per-Person Rate</span><span class="live-preview-value" id="lp_rate">—</span></div>
         <div class="live-preview-row"><span class="live-preview-label">Guest Count</span><span class="live-preview-value" id="lp_guests">—</span></div>
-        <div class="live-preview-row"><span class="live-preview-label">Food Subtotal</span><span class="live-preview-value" id="lp_food_sub">—</span></div>
-        <div class="live-preview-row"><span class="live-preview-label">Pre-Tax Total</span><span class="live-preview-value" id="lp_pretax">—</span></div>
-        <div class="live-preview-row"><span class="live-preview-label">Tax (10.25%)</span><span class="live-preview-value" id="lp_tax">—</span></div>
+        <div class="live-preview-row"><span class="live-preview-label">Food Subtotal (taxable)</span><span class="live-preview-value" id="lp_food_sub">—</span></div>
         <div class="live-preview-row"><span class="live-preview-label">Travel Fee</span><span class="live-preview-value" id="lp_travel">—</span></div>
         <div class="live-preview-row"><span class="live-preview-label">Chafing Setup</span><span class="live-preview-value" id="lp_chafing">—</span></div>
+        <div class="live-preview-row" id="lp_misc_row" style="display:none;"><span class="live-preview-label" id="lp_misc_label">Misc Charges</span><span class="live-preview-value" id="lp_misc">—</span></div>
         <div class="live-preview-row" id="lp_discount_row" style="display:none;color:#2d7a2d;"><span class="live-preview-label">🎁 Discount Applied</span><span class="live-preview-value" id="lp_discount">—</span></div>
+        <div class="live-preview-row"><span class="live-preview-label">Pre-Tax Total</span><span class="live-preview-value" id="lp_pretax">—</span></div>
         <div class="live-preview-row"><span class="live-preview-label">Non-Refundable Retainer (paid)</span><span class="live-preview-value" id="lp_deposit">—</span></div>
+        <div class="live-preview-row"><span class="live-preview-label">Tax (10.25% on food only)</span><span class="live-preview-value" id="lp_tax">—</span></div>
         <div class="live-preview-total"><span class="live-preview-label">TOTAL REMAINING</span><span class="live-preview-value" id="lp_total">—</span></div>
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
@@ -790,13 +793,13 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
           <tbody>
             <tr><td>Per-Person Rate</td><td class="prefilled-cell" id="d_rate_pp">—</td></tr>
             <tr><td>Food Subtotal (rate × guests)</td><td class="prefilled-cell" id="d_food_sub">—</td></tr>
-            <tr><td>Pre-Tax Total</td><td class="prefilled-cell" id="d_pretax">—</td></tr>
-            <tr style="font-style:italic;"><td>Tax (10.25% Chicago rate — food items only)</td><td class="prefilled-cell" id="d_tax">—</td></tr>
             <tr><td>Travel Fee</td><td class="prefilled-cell" id="d_travel_fee">—</td></tr>
             <tr><td>Chafing Setup</td><td class="prefilled-cell" id="d_chafing_fee">—</td></tr>
+            <tr id="d_misc_row" style="display:none;"><td id="d_misc_label">Misc Charges</td><td class="prefilled-cell" id="d_misc">—</td></tr>
             <tr id="d_discount_row" style="display:none;color:#2d7a2d;font-weight:600;"><td>🎁 Discount Applied</td><td class="prefilled-cell" id="d_discount">—</td></tr>
+            <tr><td>Pre-Tax Total</td><td class="prefilled-cell" id="d_pretax">—</td></tr>
             <tr><td><strong>Non-Refundable Retainer Paid</strong></td><td class="prefilled-cell" id="d_deposit">—</td></tr>
-            <tr><td>Add-Ons</td><td class="prefilled-cell" id="d_addons">—</td></tr>
+            <tr style="font-style:italic;"><td>Tax (10.25% Chicago rate — food items only)</td><td class="prefilled-cell" id="d_tax">—</td></tr>
             <tr class="total-row"><td>TOTAL REMAINING</td><td id="d_total_remaining">—</td></tr>
           </tbody>
         </table>
@@ -1412,28 +1415,36 @@ function updateLivePreview(){
   const chafing = cleanNum('h_fee_chafing');
   const deposit = cleanNum('h_fee_retainer')||200;
   const discount = cleanNum('h_fee_discount');
+  const misc = cleanNum('h_fee_misc');
+  const miscLabel = document.getElementById('h_fee_misc_label')?.value.trim() || 'Misc Charges';
   const foodSub = rate * guests;
+  const preTax = foodSub + travel + chafing + misc - discount;
   const tax = foodSub * TAX_RATE;
-  const total = foodSub + tax + travel + chafing - deposit - discount;
+  const total = preTax + tax - deposit;
   const set = (id, val) => { const el=document.getElementById(id); if(el) el.textContent=val; };
   set('lp_rate', rate > 0 ? fmt$(rate)+'/person' : '—');
   set('lp_guests', guests > 0 ? guests+' guests' : '—');
-  const preTax = foodSub + travel + chafing;
   set('lp_food_sub', foodSub > 0 ? fmt$(foodSub) : '—');
-  set('lp_pretax', preTax > 0 ? fmt$(preTax) : '—');
+  set('lp_travel', travel > 0 ? fmt$(travel) : 'Not applicable');
+  set('lp_chafing', chafing > 0 ? fmt$(chafing) : 'Not booked');
+  // Misc row
+  const miscRow = document.getElementById('lp_misc_row');
+  if(miscRow) miscRow.style.display = misc > 0 ? 'flex' : 'none';
+  const miscLabelEl = document.getElementById('lp_misc_label');
+  if(miscLabelEl) miscLabelEl.textContent = miscLabel || 'Misc Charges';
+  set('lp_misc', misc > 0 ? fmt$(misc) : '—');
   // Discount row
   const discRow = document.getElementById('lp_discount_row');
   if(discRow) discRow.style.display = discount > 0 ? 'flex' : 'none';
   set('lp_discount', discount > 0 ? '-'+fmt$(discount) : '—');
-  set('lp_tax', foodSub > 0 ? fmt$(tax) : '—');
-  set('lp_travel', travel > 0 ? fmt$(travel) : 'Not applicable');
-  set('lp_chafing', chafing > 0 ? fmt$(chafing) : 'Not booked');
+  set('lp_pretax', preTax > 0 ? fmt$(preTax) : '—');
   set('lp_deposit', '-'+fmt$(deposit));
+  set('lp_tax', foodSub > 0 ? fmt$(tax) : '—');
   set('lp_total', foodSub > 0 || travel > 0 || chafing > 0 ? fmt$(total) : '—');
   // Warn if below $3,000 minimum
   const minWarn = document.getElementById('minimum_booking_warning');
   if(minWarn){
-    const gross = foodSub + tax + travel + chafing;
+    const gross = foodSub + tax + travel + chafing + misc - discount;
     minWarn.style.display = (gross > 0 && gross < 3000) ? 'block' : 'none';
   }
 }
@@ -1725,16 +1736,20 @@ function generateLink(){
   const ch   = cleanNum('h_fee_chafing');
   const dep  = cleanNum('h_fee_retainer')||200;
   const disc = cleanNum('h_fee_discount');
+  const misc = cleanNum('h_fee_misc');
+  const miscLabel = document.getElementById('h_fee_misc_label')?.value.trim()||'';
   const gNum2 = parseInt(gc)||0;
   const foodSub = gNum2 * rNum;
   const tax = foodSub * TAX_RATE;
-  const totalRem = foodSub + tax + tr + ch - dep - disc;
+  const preTax = foodSub + tr + ch + misc - disc;
+  const totalRem = preTax + tax - dep;
   p.set('rate_pp', rNum > 0 ? rNum.toFixed(2) : '0');
   p.set('travel_fee', tr > 0 ? tr.toFixed(2) : '0');
   p.set('chafing_fee', ch > 0 ? ch.toFixed(2) : '0');
   p.set('deposit', dep.toFixed(2));
-  p.set('addons','0');
-  p.set('food_sub',fmt$(foodSub));p.set('pre_tax_total',fmt$(foodSub+tr+ch));p.set('tax_amt',fmt$(tax));p.set('total_remaining',fmt$(totalRem));
+  if(misc > 0){ p.set('misc_fee', misc.toFixed(2)); }
+  if(miscLabel) p.set('misc_label', miscLabel);
+  p.set('food_sub',fmt$(foodSub));p.set('pre_tax_total',fmt$(preTax));p.set('tax_amt',fmt$(tax));p.set('total_remaining',fmt$(totalRem));
   if(disc>0){p.set('discount',fmt$(disc));}
   const celebration=document.getElementById('h_celebration')?.value||'';
   if(celebration)p.set('celebration',celebration);
@@ -1886,19 +1901,25 @@ function loadClientView(){
   }
   setText('d_rate_pp',raw['rate_pp']?'$'+parseFloat(raw['rate_pp']).toFixed(2)+'/person':'—');
   setText('d_food_sub',raw['food_sub']||'—');
-  setText('d_pretax',raw['pre_tax_total']||'—');
-  setText('d_tax',raw['tax_amt']||'—');
   setText('d_travel_fee',raw['travel_fee']&&parseFloat(raw['travel_fee'])>0?'$'+parseFloat(raw['travel_fee']).toFixed(2):'Not applicable');
-  setText('d_addons',raw['addons']&&parseFloat(raw['addons'])>0?'$'+parseFloat(raw['addons']).toFixed(2):'—');
   setText('d_chafing_fee',raw['chafing_fee']&&parseFloat(raw['chafing_fee'])>0?'$'+parseFloat(raw['chafing_fee']).toFixed(2):'Not booked');
-  setText('d_addons',raw['addons']&&parseFloat(raw['addons'])>0?'$'+parseFloat(raw['addons']).toFixed(2):'—');
+  // Misc row
+  if(raw['misc_fee'] && parseFloat(raw['misc_fee']) > 0){
+    const miscRow = document.getElementById('d_misc_row');
+    if(miscRow) miscRow.style.display = 'table-row';
+    const miscLabelEl = document.getElementById('d_misc_label');
+    if(miscLabelEl) miscLabelEl.textContent = raw['misc_label'] || 'Misc Charges';
+    setText('d_misc', '$'+parseFloat(raw['misc_fee']).toFixed(2));
+  }
   // Show discount if present
   if(raw['discount'] && parseFloat(raw['discount'].replace(/[$,]/g,'')) > 0){
     const discRow = document.getElementById('d_discount_row');
     if(discRow) discRow.style.display = 'table-row';
     setText('d_discount', '-' + raw['discount']);
   }
+  setText('d_pretax',raw['pre_tax_total']||'—');
   setText('d_deposit','$'+parseFloat(raw['deposit']||200).toFixed(2)+' (paid)');
+  setText('d_tax',raw['tax_amt']||'—');
   setText('d_total_remaining',raw['total_remaining']||'—');
 
   // ── Recalc on guest count change ──
