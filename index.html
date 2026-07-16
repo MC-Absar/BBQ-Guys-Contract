@@ -614,16 +614,16 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
       <!-- Live Fee Preview -->
       <div class="live-preview">
         <div class="live-preview-title">⚡ Live Fee Preview</div>
-        <div class="live-preview-row"><span class="live-preview-label">Per-Person Rate</span><span class="live-preview-value" id="lp_rate">—</span></div>
+        <div class="live-preview-row"><span class="live-preview-label">Rate</span><span class="live-preview-value" id="lp_rate">—</span></div>
         <div class="live-preview-row"><span class="live-preview-label">Guest Count</span><span class="live-preview-value" id="lp_guests">—</span></div>
-        <div class="live-preview-row"><span class="live-preview-label">Food Subtotal (taxable)</span><span class="live-preview-value" id="lp_food_sub">—</span></div>
+        <div class="live-preview-row"><span class="live-preview-label">Food Sub Total (taxable)</span><span class="live-preview-value" id="lp_food_sub">—</span></div>
         <div class="live-preview-row"><span class="live-preview-label">Travel Fee</span><span class="live-preview-value" id="lp_travel">—</span></div>
         <div class="live-preview-row"><span class="live-preview-label">Chafing Setup</span><span class="live-preview-value" id="lp_chafing">—</span></div>
-        <div class="live-preview-row" id="lp_misc_row" style="display:none;"><span class="live-preview-label" id="lp_misc_label">Misc Charges</span><span class="live-preview-value" id="lp_misc">—</span></div>
-        <div class="live-preview-row" id="lp_discount_row" style="display:none;color:#2d7a2d;"><span class="live-preview-label">🎁 Discount Applied</span><span class="live-preview-value" id="lp_discount">—</span></div>
+        <div class="live-preview-row" id="lp_misc_row" style="display:none;"><span class="live-preview-label" id="lp_misc_label">Other Misc Charges</span><span class="live-preview-value" id="lp_misc">—</span></div>
+        <div class="live-preview-row" id="lp_discount_row" style="display:none;color:#2d7a2d;"><span class="live-preview-label">Discount</span><span class="live-preview-value" id="lp_discount">—</span></div>
         <div class="live-preview-row"><span class="live-preview-label">Pre-Tax Total</span><span class="live-preview-value" id="lp_pretax">—</span></div>
-        <div class="live-preview-row"><span class="live-preview-label">Non-Refundable Retainer (paid)</span><span class="live-preview-value" id="lp_deposit">—</span></div>
-        <div class="live-preview-row"><span class="live-preview-label">Tax (10.25% on food only)</span><span class="live-preview-value" id="lp_tax">—</span></div>
+        <div class="live-preview-row"><span class="live-preview-label">Retainer Paid</span><span class="live-preview-value" id="lp_deposit">—</span></div>
+        <div class="live-preview-row"><span class="live-preview-label">Tax (on Food Sub Total)</span><span class="live-preview-value" id="lp_tax">—</span></div>
         <div class="live-preview-total"><span class="live-preview-label">TOTAL REMAINING</span><span class="live-preview-value" id="lp_total">—</span></div>
       </div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
@@ -791,15 +791,15 @@ ul.clause-list li { margin-bottom:7px; line-height:1.65; }
         <table class="fee-table">
           <thead><tr><th>Item</th><th>Amount</th></tr></thead>
           <tbody>
-            <tr><td>Per-Person Rate</td><td class="prefilled-cell" id="d_rate_pp">—</td></tr>
-            <tr><td>Food Subtotal (rate × guests)</td><td class="prefilled-cell" id="d_food_sub">—</td></tr>
+            <tr><td>Rate</td><td class="prefilled-cell" id="d_rate_pp">—</td></tr>
+            <tr><td>Food Sub Total (taxable)</td><td class="prefilled-cell" id="d_food_sub">—</td></tr>
             <tr><td>Travel Fee</td><td class="prefilled-cell" id="d_travel_fee">—</td></tr>
             <tr><td>Chafing Setup</td><td class="prefilled-cell" id="d_chafing_fee">—</td></tr>
-            <tr id="d_misc_row" style="display:none;"><td id="d_misc_label">Misc Charges</td><td class="prefilled-cell" id="d_misc">—</td></tr>
-            <tr id="d_discount_row" style="display:none;color:#2d7a2d;font-weight:600;"><td>🎁 Discount Applied</td><td class="prefilled-cell" id="d_discount">—</td></tr>
+            <tr id="d_misc_row" style="display:none;"><td id="d_misc_label">Other Misc Charges</td><td class="prefilled-cell" id="d_misc">—</td></tr>
+            <tr id="d_discount_row" style="display:none;color:#2d7a2d;font-weight:600;"><td>Discount</td><td class="prefilled-cell" id="d_discount">—</td></tr>
             <tr><td>Pre-Tax Total</td><td class="prefilled-cell" id="d_pretax">—</td></tr>
-            <tr><td><strong>Non-Refundable Retainer Paid</strong></td><td class="prefilled-cell" id="d_deposit">—</td></tr>
-            <tr style="font-style:italic;"><td>Tax (10.25% Chicago rate — food items only)</td><td class="prefilled-cell" id="d_tax">—</td></tr>
+            <tr><td><strong>Retainer Paid</strong></td><td class="prefilled-cell" id="d_deposit">—</td></tr>
+            <tr style="font-style:italic;"><td>Tax (on Food Sub Total)</td><td class="prefilled-cell" id="d_tax">—</td></tr>
             <tr class="total-row"><td>TOTAL REMAINING</td><td id="d_total_remaining">—</td></tr>
           </tbody>
         </table>
@@ -1280,25 +1280,6 @@ function fmtTime(t){if(!t)return'—';const[h,mn]=t.split(':');const hr=parseInt
 function fmt$(n){return(n===null||isNaN(n))?'—':'$'+parseFloat(n).toFixed(2);}
 function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
 
-function calcTax(){
-  const rate=parseFloat(document.getElementById('h_fee_single')?.value)||0;
-  const guests=parseInt(document.getElementById('h_guest_count')?.value)||0;
-  const travel=parseFloat(document.getElementById('h_fee_travel')?.value)||0;
-  const chafing=parseFloat(document.getElementById('h_fee_chafing')?.value)||0;
-  const deposit=parseFloat(document.getElementById('h_fee_retainer')?.value)||200;
-  const addons=parseFloat(document.getElementById('h_fee_retainer')?.value)||0;
-  const foodSub=rate*guests;
-  const tax=foodSub*TAX_RATE;
-  const total=foodSub+tax+travel+chafing+addons-deposit;
-  setText('calc_food_sub',fmt$(foodSub));
-  setText('calc_tax',fmt$(tax));
-  setText('calc_travel_disp',fmt$(travel));
-  setText('calc_chafing_disp',fmt$(chafing));
-  setText('calc_addons_disp',fmt$(addons));
-  setText('calc_deposit_disp','-'+fmt$(deposit));
-  setText('calc_total_remaining',fmt$(total));
-}
-
 let hostEventCount=0;
 function addHostEvent(){
   hostEventCount++;
@@ -1416,7 +1397,7 @@ function updateLivePreview(){
   const deposit = cleanNum('h_fee_retainer')||200;
   const discount = cleanNum('h_fee_discount');
   const misc = cleanNum('h_fee_misc');
-  const miscLabel = document.getElementById('h_fee_misc_label')?.value.trim() || 'Misc Charges';
+  const miscLabel = document.getElementById('h_fee_misc_label')?.value.trim() || 'Other Misc Charges';
   const foodSub = rate * guests;
   const preTax = foodSub + travel + chafing + misc - discount;
   const tax = foodSub * TAX_RATE;
@@ -1431,7 +1412,7 @@ function updateLivePreview(){
   const miscRow = document.getElementById('lp_misc_row');
   if(miscRow) miscRow.style.display = misc > 0 ? 'flex' : 'none';
   const miscLabelEl = document.getElementById('lp_misc_label');
-  if(miscLabelEl) miscLabelEl.textContent = miscLabel || 'Misc Charges';
+  if(miscLabelEl) miscLabelEl.textContent = miscLabel || 'Other Misc Charges';
   set('lp_misc', misc > 0 ? fmt$(misc) : '—');
   // Discount row
   const discRow = document.getElementById('lp_discount_row');
@@ -1559,10 +1540,10 @@ function showContractSummary(){
     });
   }catch(e){}
   lines.push('&nbsp;');
-  lines.push('<strong>Food Subtotal:</strong> ' + (raw['food_sub']||'—'));
+  lines.push('<strong>Food Sub Total (taxable):</strong> ' + (raw['food_sub']||'—'));
   lines.push('<strong>Pre-Tax Total:</strong> ' + (raw['pre_tax_total']||'—'));
-  lines.push('<strong>Tax (10.25%):</strong> ' + (raw['tax_amt']||'—'));
-  lines.push('<strong>Non-Refundable Retainer Paid:</strong> $' + (raw['deposit']||'200'));
+  lines.push('<strong>Tax (on Food Sub Total):</strong> ' + (raw['tax_amt']||'—'));
+  lines.push('<strong>Retainer Paid:</strong> $' + (raw['deposit']||'200'));
   lines.push('<strong style="color:var(--crimson-mid);">Total Remaining:</strong> ' + (raw['total_remaining']||'—'));
   panel.innerHTML = lines.join('<br/>');
   panel.style.display = 'block';
@@ -1908,7 +1889,7 @@ function loadClientView(){
     const miscRow = document.getElementById('d_misc_row');
     if(miscRow) miscRow.style.display = 'table-row';
     const miscLabelEl = document.getElementById('d_misc_label');
-    if(miscLabelEl) miscLabelEl.textContent = raw['misc_label'] || 'Misc Charges';
+    if(miscLabelEl) miscLabelEl.textContent = raw['misc_label'] || 'Other Misc Charges';
     setText('d_misc', '$'+parseFloat(raw['misc_fee']).toFixed(2));
   }
   // Show discount if present
@@ -2227,6 +2208,20 @@ window.submitContract=async function(){
   const menuBaseUrl = baseUrl.replace(/index\.html$/, '').replace(/\/$/, '') + '/menu.html';
   let printLinkEmail = menuBaseUrl + '?' + new URLSearchParams(raw).toString();
 
+  // ── Shared fees block (emails + calendar notes) ──
+  const feesLines=[];
+  if(raw['rate_pp']&&parseFloat(raw['rate_pp'])>0)feesLines.push('Rate: $'+parseFloat(raw['rate_pp']).toFixed(2)+'/person');
+  if(raw['food_sub'])feesLines.push('Food Sub Total (taxable): '+raw['food_sub']);
+  if(raw['travel_fee']&&parseFloat(raw['travel_fee'])>0)feesLines.push('Travel Fee: $'+parseFloat(raw['travel_fee']).toFixed(2));
+  if(raw['chafing_fee']&&parseFloat(raw['chafing_fee'])>0)feesLines.push('Chafing Setup: $'+parseFloat(raw['chafing_fee']).toFixed(2));
+  if(raw['misc_fee']&&parseFloat(raw['misc_fee'])>0)feesLines.push((raw['misc_label']||'Other Misc Charges')+': $'+parseFloat(raw['misc_fee']).toFixed(2));
+  if(raw['discount']&&parseFloat(raw['discount'].replace(/[$,]/g,''))>0)feesLines.push('Discount: -'+raw['discount']);
+  if(raw['pre_tax_total'])feesLines.push('Pre-Tax Total: '+raw['pre_tax_total']);
+  feesLines.push('Retainer Paid: $'+parseFloat(raw['deposit']||200).toFixed(2));
+  if(raw['tax_amt'])feesLines.push('Tax (on Food Sub Total): '+raw['tax_amt']);
+  if(raw['total_remaining'])feesLines.push('Total Remaining: '+raw['total_remaining']);
+  const feesBlock=feesLines.join('\n');
+
   // ── Build .ics calendar link for team ──
   let calLink = '';
   try {
@@ -2289,9 +2284,7 @@ window.submitContract=async function(){
       'Service Style: ' + (raw['service_type']||'—') + '\n' +
       (raw['chafing_tier'] && raw['chafing_tier']!=='Not booked' ? 'Chafing Setup: ' + raw['chafing_tier'].replace(/ — \$\d+/,'') + '\n' : '') +
       (menuLines ? '\nMenu selection:\n' + menuLines + '\n' : '') +
-      '\nQuote:\n' +
-      'Pre-Tax: ' + preTax + '\n' +
-      'Total w/ Tax: ' + total + '\n' +
+      '\nQuote:\n' + feesBlock + '\n' +
       'Cash, Zelle or Check\n' +
       'Zelle: (224) 400-2402\n\n' +
       '--- PRINT MENU CARD ---\n' +
@@ -2311,6 +2304,7 @@ window.submitContract=async function(){
 
   const templateParams={
     celebration:raw['celebration']||'Catering Event',
+    fees_block:feesBlock,
     event_date_short:(()=>{ try{ const evs=JSON.parse(raw['events']||'[]'); return evs[0]?.edate ? new Date(evs[0].edate+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—'; } catch(e){ return '—'; }})(),
     client_names:raw['client_names']||cnEl.value||'—',
     client_phone:raw['client_phone']||document.getElementById('client_phone')?.value||'—',
@@ -2323,10 +2317,10 @@ window.submitContract=async function(){
     pre_tax_total:raw['pre_tax_total']||'—',
     tax_amt:raw['tax_amt']||'—',
     travel_fee:raw['travel_fee']&&parseFloat(raw['travel_fee'])>0?'$'+parseFloat(raw['travel_fee']).toFixed(2):'Not applicable',
-    addons:raw['addons']&&parseFloat(raw['addons'])>0?'$'+parseFloat(raw['addons']).toFixed(2):'—',
+    addons:raw['misc_fee']&&parseFloat(raw['misc_fee'])>0?(raw['misc_label']||'Other Misc Charges')+': $'+parseFloat(raw['misc_fee']).toFixed(2):'—',
     deposit:'$'+parseFloat(raw['deposit']||200).toFixed(2),
     discount:raw['discount']&&parseFloat(raw['discount'].replace(/[$,]/g,''))>0?'- '+raw['discount']:'',
-    discount_label:raw['discount']&&parseFloat(raw['discount'].replace(/[$,]/g,''))>0?'Discount Applied':'',
+    discount_label:raw['discount']&&parseFloat(raw['discount'].replace(/[$,]/g,''))>0?'Discount':'',
     total_remaining:raw['total_remaining']||'—',
     food_summary:foodSummary||'See contract for menu selections.',
     food_notes:raw['food_notes']||'None',
@@ -2372,6 +2366,7 @@ window.submitContract=async function(){
         to_email: clientEmail,
         client_names: templateParams.client_names,
         celebration: templateParams.celebration,
+        fees_block: templateParams.fees_block,
         events_summary: templateParams.events_summary,
         guest_count: templateParams.guest_count,
         service_type: templateParams.service_type,
